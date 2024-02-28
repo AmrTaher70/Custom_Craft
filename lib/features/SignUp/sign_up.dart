@@ -5,7 +5,9 @@ import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({
+    super.key,
+  });
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -34,17 +36,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 113, bottom: 60),
+                  padding: const EdgeInsets.only(top: 113, bottom: 113),
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.center,
                         child: Container(
                           alignment: Alignment.center,
-                          height: 612,
-                          width: width < 600
-                              ? screenSize.width * 0.9
-                              : 327, // Adjust width based on screen size
+                          height: 600,
+                          width: 327,
                           decoration: BoxDecoration(
                             color: const Color(0xffFAFAFA).withOpacity(.4),
                             border: Border.all(
@@ -68,9 +68,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 24,
-                          ),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: width < 600
@@ -88,18 +85,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 24,
                           ),
-
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: width < 600 ? 40 : width - 80),
                             child: TextFiledData(
-                                hintTitle: 'User Name',
-                                controller: _userNameController,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.person_2_outlined),
-                                ) // Adding email icon
-                                ),
+                              hintTitle: 'User Name',
+                              controller: _userNameController,
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.person_2_outlined),
+                              ), // Adding email icon
+                            ),
                           ),
                           const SizedBox(
                             height: 16,
@@ -108,13 +104,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: width < 600 ? 40 : width - 80),
                             child: TextFiledData(
-                                hintTitle: 'Email',
-                                controller: _emailController,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.email_outlined),
-                                ) // Adding email icon
-                                ),
+                              hintTitle: 'Email',
+                              controller: _emailController,
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.email_outlined),
+                              ), // Adding email icon
+                            ),
                           ),
                           const SizedBox(
                             height: 16,
@@ -161,11 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 16,
-                          ),
-
-                          const SizedBox(
-                            height: 8,
+                            height: 24,
                           ),
                           // Sign Up Button
                           Align(
@@ -176,8 +168,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AssetsColors
-                                      .primaryColor, // Background color
+                                  backgroundColor: AssetsColors.primaryColor,
+                                  // Background color
                                   // foregroundColor:
                                   //     Colors.white, // Text color
                                   // Button padding
@@ -196,14 +188,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 16,
+                            height: 28,
                           ),
-                          const Center(
-                            child: Text(
-                                'ـــــــــــــــــــــــــــــــــــ Or Sign Up with ـــــــــــــــــــــــــــــــــ'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 2,
+                                color: const Color(0xff8E8E8E),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Text(
+                                  'Or Sign Up with',
+                                  style: TextStyle(
+                                    color: Color(0xff8E8E8E),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 90,
+                                height: 2,
+                                color: const Color(0xff8E8E8E),
+                              ),
+                            ],
                           ),
                           const SizedBox(
-                            height: 12,
+                            height: 16,
                           ),
                           Center(
                             child: Image.asset(AssetsData.googleLogo,
@@ -227,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
