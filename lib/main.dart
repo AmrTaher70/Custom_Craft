@@ -1,4 +1,5 @@
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:custom_craft/features/onBoarding/on_boarding.dart';
 import 'package:custom_craft/features/splash/splash/splash_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: SplashScreen(),
+            child: SignUpScreen(),
           )
         ],
       ),

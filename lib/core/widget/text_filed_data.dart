@@ -12,7 +12,7 @@ class TextFiledData extends StatelessWidget {
     this.validator,
     this.obscureText = false,
     this.togglePasswordVisibility,
-    this.backgroundColor = const Color(0xffEEEEEE),
+    this.backgroundColor = const Color(0xffF3F3F3),
   }) : super(key: key);
 
   final String? title;

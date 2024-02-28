@@ -4,18 +4,20 @@ import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _showPassword = false;
-  bool _rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 131, bottom: 60),
+                  padding: const EdgeInsets.only(top: 113, bottom: 60),
                   child: Stack(
                     children: [
                       Align(
                         alignment: Alignment.center,
                         child: Container(
                           alignment: Alignment.center,
-                          height: 570,
+                          height: 612,
                           width: width < 600
                               ? screenSize.width * 0.9
                               : 327, // Adjust width based on screen size
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 16,
+                            height: 24,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
@@ -77,25 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                'Welcome Back!',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: width < 600
-                                    ? 40
-                                    : width -
-                                        80), // Adjust padding based on screen size
-                            child: const Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Log In',
+                                'Sign Up',
                                 style: TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.w500),
                               ),
@@ -103,6 +87,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(
                             height: 24,
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: width < 600 ? 40 : width - 80),
+                            child: TextFiledData(
+                                hintTitle: 'User Name',
+                                controller: _userNameController,
+                                suffixIcon: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.person_2_outlined),
+                                ) // Adding email icon
+                                ),
+                          ),
+                          const SizedBox(
+                            height: 16,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -144,41 +144,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: width < 600 ? 40 : width - 80),
-                            child:
-                                // Remember me box
-                                Row(
-                              children: [
-                                Checkbox(
-                                  value: _rememberMe,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _rememberMe = value ?? false;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'Remember me',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Color(0xff8E8E8E)),
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () {
-                                    // Handle Forgot Password
-                                  },
-                                  // Forgot Password
-                                  child: const Text(
-                                    'Forgot Password?',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ],
+                            child: TextFiledData(
+                              hintTitle: 'Confirm Password',
+                              controller: _confirmPasswordController,
+                              obscureText: !_showPassword,
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showPassword = !_showPassword;
+                                  });
+                                },
+                                icon: _showPassword
+                                    ? const Icon(Icons.visibility_outlined)
+                                    : const Icon(Icons.visibility_off_outlined),
+                              ),
                             ),
                           ),
                           const SizedBox(
+                            height: 16,
+                          ),
+
+                          const SizedBox(
                             height: 8,
                           ),
-                          // Login Button
+                          // Sign Up Button
                           Align(
                             alignment: Alignment.center,
                             child: SizedBox(
@@ -202,19 +191,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   elevation: 5, // Button elevation
                                 ),
-                                child: const Text(AssetsStrings.appLogin),
+                                child: const Text(AssetsStrings.appSignUp),
                               ),
                             ),
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 16,
                           ),
                           const Center(
                             child: Text(
-                              'ـــــــــــــــــــــــــــــــــــ Or Log In with ـــــــــــــــــــــــــــــــــ',
-                              style: TextStyle(
-                                  fontSize: 12, color: Color(0xff8E8E8E)),
-                            ),
+                                'ـــــــــــــــــــــــــــــــــــ Or Sign Up with ـــــــــــــــــــــــــــــــــ'),
                           ),
                           const SizedBox(
                             height: 12,
@@ -223,30 +209,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Image.asset(AssetsData.googleLogo,
                                 height: 40, width: 40),
                           ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 24),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Don’t have an account?',
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 32),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Already have an account?'),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Log In',
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
+                                        color: AssetsColors.primaryColor),
                                   ),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                          color: AssetsColors.primaryColor,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
                         ],
