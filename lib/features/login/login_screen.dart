@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                         child: Container(
                           alignment: Alignment.center,
-                          height: 570,
+                          height: 550,
                           width: width < 600
                               ? screenSize.width * 0.9
                               : 327, // Adjust width based on screen size
@@ -66,9 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+
                           Padding(
                             padding: EdgeInsets.only(
                                 left: width < 600
@@ -176,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 8,
+                            height: 24,
                           ),
                           // Login Button
                           Align(
@@ -207,14 +205,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 28,
                           ),
-                          const Center(
-                            child: Text(
-                              'ـــــــــــــــــــــــــــــــــــ Or Log In with ـــــــــــــــــــــــــــــــــ',
-                              style: TextStyle(
-                                  fontSize: 12, color: Color(0xff8E8E8E)),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 2,
+                                color: const Color(0xff8E8E8E),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Text(
+                                  'Or Log in with',
+                                  style: TextStyle(
+                                    color: Color(0xff8E8E8E),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 90,
+                                height: 2,
+                                color: const Color(0xff8E8E8E),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 12,
@@ -225,7 +240,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Center(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 24),
+                              padding:
+                                  const EdgeInsets.only(top: 102, bottom: 32),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
