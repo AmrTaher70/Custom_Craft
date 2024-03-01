@@ -1,6 +1,7 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/core/widget/pin_entry.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,24 @@ class VerifyEmail extends StatefulWidget {
 }
 
 class _VerifyEmailState extends State<VerifyEmail> {
+  List<TextEditingController> controllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < 4; i++) {
+      controllers.add(TextEditingController());
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackGroundImage(
@@ -91,188 +110,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   const SizedBox(
                     height: 24,
                   ),
-                  Form(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 67),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Material(
-                            elevation: 2,
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(
-                              height: 56,
-                              width: 48,
-                              child: TextFormField(
-                                onSaved: (pin1) {},
-                                onChanged: (value) {
-                                  if (value.length == 1) {
-                                    FocusScope.of(context).nextFocus();
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                        0xffFAFAFA,
-                                      ),
-                                      width: 2,
-                                      // Change the color here
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                          0xffFAFAFA), // Change the color here
-                                    ),
-                                  ),
-                                ),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(1),
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                              ),
-                            ),
-                          ),
-                          Material(
-                            elevation: 1,
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(
-                              height: 56,
-                              width: 48,
-                              child: TextFormField(
-                                onSaved: (pin2) {},
-                                onChanged: (value) {
-                                  if (value.length == 1) {
-                                    FocusScope.of(context).nextFocus();
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                        0xffFAFAFA,
-                                      ),
-                                      width: 2,
-                                      // Change the color here
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                          0xffFAFAFA), // Change the color here
-                                    ),
-                                  ),
-                                ),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(1),
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                              ),
-                            ),
-                          ),
-                          Material(
-                            elevation: 1,
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(
-                              height: 56,
-                              width: 48,
-                              child: TextFormField(
-                                onSaved: (pin3) {},
-                                onChanged: (value) {
-                                  if (value.length == 1) {
-                                    FocusScope.of(context).nextFocus();
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                        0xffFAFAFA,
-                                      ),
-                                      width: 2,
-                                      // Change the color here
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                          0xffFAFAFA), // Change the color here
-                                    ),
-                                  ),
-                                ),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(1),
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                              ),
-                            ),
-                          ),
-                          Material(
-                            elevation: 1,
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(
-                              height: 56,
-                              width: 48,
-                              child: TextFormField(
-                                onSaved: (pin4) {},
-                                onChanged: (value) {
-                                  if (value.length == 1) {
-                                    FocusScope.of(context).nextFocus();
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                        0xffFAFAFA,
-                                      ),
-                                      width: 2,
-                                      // Change the color here
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                      color: Color(
-                                          0xffFAFAFA), // Change the color here
-                                    ),
-                                  ),
-                                ),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(1),
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const PinEntry(), // Pin entry
                   const SizedBox(
                     height: 24,
                   ),
