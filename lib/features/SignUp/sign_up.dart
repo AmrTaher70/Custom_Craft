@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   'Sign Up',
                                   style: TextStyle(
                                       fontSize: 24,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),

@@ -4,10 +4,9 @@ import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
+import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -72,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-
                             Padding(
                               padding: EdgeInsets.only(
                                   left: width < 600
@@ -84,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Welcome Back!',
                                   style: TextStyle(
                                       fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -103,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Log In',
                                   style: TextStyle(
                                       fontSize: 24,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
@@ -171,12 +169,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const Spacer(),
                                   TextButton(
                                     onPressed: () {
-                                      // Handle Forgot Password
+                                      Get.to(
+                                        () => const ForgotPasswordScreen(),
+                                      );
                                     },
                                     // Forgot Password
                                     child: const Text(
                                       'Forgot Password?',
-                                      style: TextStyle(color: Colors.red),
+                                      style:
+                                          TextStyle(color: Color(0xffD33535)),
                                     ),
                                   ),
                                 ],
