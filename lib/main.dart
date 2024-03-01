@@ -1,6 +1,9 @@
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
+import 'package:custom_craft/features/forgotPassword/forgot_password.dart';
+import 'package:custom_craft/features/forgotPassword/verify_email.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
+import 'package:custom_craft/features/splash/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: SignUpScreen(),
+            child: VerifyEmail(),
           )
         ],
       ),

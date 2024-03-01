@@ -1,6 +1,10 @@
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/features/SignUp/sign_up.dart';
+import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class ElavButton extends StatelessWidget {
   const ElavButton({super.key});
@@ -16,7 +20,11 @@ class ElavButton extends StatelessWidget {
             height: 43,
             width: 135,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(
+                  () => const SignUpScreen(),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white, // Background color
                 foregroundColor: AssetsColors.primaryColor, // Text color
@@ -43,7 +51,11 @@ class ElavButton extends StatelessWidget {
             height: 43,
             width: 135,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(
+                  () => const LoginScreen(),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AssetsColors.primaryColor, // Background color
                 // foregroundColor:
