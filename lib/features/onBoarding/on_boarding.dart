@@ -1,18 +1,19 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/core/widget/next_page_button.dart';
 import 'package:custom_craft/features/onBoarding/elv_button.dart';
 import 'package:custom_craft/features/onBoarding/on_boarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class On1 extends StatefulWidget {
-  const On1({Key? key}) : super(key: key);
+class OnBoardingScreens extends StatefulWidget {
+  const OnBoardingScreens({Key? key}) : super(key: key);
 
   @override
-  State<On1> createState() => _On1State();
+  State<OnBoardingScreens> createState() => _OnBoardingScreensState();
 }
 
-class _On1State extends State<On1> {
+class _OnBoardingScreensState extends State<OnBoardingScreens> {
   PageController controller = PageController();
 
   @override
@@ -69,27 +70,7 @@ class _On1State extends State<On1> {
                           ),
                         ),
                         // NextPage Button
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const CircleAvatar(
-                              backgroundColor: AssetsColors.primaryColor,
-                              radius: 25,
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                controller.nextPage(
-                                    duration:
-                                        const Duration(microseconds: 1000),
-                                    curve: Curves.fastLinearToSlowEaseIn);
-                              },
-                              icon: const Icon(
-                                Icons.arrow_right_alt_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                        const NextPageButton(),
                         const SizedBox(
                           height: 24,
                         ),
@@ -128,6 +109,7 @@ class _On1State extends State<On1> {
                             activeDotColor: AssetsColors.primaryColor,
                             dotHeight: 4,
                             spacing: 5,
+                            dotWidth: 6,
                           ),
                         ),
                         const SizedBox(

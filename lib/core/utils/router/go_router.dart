@@ -18,7 +18,7 @@ abstract class AppRouter {
       GoRoute(
         path: kOnScreen,
         builder: (context, state) => const BackGroundImage(
-          child: On1(),
+          child: OnBoardingScreens(),
         ),
       ),
     ],

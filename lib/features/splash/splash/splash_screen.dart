@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void navigateToOn() {
     Future.delayed(const Duration(seconds: 3), () {
-      Get.to(() => const On1(),
+      Get.to(() => const OnBoardingScreens(),
           transition: Transition.fade,
           duration: const Duration(milliseconds: 250));
     });
