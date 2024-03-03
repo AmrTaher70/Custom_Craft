@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: LineOfOnBoarding(),
+            child: BackGroundOfOnBoarding(),
           )
         ],
       ),
