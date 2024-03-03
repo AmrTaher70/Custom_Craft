@@ -37,7 +37,7 @@ class ElavButton extends StatelessWidget {
                   fontSize: 16, // Text size
                   fontWeight: FontWeight.w400, // Text weight
                 ),
-                elevation: 5, // Button elevation
+                elevation: 1, // Button elevation
               ),
               child: const Text(AssetsStrings.appSignUp),
             ),

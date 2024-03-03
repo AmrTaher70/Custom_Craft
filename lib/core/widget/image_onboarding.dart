@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class BackGroundOfOnBoarding extends StatefulWidget {
-  const BackGroundOfOnBoarding({super.key});
+  const BackGroundOfOnBoarding({super.key, required this.child});
 
   @override
   State<BackGroundOfOnBoarding> createState() => _BackGroundOfOnBoardingState();
+  final Widget child;
 }
 
 class _BackGroundOfOnBoardingState extends State<BackGroundOfOnBoarding> {
@@ -14,13 +15,15 @@ class _BackGroundOfOnBoardingState extends State<BackGroundOfOnBoarding> {
   Widget build(BuildContext context) {
     //final screenSize = MediaQuery.of(context).size;
     //final double width = screenSize.width;
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Image.asset(AssetsData.BackGroundOfBoarding)],
-      ),
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [Image.asset(AssetsData.BackGroundOfBoarding)],
+        ),
+        widget.child
+      ],
     );
   }
 }
