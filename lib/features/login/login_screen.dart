@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width < 600 ? 40 : width - 80),
                               child: TextFiledData(
-                                  hintTitle: 'Email',
+                                  labelText: 'Email',
                                   controller: _emailController,
                                   suffixIcon: IconButton(
                                     onPressed: () {},
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width < 600 ? 40 : width - 80),
                               child: TextFiledData(
-                                hintTitle: 'Password',
+                                labelText: 'Password',
                                 controller: _passwordController,
                                 obscureText: !_showPassword,
                                 suffixIcon: IconButton(

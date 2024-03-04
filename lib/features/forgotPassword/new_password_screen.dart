@@ -84,7 +84,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFiledData(
-                      hintTitle: 'New Password',
+                      labelText: 'New Password',
                       controller: _newPasswordController,
                       obscureText: !_showPassword,
                       suffixIcon: IconButton(
@@ -105,7 +105,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFiledData(
-                      hintTitle: 'Confirm Password',
+                      labelText: 'Confirm Password',
                       controller: _confirmNewPasswordController,
                       obscureText: !_showPassword,
                       suffixIcon: IconButton(

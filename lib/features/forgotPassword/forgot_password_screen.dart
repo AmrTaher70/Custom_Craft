@@ -97,13 +97,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFiledData(
-                        hintTitle: 'Email',
-                        controller: _forgetEmailController,
-                        suffixIcon: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.email_outlined),
-                        ) // Adding email icon
-                        ),
+                      labelText: 'Email',
+                      controller: _forgetEmailController,
+                      suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.email_outlined),
+                      ),
+                      // Adding email icon
+                    ),
                   ),
                   const SizedBox(
                     height: 24,
