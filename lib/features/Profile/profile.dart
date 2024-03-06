@@ -6,6 +6,8 @@ import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Ctegory/category.dart';
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -128,7 +130,10 @@ class _ProfileState extends State<Profile> {
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 25),
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => const CategoryScreen(),
+                  transition: Transition.fadeIn);
+            },
             backgroundColor: AssetsColors.primaryColor,
             elevation: 5,
             child: const Icon(Icons.add),
