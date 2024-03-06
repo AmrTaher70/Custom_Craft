@@ -9,4 +9,5 @@ class AssetsData {
   static const newPassword = 'assets/images/newPasswordImage.png';
   static const verify = 'assets/images/verifyImage.png';
   static const BackGroundOfBoarding = 'assets/images/BackgroundOfBoarding.png';
+  static const navBarBackGround = 'assets/images/navBarBackGround.png';
 }

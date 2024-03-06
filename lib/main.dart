@@ -2,6 +2,7 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/widget/custo_nav_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/image_onboarding.dart';
+import 'package:custom_craft/core/widget/nav_bar.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: CustomNavBar(),
+            child: HomeScreen(),
           )
         ],
       ),
