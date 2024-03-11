@@ -1,6 +1,6 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
-import 'package:custom_craft/features/Ctegory/category.dart';
+import 'package:custom_craft/features/Category/category.dart';
 import 'package:custom_craft/features/Profile/profile.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';

@@ -6,7 +6,7 @@ import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Ctegory/category.dart';
+import '../Category/category.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

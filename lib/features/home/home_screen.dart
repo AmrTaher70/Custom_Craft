@@ -4,7 +4,7 @@ import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/custo_nav_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/nav_bar.dart';
-import 'package:custom_craft/features/Ctegory/category.dart';
+import 'package:custom_craft/features/Category/category.dart';
 import 'package:custom_craft/features/Profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
