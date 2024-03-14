@@ -50,45 +50,230 @@ class _MainDesignState extends State<MainDesign> {
         appBar: const CustomAppBarDesign(),
         body: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                images[_currentPageIndex],
-                height: 343,
-                width: 407,
-              ),
-              SizedBox(
-                height: 120,
-                child: PageView.builder(
-                  scrollDirection: Axis.horizontal,
-                  controller: _pageController,
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    double scaleFactor = index == _currentPageIndex ? 1.0 : 0.8;
-                    return Transform.scale(
-                      scale: scaleFactor,
-                      child: Image.asset(
-                        images[index],
-                        fit: BoxFit.contain,
+              Stack(
+                children: [
+                  Image.asset(AssetsData.BackGroundOfItem),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        images[_currentPageIndex],
+                        height: 407,
+                        width: 343,
+                        fit: BoxFit.fitHeight,
                       ),
-                    );
-                  },
-                ),
+                      SizedBox(
+                        height: 120,
+                        child: PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          controller: _pageController,
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            double scaleFactor =
+                                index == _currentPageIndex ? 1.0 : 0.7;
+                            return Transform.scale(
+                              scale: scaleFactor,
+                              child: Image.asset(
+                                images[index],
+                                fit: BoxFit.contain,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 13,
+                      ),
+                      Container(
+                        height: 96,
+                        width: width - 5,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffFAFAFA).withOpacity(.6),
+                          border: const Border(
+                            top: BorderSide(width: 3, color: Colors.white),
+                            right: BorderSide(width: 3, color: Colors.white),
+                            left: BorderSide(width: 3, color: Colors.white),
+                            bottom: BorderSide(width: 1, color: Colors.white),
+                          ),
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1, color: Colors.black),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.accessibility_rounded),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color:
+                                        const Color(0xffD9D9D9).withOpacity(.5),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Text',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xff8E8E8E),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 91,
+                        width: width - 5,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffFAFAFA).withOpacity(.6),
+                          border: const Border(
+                            top: BorderSide(width: 1, color: Colors.white),
+                            right: BorderSide(width: 3, color: Colors.white),
+                            left: BorderSide(width: 3, color: Colors.white),
+                            bottom: BorderSide(width: 3, color: Colors.white),
+                          ),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(45),
+                            bottomRight: Radius.circular(45),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            // Ai Generator
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.auto_fix_high_outlined,
+                                    ),
+                                    iconSize: 28,
+                                  ),
+                                  const Text(
+                                    'Ai',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Text
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.text_fields_outlined,
+                                    ),
+                                    iconSize: 28,
+                                  ),
+                                  const Text(
+                                    'Text',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Color
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.color_lens_outlined,
+                                    ),
+                                    iconSize: 28,
+                                  ),
+                                  const Text(
+                                    'Color',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Shapes
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.circle_outlined,
+                                    ),
+                                    iconSize: 28,
+                                  ),
+                                  const Text(
+                                    'Shapes',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                            // Photos
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.photo_outlined,
+                                    ),
+                                    iconSize: 28,
+                                  ),
+                                  const Text(
+                                    'Photos',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 26,
-              ),
-              Container(
-                height: 96,
-                width: width,
-                decoration: BoxDecoration(
-                    color: const Color(0xffFAFAFA).withOpacity(.6),
-                    border: Border.all(width: 2, color: Colors.white),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    )),
-              )
             ],
           ),
         ),
@@ -96,94 +281,3 @@ class _MainDesignState extends State<MainDesign> {
     );
   }
 }
-
-  // Column(
-  //   crossAxisAlignment: CrossAxisAlignment.stretch,
-  //   mainAxisAlignment: MainAxisAlignment.center,
-  //   children: [
-  //     Expanded(
-  //       child: PageView.builder(
-  //         physics: const NeverScrollableScrollPhysics(),
-  //         controller: _pageController,
-  //         onPageChanged: (int index) {
-  //           setState(() {
-  //             _currentPageIndex = index;
-  //           });
-  //         },
-  //         itemCount: images.length,
-  //         itemBuilder: (context, index) {
-  //           return Padding(
-  //             padding: const EdgeInsets.only(
-  //               top: 20,
-  //             ),
-  //             child: Image.asset(
-  //               images[index],
-  //               height: 343,
-  //               width: 407,
-  //               fit: BoxFit.fitHeight,
-  //             ),
-  //           );
-  //         },
-  //       ),
-  //     ),
-  //     Center(
-  //       child: SizedBox(
-  //         height: 80,
-  //         child: ListView.builder(
-  //           scrollDirection: Axis.horizontal,
-  //           itemCount: images.length - 1,
-  //           itemBuilder: (context, index) {
-  //             return Padding(
-  //               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-  //               child: GestureDetector(
-  //                 onTap: () {
-  //                   _pageController?.animateToPage(
-  //                     index + 1,
-  //                     duration: const Duration(milliseconds: 500),
-  //                     curve: Curves.ease,
-  //                   );
-  //                 },
-  //                 child: Image.network(
-  //                   images[index + 1],
-  //                   height: 80,
-  //                   width: 80,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       ),
-  //     ),
-  //   ],
-  // ),
-
-  // Column(
-  //   crossAxisAlignment: CrossAxisAlignment.center,
-  //   mainAxisAlignment: MainAxisAlignment.center,
-  //   children: [
-  //     Center(
-  //       child: Expanded(
-  //         child: PageView.builder(
-  //           controller: itemController,
-  //           itemCount: 2,
-  //           itemBuilder: (context, index) {
-  //             return Column(
-  //               children: [
-  //                 // page view of images and titles and sub titles
-
-  //                 Image.asset(
-  //                   ItemModel.mainDesign[index].imgPath,
-  //                   height: 100,
-  //                   width: 100,
-  //                 ),
-  //               ],
-  //             );
-  //           },
-
-  //         ),
-  //       ),
-  //     ),
-  //   ],
-  // ),
-

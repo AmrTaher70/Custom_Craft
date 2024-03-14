@@ -1,5 +1,7 @@
 import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
@@ -26,7 +28,11 @@ class CustomCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(
+              () => const MainDesign(),
+            );
+          },
           child: Card(
             color: const Color(0xffADADAD).withOpacity(.1),
             elevation: 0,

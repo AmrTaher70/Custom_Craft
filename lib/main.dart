@@ -5,6 +5,7 @@ import 'package:custom_craft/core/widget/image_onboarding.dart';
 import 'package:custom_craft/core/widget/nav_bar.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/Category/category.dart';
+import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
