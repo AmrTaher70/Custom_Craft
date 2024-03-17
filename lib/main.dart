@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: MainDesign(),
+            child: AddText(),
           )
         ],
       ),

@@ -1,29 +1,35 @@
-import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
+import 'package:custom_craft/core/widget/font_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddText extends StatefulWidget {
-  const AddText({super.key});
+  const AddText({Key? key}) : super(key: key);
 
   @override
-  State<AddText> createState() => _AddTextState();
+  _AddTextState createState() => _AddTextState();
 }
 
 class _AddTextState extends State<AddText> {
-  late TextEditingController _textController;
-  final Color _selectedColor = Colors.black;
-  double _fontSize = 24.0;
-  final FontWeight _fontWeight = FontWeight.normal;
+  late TextEditingController _textControllerOfAddText;
+  String dropdownValue = 'Roboto';
+  Color pickerColor = const Color(0xff443a49);
+  Color currentColor = const Color(0xff443a49);
+
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
+    _textControllerOfAddText = TextEditingController();
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textControllerOfAddText.dispose();
     super.dispose();
   }
 
@@ -50,31 +56,54 @@ class _AddTextState extends State<AddText> {
               ),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextField(
-                      controller: _textController,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter text here',
+                    Padding(
+                      padding: const EdgeInsets.only(top: 122),
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        controller: _textControllerOfAddText,
+                        style: GoogleFonts.getFont(
+                          dropdownValue,
+                          fontSize: 48.0,
+                          color: currentColor,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Text',
+                          hintStyle: GoogleFonts.getFont(
+                            dropdownValue,
+                            fontSize: 48.0,
+                            color: currentColor,
+                          ),
+                          border: InputBorder.none,
+                          disabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Text('Font Size: $_fontSize'),
-                    Slider(
-                      value: _fontSize,
-                      min: 10,
-                      max: 50,
-                      divisions: 4,
-                      onChanged: (value) {
-                        setState(() {
-                          _fontSize = value;
-                        });
-                      },
+                    Center(
+                      child: FontSelector(
+                        onFontChanged: (String font) {
+                          setState(() {
+                            dropdownValue = font;
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
+            ColorPickerButton(
+              initialColor: currentColor,
+              onColorChanged: (Color color) {
+                setState(() => currentColor = color);
+              },
+            ),
           ],
         ),
       ),
