@@ -43,7 +43,12 @@ class _FontSelectorState extends State<FontSelector> {
             'Open Sans',
             'Lato',
             'Raleway',
-            'Montserrat'
+            'Montserrat',
+            'Oswald', // Added
+            'Merriweather', // Added
+            'Ubuntu', // Added
+            'Zilla Slab', // Added
+            'Bitter'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

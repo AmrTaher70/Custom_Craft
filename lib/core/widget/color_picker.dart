@@ -21,39 +21,58 @@ class _ColorPickerButtonState extends State<ColorPickerButton> {
     pickerColor = widget.initialColor;
   }
 
+  Color currentColor = const Color(0xff443a49);
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Pick a color!'),
-              content: SingleChildScrollView(
-                child: ColorPicker(
-                  pickerColor: pickerColor,
-                  onColorChanged: (Color color) {
-                    setState(() => pickerColor = color);
-                    widget.onColorChanged(color);
-                  },
-                  labelTypes: const [],
-                  pickerAreaHeightPercent: 0.8,
+    return SizedBox(
+      width: 343,
+      height: 37,
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(6),
+      // ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: pickerColor, // Background color
+          // foregroundColor:
+          //     Colors.white, // Text color
+          // Button padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6), // Button border radius
+          ),
+
+          elevation: 1, // Button elevation
+        ),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Pick a color!'),
+                content: SingleChildScrollView(
+                  child: ColorPicker(
+                    pickerColor: pickerColor,
+                    onColorChanged: (Color color) {
+                      setState(() => pickerColor = color);
+                      widget.onColorChanged(color);
+                    },
+                    labelTypes: const [],
+                    pickerAreaHeightPercent: 0.8,
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Got it'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: const Text('Change Text Color'),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('Got it'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: null,
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
+import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDesign extends StatefulWidget {
@@ -61,6 +63,8 @@ class _MainDesignState extends State<MainDesign> {
                         images[_currentPageIndex],
                         height: 407,
                         width: 343,
+                        //      color: AssetsColors.primaryColor,  //you can change the color of the image here
+                        //    colorBlendMode: BlendMode.modulate, // you can change the blend mode of the image here
                         fit: BoxFit.fitHeight,
                       ),
                       SizedBox(
@@ -77,6 +81,8 @@ class _MainDesignState extends State<MainDesign> {
                               child: Image.asset(
                                 images[index],
                                 fit: BoxFit.contain,
+                                //   color: AssetsColors.primaryColor,
+                                // colorBlendMode: BlendMode.modulate,
                               ),
                             );
                           },
@@ -189,7 +195,21 @@ class _MainDesignState extends State<MainDesign> {
                               child: Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      final height =
+                                          MediaQuery.of(context).size.height;
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return SizedBox(
+                                            height: height *
+                                                0.75, // This makes the bottom sheet take up 3/4 of the screen height
+                                            child: const AddText(),
+                                          );
+                                        },
+                                        isScrollControlled: true,
+                                      );
+                                    },
                                     icon: const Icon(
                                       Icons.text_fields_outlined,
                                     ),

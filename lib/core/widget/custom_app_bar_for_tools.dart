@@ -59,7 +59,7 @@ class CustomAppBarForTools extends StatelessWidget
             size: 30,
           ),
           onPressed: () {
-            Get.to(() => const MainDesign(), transition: Transition.fadeIn);
+            Get.to(() => const MainDesign(), transition: Transition.upToDown);
           },
         ),
       ),
