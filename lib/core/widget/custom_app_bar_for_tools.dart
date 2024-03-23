@@ -6,10 +6,15 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 class CustomAppBarForTools extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppBarForTools({super.key, required this.text});
+  const CustomAppBarForTools({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
   @override
   Size get preferredSize => const Size.fromHeight(70);
   final Text text;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class CustomAppBarForTools extends StatelessWidget
             height: 39,
             width: 75,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white, // Background color
                 // foregroundColor:

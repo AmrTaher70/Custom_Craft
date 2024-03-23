@@ -1,27 +1,49 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/core/utils/models/text_model.dart';
+import 'package:custom_craft/core/widget/add_text_on_photo.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/core/widget/font_selector.dart';
+import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AddText extends StatefulWidget {
-  const AddText({Key? key}) : super(key: key);
+  const AddText({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _AddTextState createState() => _AddTextState();
 }
 
 class _AddTextState extends State<AddText> {
-  late TextEditingController _textControllerOfAddText;
+  late final TextEditingController _textControllerOfAddText;
   String dropdownValue = 'Roboto';
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
   TextAlign textAlign = TextAlign.center;
-  int selectedIcon = 0; // Added
+  int selectedIcon = 0;
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+    Provider.of<TextModel>(context, listen: false).updateColor(color);
+  }
+
+  void changeText(String text) {
+    Provider.of<TextModel>(context, listen: false).updateText(text);
+  }
+
+  void changeAlign(TextAlign align) {
+    setState(() => textAlign = align);
+    Provider.of<TextModel>(context, listen: false).updateAlign(align);
+  }
+
+  void changeFont(String font) {
+    setState(() => dropdownValue = font);
+    Provider.of<TextModel>(context, listen: false).updateFont(font);
   }
 
   @override
@@ -40,13 +62,24 @@ class _AddTextState extends State<AddText> {
 
   @override
   Widget build(BuildContext context) {
+    final textModel = Provider.of<TextModel>(context, listen: false);
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA).withOpacity(.5),
-      appBar: const CustomAppBarForTools(
-        text: Text(
+      appBar: CustomAppBarForTools(
+        text: const Text(
           'Text',
           style: TextStyle(fontSize: 24, color: Colors.black),
         ),
+        onPressed: () {
+          textModel.updateText(_textControllerOfAddText.text);
+          textModel.updateColor(currentColor);
+          textModel.updateAlign(textAlign);
+          textModel.updateFont(dropdownValue);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainDesign()),
+          );
+        },
       ),
       body: Center(
         child: Column(
@@ -64,32 +97,13 @@ class _AddTextState extends State<AddText> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 122),
-                      child: TextField(
-                        textAlign: textAlign, // Updated
-                        controller: _textControllerOfAddText,
-                        style: GoogleFonts.getFont(
-                          dropdownValue,
-                          fontSize: 48.0,
-                          color: currentColor,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Text',
-                          hintStyle: GoogleFonts.getFont(
-                            dropdownValue,
-                            fontSize: 48.0,
-                            color: currentColor,
-                          ),
-                          border: InputBorder.none,
-                          disabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                        padding: const EdgeInsets.only(top: 122),
+                        child: MyTextField(
+                          textControllerOfAddText: _textControllerOfAddText,
+                          textAlign: textAlign,
+                          dropdownValue: dropdownValue,
+                          currentColor: currentColor,
+                        )),
                     Center(
                       child: FontSelector(
                         onFontChanged: (String font) {

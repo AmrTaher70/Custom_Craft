@@ -4,6 +4,10 @@ import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../../core/utils/models/text_model.dart';
 
 class MainDesign extends StatefulWidget {
   const MainDesign({Key? key}) : super(key: key);
@@ -45,6 +49,11 @@ class _MainDesignState extends State<MainDesign> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
+    final textModel = Provider.of<TextModel>(context);
+    final text = textModel.text;
+    final color = textModel.color;
+    final align = textModel.align;
+    final font = textModel.font;
 
     return BackGroundImage(
       child: Scaffold(
@@ -59,13 +68,37 @@ class _MainDesignState extends State<MainDesign> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        images[_currentPageIndex],
-                        height: 407,
-                        width: 343,
-                        //      color: AssetsColors.primaryColor,  //you can change the color of the image here
-                        //    colorBlendMode: BlendMode.modulate, // you can change the blend mode of the image here
-                        fit: BoxFit.fitHeight,
+                      Stack(
+                        children: [
+                          Image.asset(
+                            images[_currentPageIndex],
+                            height: 407,
+                            width: 343,
+                            fit: BoxFit.fitHeight,
+                          ),
+                          Positioned(
+                            height: 350,
+                            left: 100,
+                            right: 100,
+                            child: Center(
+                              child: Consumer<TextModel>(
+                                builder: (context, textModel, child) {
+                                  return Text(
+                                    textModel.text.isEmpty
+                                        ? 'Default text'
+                                        : textModel.text,
+                                    style: GoogleFonts.getFont(
+                                      textModel.font,
+                                      fontSize: 24.0,
+                                      color: textModel.color,
+                                    ),
+                                    textAlign: textModel.align,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 120,
@@ -135,16 +168,26 @@ class _MainDesignState extends State<MainDesign> {
                                         const Color(0xffD9D9D9).withOpacity(.5),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Text',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff8E8E8E),
-                                    ),
-                                  ),
-                                ),
+                                    onPressed: () {},
+                                    child: Consumer<TextModel>(
+                                      builder: (context, textModel, child) {
+                                        return Text(
+                                          textModel.text.isEmpty
+                                              ? 'Text'
+                                              : textModel.text,
+                                          style: GoogleFonts.getFont(
+                                            textModel.font,
+                                            fontSize: textModel.text.isEmpty
+                                                ? 16.0
+                                                : 16.0,
+                                            color: textModel.text.isEmpty
+                                                ? const Color(0xff8E8E8E)
+                                                : textModel.color,
+                                          ),
+                                          textAlign: textModel.align,
+                                        );
+                                      },
+                                    )),
                               ),
                             ),
                           ],

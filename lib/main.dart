@@ -1,4 +1,6 @@
 import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/core/utils/models/text_model.dart';
+import 'package:custom_craft/core/widget/add_text_on_photo.dart';
 import 'package:custom_craft/core/widget/custo_nav_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/image_onboarding.dart';
@@ -14,10 +16,17 @@ import 'package:custom_craft/features/splash/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    DevicePreview(enabled: true, builder: (context) => const MyApp()),
+    DevicePreview(
+      enabled: true,
+      builder: (context) => ChangeNotifierProvider(
+        create: (context) => TextModel(),
+        child: const MyApp(),
+      ),
+    ),
   );
 }
 
