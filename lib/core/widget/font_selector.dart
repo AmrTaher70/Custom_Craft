@@ -48,13 +48,22 @@ class _FontSelectorState extends State<FontSelector> {
             'Merriweather', // Added
             'Ubuntu', // Added
             'Zilla Slab', // Added
-            'Bitter'
+            'Bitter',
+            'Anton',
+            'Teko',
+            'Dancing Script',
+            'Pacifico',
+            'Shadows Into Light',
+            'Righteous',
+            'Merienda',
+            'Rubik Doodle Shadow',
+            'Rubik Moonrocks'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Padding(
                 padding: const EdgeInsets.only(
-                    right: 90.0, left: 100), // Add this line
+                    right: 50.0, left: 50), // Add this line
                 child: Text(
                   value,
                   style: const TextStyle(

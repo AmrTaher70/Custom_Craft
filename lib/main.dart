@@ -1,18 +1,7 @@
-import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
-import 'package:custom_craft/core/widget/add_text_on_photo.dart';
-import 'package:custom_craft/core/widget/custo_nav_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
-import 'package:custom_craft/core/widget/image_onboarding.dart';
-import 'package:custom_craft/core/widget/nav_bar.dart';
-import 'package:custom_craft/core/widget/text_filed_data.dart';
-import 'package:custom_craft/features/Category/category.dart';
-import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
-import 'package:custom_craft/features/home/home_screen.dart';
-import 'package:custom_craft/features/login/login_screen.dart';
-import 'package:custom_craft/features/onBoarding/on_boarding.dart';
-import 'package:custom_craft/features/splash/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,8 +11,11 @@ void main() {
   runApp(
     DevicePreview(
       enabled: true,
-      builder: (context) => ChangeNotifierProvider(
-        create: (context) => TextModel(),
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => TextModel()),
+          ChangeNotifierProvider(create: (context) => ColorItemModel()),
+        ],
         child: const MyApp(),
       ),
     ),
