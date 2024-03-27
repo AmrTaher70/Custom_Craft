@@ -3,24 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 
-class ColorPickerButton extends StatefulWidget {
+class ColorPickerFotItemButton extends StatefulWidget {
   final Color initialColor;
   final Function(Color) onColorChanged;
 
-  const ColorPickerButton(
+  const ColorPickerFotItemButton(
       {super.key, required this.initialColor, required this.onColorChanged});
 
   @override
-  _ColorPickerButtonState createState() => _ColorPickerButtonState();
+  _ColorPickerFotItemButtonState createState() =>
+      _ColorPickerFotItemButtonState();
 }
 
-class _ColorPickerButtonState extends State<ColorPickerButton> {
+class _ColorPickerFotItemButtonState extends State<ColorPickerFotItemButton> {
   late Color pickerColor;
+  Color currentColor = const Color(0xff443a49);
 
   @override
   void initState() {
     super.initState();
-    pickerColor = widget.initialColor;
+    pickerColor = currentColor;
   }
 
   @override
@@ -32,7 +34,7 @@ class _ColorPickerButtonState extends State<ColorPickerButton> {
       height: 37,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: pickerColor, // Background color
+          backgroundColor: colorItem.colorOfItem, // Background color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6), // Button border radius
           ),
@@ -59,6 +61,11 @@ class _ColorPickerButtonState extends State<ColorPickerButton> {
                   TextButton(
                     child: const Text('Got it'),
                     onPressed: () {
+                      setState(() {
+                        colorItem.colorOfItem =
+                            pickerColor; // Set the current color to the selected color
+                      });
+                      colorItem.updateColor(pickerColor);
                       Navigator.of(context).pop();
                     },
                   ),

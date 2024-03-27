@@ -97,7 +97,7 @@ class _MainDesignState extends State<MainDesign> {
                               height: 407,
                               width: 343,
                               fit: BoxFit.fitHeight,
-                              color: colorItemModel.color,
+                              color: colorItemModel.colorOfItem,
                               colorBlendMode: BlendMode.modulate,
                             ),
                             Positioned(
@@ -149,7 +149,7 @@ class _MainDesignState extends State<MainDesign> {
                                 child: Image.asset(
                                   images[index],
                                   fit: BoxFit.contain,
-                                  color: colorItemModel.color,
+                                  color: colorItemModel.colorOfItem,
                                   colorBlendMode: BlendMode.modulate,
                                 ),
                               );
@@ -324,7 +324,7 @@ class _MainDesignState extends State<MainDesign> {
                                                   0.5), // Change this to your desired color and opacity
                                               child: SizedBox(
                                                 height: height *
-                                                    0.75, // This makes the bottom sheet take up 3/4 of the screen height
+                                                    0.35, // This makes the bottom sheet take up 3/4 of the screen height
                                                 child: const ChooseColor(),
                                               ),
                                             );
