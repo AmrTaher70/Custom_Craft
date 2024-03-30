@@ -56,7 +56,6 @@ class _FontSelectorState extends State<FontSelector> {
             'Shadows Into Light',
             'Righteous',
             'Merienda',
-            'Rubik Doodle Shadow',
             'Rubik Moonrocks'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(

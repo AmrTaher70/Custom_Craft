@@ -1,9 +1,11 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
+import 'package:custom_craft/core/widget/add_photo.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/core/widget/photos.dart';
 import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
 import 'package:custom_craft/features/Design/ChooseColor/choose_color.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,8 @@ import 'package:provider/provider.dart';
 import '../../core/utils/models/text_model.dart';
 
 class MainDesign extends StatefulWidget {
-  const MainDesign({Key? key}) : super(key: key);
-
+  const MainDesign({Key? key, this.selectedPhoto}) : super(key: key);
+  final Photo? selectedPhoto;
   @override
   State<MainDesign> createState() => _MainDesignState();
 }
@@ -100,6 +102,10 @@ class _MainDesignState extends State<MainDesign> {
                               color: colorItemModel.colorOfItem,
                               colorBlendMode: BlendMode.modulate,
                             ),
+                            if (widget.selectedPhoto != null)
+                              Center(
+                                  child:
+                                      Image.memory(widget.selectedPhoto!.data)),
                             Positioned(
                               height: 450,
                               left: 100,
@@ -286,7 +292,12 @@ class _MainDesignState extends State<MainDesign> {
                                               child: SizedBox(
                                                 height: height *
                                                     0.75, // This makes the bottom sheet take up 3/4 of the screen height
-                                                child: const AddText(),
+                                                child: AddText(
+                                                  initialText: text,
+                                                  initialFont: font,
+                                                  initialColor: color,
+                                                  initialAlign: align,
+                                                ),
                                               ),
                                             );
                                           },
@@ -373,7 +384,26 @@ class _MainDesignState extends State<MainDesign> {
                                 child: Column(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        final height =
+                                            MediaQuery.of(context).size.height;
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              color: Colors.black.withOpacity(
+                                                  0.5), // Change this to your desired color and opacity
+                                              child: SizedBox(
+                                                height: height *
+                                                    0.75, // This makes the bottom sheet take up 3/4 of the screen height
+                                                child:
+                                                    const PhotoUploadScreen(),
+                                              ),
+                                            );
+                                          },
+                                          isScrollControlled: true,
+                                        );
+                                      },
                                       icon: const Icon(
                                         Icons.photo_outlined,
                                       ),

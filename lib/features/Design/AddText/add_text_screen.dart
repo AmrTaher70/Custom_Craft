@@ -13,10 +13,18 @@ import 'package:provider/provider.dart';
 class AddText extends StatefulWidget {
   const AddText({
     Key? key,
+    required this.initialText,
+    required this.initialFont,
+    required this.initialColor,
+    required this.initialAlign,
   }) : super(key: key);
 
   @override
   _AddTextState createState() => _AddTextState();
+  final String initialText;
+  final String initialFont;
+  final Color initialColor;
+  final TextAlign initialAlign;
 }
 
 class _AddTextState extends State<AddText> {
@@ -26,6 +34,15 @@ class _AddTextState extends State<AddText> {
   Color currentColor = const Color(0xff443a49);
   TextAlign textAlign = TextAlign.center;
   int selectedIcon = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _textControllerOfAddText = TextEditingController(text: widget.initialText);
+    dropdownValue = widget.initialFont;
+    currentColor = widget.initialColor;
+    textAlign = widget.initialAlign;
+  }
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
@@ -44,12 +61,6 @@ class _AddTextState extends State<AddText> {
   void changeFont(String font) {
     setState(() => dropdownValue = font);
     Provider.of<TextModel>(context, listen: false).updateFont(font);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _textControllerOfAddText = TextEditingController();
   }
 
   @override
@@ -97,19 +108,22 @@ class _AddTextState extends State<AddText> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(top: 122),
-                        child: MyTextField(
-                          textControllerOfAddText: _textControllerOfAddText,
-                          textAlign: textAlign,
-                          dropdownValue: dropdownValue,
-                          currentColor: currentColor,
-                        )),
+                      padding: const EdgeInsets.only(top: 122),
+                      child: MyTextField(
+                        textControllerOfAddText: _textControllerOfAddText,
+                        textAlign: textAlign,
+                        dropdownValue: dropdownValue,
+                        currentColor: currentColor,
+                      ),
+                    ),
                     Center(
                       child: FontSelector(
                         onFontChanged: (String font) {
-                          setState(() {
-                            dropdownValue = font;
-                          });
+                          setState(
+                            () {
+                              dropdownValue = font;
+                            },
+                          );
                         },
                       ),
                     ),
@@ -135,10 +149,12 @@ class _AddTextState extends State<AddText> {
                     padding: const EdgeInsets.only(left: 24),
                     child: IconButton(
                       onPressed: () {
-                        setState(() {
-                          textAlign = TextAlign.left;
-                          selectedIcon = 1; // Change this line
-                        });
+                        setState(
+                          () {
+                            textAlign = TextAlign.left;
+                            selectedIcon = 1; // Change this line
+                          },
+                        );
                       },
                       icon: Icon(
                         Icons.align_horizontal_left_outlined,
@@ -150,10 +166,12 @@ class _AddTextState extends State<AddText> {
                   ),
                   IconButton(
                     onPressed: () {
-                      setState(() {
-                        textAlign = TextAlign.center;
-                        selectedIcon = 2; // Change this line
-                      });
+                      setState(
+                        () {
+                          textAlign = TextAlign.center;
+                          selectedIcon = 2; // Change this line
+                        },
+                      );
                     },
                     icon: Icon(
                       Icons.align_horizontal_center_outlined,
@@ -166,10 +184,12 @@ class _AddTextState extends State<AddText> {
                     padding: const EdgeInsets.only(right: 24),
                     child: IconButton(
                       onPressed: () {
-                        setState(() {
-                          textAlign = TextAlign.right;
-                          selectedIcon = 3; // Change this line
-                        });
+                        setState(
+                          () {
+                            textAlign = TextAlign.right;
+                            selectedIcon = 3; // Change this line
+                          },
+                        );
                       },
                       icon: Icon(
                         Icons.align_horizontal_right_outlined,

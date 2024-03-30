@@ -15,10 +15,10 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const Profile(),
-  ];
+  // final List<Widget> _screens = [
+  //   const HomeScreen(),
+  //   const Profile(),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {

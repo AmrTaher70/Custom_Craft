@@ -1,9 +1,7 @@
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/custom_cart.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);

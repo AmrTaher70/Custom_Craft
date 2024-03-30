@@ -1,7 +1,5 @@
-import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:provider/provider.dart';
 
 class ColorPickerButton extends StatefulWidget {
   final Color initialColor;
@@ -25,8 +23,6 @@ class _ColorPickerButtonState extends State<ColorPickerButton> {
 
   @override
   Widget build(BuildContext context) {
-    final colorItem = Provider.of<ColorItemModel>(context, listen: false);
-
     return SizedBox(
       width: 343,
       height: 37,

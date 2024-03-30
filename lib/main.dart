@@ -1,3 +1,4 @@
+import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
@@ -15,6 +16,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (context) => TextModel()),
           ChangeNotifierProvider(create: (context) => ColorItemModel()),
+          ChangeNotifierProvider(create: (context) => PhotoProvider()),
         ],
         child: const MyApp(),
       ),
