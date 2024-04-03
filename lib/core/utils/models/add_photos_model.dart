@@ -1,7 +1,7 @@
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 
 import 'package:custom_craft/core/widget/photos.dart';
-import 'package:flutter/material.dart';
 
 class PhotoProvider with ChangeNotifier {
   final List<Photo> _photos = [];
@@ -13,12 +13,24 @@ class PhotoProvider with ChangeNotifier {
   Photo? get selectedPhoto => _selectedPhoto;
 
   void addPhoto(Uint8List data) {
-    _photos.add(Photo(data: data));
-    notifyListeners();
+    // Check if the same photo already exists in the list
+    if (!_photos.any((photo) => photo.data == data)) {
+      _photos.add(Photo(data: data));
+      notifyListeners();
+    } else {
+      // Optionally handle the case where the photo already exists
+      print('Duplicate photo detected!');
+    }
   }
 
   void setSelectedPhoto(Photo photo) {
-    _selectedPhoto = photo;
-    notifyListeners();
+    // ignore: unnecessary_null_comparison
+    if (photo != null) {
+      _selectedPhoto = photo;
+      notifyListeners();
+    } else {
+      // Optionally handle the case where the provided photo is null
+      print('Error: Selected photo is null');
+    }
   }
 }

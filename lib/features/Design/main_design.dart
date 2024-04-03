@@ -1,4 +1,5 @@
 import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/widget/add_photo.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
@@ -76,6 +77,8 @@ class _MainDesignState extends State<MainDesign> {
     final color = textModel.color;
     final align = textModel.align;
     final font = textModel.font;
+    final selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
+
     bool handleFirstViewer = true;
 
     return BackGroundImage(
@@ -108,30 +111,29 @@ class _MainDesignState extends State<MainDesign> {
                               color: colorItemModel.colorOfItem,
                               colorBlendMode: BlendMode.modulate,
                             ),
-                            if (widget.selectedPhoto != null)
-                              Positioned(
-                                height: 350,
-                                left: 100,
-                                right: 100,
-                                child: IgnorePointer(
-                                  // ignoring: handleFirstViewer,
-                                  child: InteractiveViewer(
-                                    boundaryMargin: EdgeInsets.symmetric(
-                                      horizontal: 35,
-                                      vertical: _calculateBoundaryMargin(),
-                                    ),
-                                    minScale: 0.1,
-                                    maxScale: 1.6,
-                                    child: Center(
-                                      child: Image.memory(
-                                        widget.selectedPhoto!.data,
-                                        height: 200,
-                                        width: 200,
+                            selectedPhoto != null
+                                ? Positioned(
+                                    height: 350,
+                                    left: 100,
+                                    right: 100,
+                                    child: IgnorePointer(
+                                      // ignoring: handleFirstViewer,
+                                      child: InteractiveViewer(
+                                        boundaryMargin: EdgeInsets.symmetric(
+                                          horizontal: 35,
+                                          vertical: _calculateBoundaryMargin(),
+                                        ),
+                                        minScale: 0.1,
+                                        maxScale: 1.6,
+                                        child: Image.memory(
+                                          selectedPhoto.data,
+                                          height: 200,
+                                          width: 200,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
+                                  )
+                                : const SizedBox(),
                             Positioned(
                               height: 450,
                               left: 100,
