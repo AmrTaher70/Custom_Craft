@@ -1,20 +1,18 @@
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
-class CustomAppBarForTools extends StatelessWidget
+class CustomAppBarForAddPhoto extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppBarForTools({
-    super.key,
-    required this.text,
+  const CustomAppBarForAddPhoto({
+    Key? key,
+    required this.title,
     required this.onPressed,
-  });
+  }) : super(key: key);
+
+  final String title;
+  final VoidCallback onPressed;
   @override
   Size get preferredSize => const Size.fromHeight(70);
-  final Text text;
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +27,6 @@ class CustomAppBarForTools extends StatelessWidget
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white, // Background color
-                // foregroundColor:
-                //     Colors.white, // Text color
-                // Button padding
                 shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.circular(10), // Button border radius
@@ -53,14 +48,20 @@ class CustomAppBarForTools extends StatelessWidget
       centerTitle: true,
       toolbarHeight: 90,
       elevation: 0,
-      title: text,
+      title: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w500), // Change text color as needed
+      ),
       backgroundColor: Colors.transparent,
       leading: Padding(
         padding: const EdgeInsets.only(bottom: 17, top: 13),
         child: IconButton(
           icon: const Icon(
             Icons.close_rounded,
-            color: Color(0xff2E2E2E),
+            color: Colors.black, // Change icon color as needed
             size: 30,
           ),
           onPressed: () {

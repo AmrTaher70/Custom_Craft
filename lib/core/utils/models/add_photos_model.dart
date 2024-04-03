@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-
 import 'package:custom_craft/core/widget/photos.dart';
 
 class PhotoProvider with ChangeNotifier {
@@ -23,8 +22,7 @@ class PhotoProvider with ChangeNotifier {
     }
   }
 
-  void setSelectedPhoto(Photo photo) {
-    // ignore: unnecessary_null_comparison
+  void setSelectedPhoto(Photo? photo) {
     if (photo != null) {
       _selectedPhoto = photo;
       notifyListeners();

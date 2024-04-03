@@ -1,7 +1,7 @@
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
-import 'package:custom_craft/core/widget/add_photo.dart';
+import 'package:custom_craft/features/Design/AddPhoto/add_photo.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/photos.dart';
