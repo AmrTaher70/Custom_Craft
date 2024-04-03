@@ -1,8 +1,6 @@
-import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/widget/add_photo.dart';
-import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/photos.dart';
@@ -32,6 +30,7 @@ class _MainDesignState extends State<MainDesign> {
   ];
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
+  final Offset _position = const Offset(0, 0);
 
   @override
   void initState() {
@@ -70,19 +69,26 @@ class _MainDesignState extends State<MainDesign> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
+    final double hight = screenSize.height;
     final textModel = Provider.of<TextModel>(context);
     final colorItemModel = Provider.of<ColorItemModel>(context);
     final text = textModel.text;
     final color = textModel.color;
     final align = textModel.align;
     final font = textModel.font;
+    bool handleFirstViewer = true;
 
     return BackGroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: const CustomAppBarDesign(),
         body: GestureDetector(
-          onVerticalDragUpdate: _handleVerticalDragUpdate,
+          // onVerticalDragUpdate: _handleVerticalDragUpdate,
+          onScaleUpdate: (details) {
+            setState(() {
+              _fontSize = 16 * details.scale.clamp(0.1, 55);
+            });
+          },
           child: Center(
             child: Column(
               children: [
@@ -103,39 +109,60 @@ class _MainDesignState extends State<MainDesign> {
                               colorBlendMode: BlendMode.modulate,
                             ),
                             if (widget.selectedPhoto != null)
-                              Center(
-                                  child:
-                                      Image.memory(widget.selectedPhoto!.data)),
+                              Positioned(
+                                height: 350,
+                                left: 100,
+                                right: 100,
+                                child: IgnorePointer(
+                                  // ignoring: handleFirstViewer,
+                                  child: InteractiveViewer(
+                                    boundaryMargin: EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: _calculateBoundaryMargin(),
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
+                                    child: Center(
+                                      child: Image.memory(
+                                        widget.selectedPhoto!.data,
+                                        height: 200,
+                                        width: 200,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             Positioned(
                               height: 450,
                               left: 100,
                               right: 100,
-                              child: InteractiveViewer(
-                                boundaryMargin: EdgeInsets.symmetric(
-                                  horizontal: 35,
-                                  vertical: _calculateBoundaryMargin(),
-                                ),
-                                minScale: 0.1,
-                                maxScale: 1.6,
-                                child: Center(
-                                  child: Consumer<TextModel>(
-                                    builder: (context, textModel, child) {
-                                      return Text(
-                                        textModel.text.isEmpty
-                                            ? 'Default text'
-                                            : textModel.text,
-                                        style: GoogleFonts.getFont(
-                                          textModel.font,
-                                          fontSize: _fontSize,
-                                          color: textModel.color,
-                                        ),
-                                        textAlign: textModel.align,
-                                      );
-                                    },
+                              child: IgnorePointer(
+                                ignoring: !handleFirstViewer,
+                                child: InteractiveViewer(
+                                  boundaryMargin: const EdgeInsets.symmetric(
+                                    horizontal: 35,
+                                    vertical: 75,
+                                  ),
+                                  minScale: 0.1,
+                                  maxScale: 1.6,
+                                  child: Center(
+                                    child: Consumer<TextModel>(
+                                      builder: (context, textModel, child) {
+                                        return Text(
+                                          textModel.text,
+                                          style: GoogleFonts.getFont(
+                                            textModel.font,
+                                            fontSize: _fontSize,
+                                            color: textModel.color,
+                                          ),
+                                          textAlign: textModel.align,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                            )
                           ],
                         ),
                         SizedBox(
