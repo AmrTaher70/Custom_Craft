@@ -31,7 +31,7 @@ class _MainDesignState extends State<MainDesign> {
   ];
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
-  final Offset _position = const Offset(0, 0);
+  // final Offset _position = const Offset(0, 0);
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _MainDesignState extends State<MainDesign> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
-    final double hight = screenSize.height;
+    // final double hight = screenSize.height;
     final textModel = Provider.of<TextModel>(context);
     final colorItemModel = Provider.of<ColorItemModel>(context);
     final text = textModel.text;
@@ -117,7 +117,7 @@ class _MainDesignState extends State<MainDesign> {
                                     left: 100,
                                     right: 100,
                                     child: IgnorePointer(
-                                      // ignoring: handleFirstViewer,
+                                      ignoring: !handleFirstViewer,
                                       child: InteractiveViewer(
                                         boundaryMargin: EdgeInsets.symmetric(
                                           horizontal: 35,
@@ -139,7 +139,7 @@ class _MainDesignState extends State<MainDesign> {
                               left: 100,
                               right: 100,
                               child: IgnorePointer(
-                                ignoring: !handleFirstViewer,
+                                ignoring: handleFirstViewer,
                                 child: InteractiveViewer(
                                   boundaryMargin: const EdgeInsets.symmetric(
                                     horizontal: 35,

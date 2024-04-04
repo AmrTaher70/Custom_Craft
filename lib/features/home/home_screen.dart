@@ -1,9 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
-import 'package:custom_craft/core/widget/custo_nav_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
-import 'package:custom_craft/core/widget/nav_bar.dart';
 import 'package:custom_craft/features/Category/category.dart';
 import 'package:custom_craft/features/Profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +16,10 @@ class HomeScreen extends StatefulWidget {
 
 int _selectedIndex = 0;
 
-final List<Widget> _screens = [
-  const HomeScreen(),
-  const Profile(),
-];
+// final List<Widget> _screens = [
+//   const HomeScreen(),
+//   const Profile(),
+// ];
 
 class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {

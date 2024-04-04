@@ -1,8 +1,5 @@
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 class CustomAppBarForTools extends StatelessWidget
     implements PreferredSizeWidget {

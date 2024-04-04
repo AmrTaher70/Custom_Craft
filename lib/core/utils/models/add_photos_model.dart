@@ -23,12 +23,7 @@ class PhotoProvider with ChangeNotifier {
   }
 
   void setSelectedPhoto(Photo? photo) {
-    if (photo != null) {
-      _selectedPhoto = photo;
-      notifyListeners();
-    } else {
-      // Optionally handle the case where the provided photo is null
-      print('Error: Selected photo is null');
-    }
+    _selectedPhoto = photo;
+    notifyListeners();
   }
 }

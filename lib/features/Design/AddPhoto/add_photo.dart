@@ -2,9 +2,7 @@ import 'dart:typed_data';
 
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
-import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/core/widget/customappbarforaddphoto%20.dart';
-import 'package:custom_craft/core/widget/photos.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,8 +16,8 @@ class PhotoUploadScreen extends StatefulWidget {
 }
 
 class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
-  final List<Uint8List> _imageDataList = [];
-  int? _selectedIndex; // Variable to keep track of the selected photo
+  // final List<Uint8List> _imageDataList = [];
+  // int? _selectedIndex; // Variable to keep track of the selected photo
 
   Future<void> _getImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
