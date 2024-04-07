@@ -13,4 +13,6 @@ class AssetsData {
   static const navBarBackGround = 'assets/images/navBarBackGround.png';
   static const hoodie = 'assets/images/hodi.png';
   static const hoodieBack = 'assets/images/hoodieBack.png';
+  static const star = 'assets/images/Star.png';
+  static const circle = 'assets/images/Star3.png';
 }
