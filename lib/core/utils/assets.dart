@@ -15,4 +15,12 @@ class AssetsData {
   static const hoodieBack = 'assets/images/hoodieBack.png';
   static const star = 'assets/images/Star.png';
   static const circle = 'assets/images/Star3.png';
+  static const icons1 = 'assets/images/Capa_1.png';
+  static const icons2 = 'assets/images/emojione-monotone_dog-face.png';
+  static const icons3 = 'assets/images/emojione-monotone_penguin.png';
+  static const icons4 = 'assets/images/emojione-monotone_turtle.png';
+  static const icons5 = 'assets/images/fluent_animal-cat-20-regular.png';
+  static const icons6 = 'assets/images/fluent-emoji-high-contrast_panda.png';
+  static const icons7 = 'assets/images/icon-park-outline_duck.png';
+  static const icons8 = 'assets/images/ph_paw-print-light.png';
 }

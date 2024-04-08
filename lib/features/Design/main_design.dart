@@ -1,7 +1,7 @@
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
-import 'package:custom_craft/core/widget/interactiveItem.dart';
+import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/AddPhoto/add_photo.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
@@ -86,6 +86,8 @@ class _MainDesignState extends State<MainDesign> {
     final selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
+    final selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
+    final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
     bool isInteractingWithImage = false;
     Widget? lastClickedWidget;
@@ -162,7 +164,8 @@ class _MainDesignState extends State<MainDesign> {
                                             ),
                                           ),
                                         ),
-                                      ))
+                                      ),
+                                    )
                                   : const SizedBox(),
                               if (selectedShape != null)
                                 Positioned(
@@ -175,30 +178,48 @@ class _MainDesignState extends State<MainDesign> {
                                     colorBlendMode: BlendMode.modulate,
                                   ),
                                 ),
-
+                              if (selectedIcons != null)
+                                Positioned(
+                                  height: 450,
+                                  left: 100,
+                                  right: 100,
+                                  child: Image.asset(
+                                    selectedIcons,
+                                    color: selectedIconColor,
+                                    colorBlendMode: BlendMode.modulate,
+                                  ),
+                                ),
                               Positioned(
                                 height: 450,
                                 left: 100,
-                                right: 100, // Adjust positioning as needed
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // Handle tap on text widget if needed
-                                  },
-                                  child: Consumer<TextModel>(
-                                    builder: (context, textModel, child) {
-                                      return Text(
-                                        textModel.text,
-                                        style: GoogleFonts.getFont(
-                                          textModel.font,
-                                          fontSize: _fontSize,
-                                          color: textModel.color,
-                                        ),
-                                        textAlign: textModel.align,
-                                      );
-                                    },
+                                right: 100,
+                                child: IgnorePointer(
+                                  ignoring: isInteractingWithImage,
+                                  child: InteractiveViewer(
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: 75,
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
+                                    child: Center(
+                                      child: Consumer<TextModel>(
+                                        builder: (context, textModel, child) {
+                                          return Text(
+                                            textModel.text,
+                                            style: GoogleFonts.getFont(
+                                              textModel.font,
+                                              fontSize: _fontSize,
+                                              color: textModel.color,
+                                            ),
+                                            textAlign: textModel.align,
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -484,7 +505,7 @@ class _MainDesignState extends State<MainDesign> {
                                                 child: SizedBox(
                                                   height: height *
                                                       0.75, // This makes the bottom sheet take up 3/4 of the screen height
-                                                  child: const AddShape(),
+                                                  child: const AddIcon(),
                                                 ),
                                               );
                                             },

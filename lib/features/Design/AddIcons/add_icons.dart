@@ -6,27 +6,27 @@ import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ShapeProvider extends ChangeNotifier {
-  final List<String> _shapes = <String>[
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle
-  ]; // Fill the list with 16 hoodie images
-  String? _selectedShape;
+class IconProvider extends ChangeNotifier {
+  final List<String> _icons = <String>[
+    AssetsData.icons1,
+    AssetsData.icons2,
+    AssetsData.icons3,
+    AssetsData.icons4,
+    AssetsData.icons5,
+    AssetsData.icons6,
+    AssetsData.icons7,
+    AssetsData.icons8,
+  ];
+  String? _selectedIcons;
   Color _selectedColor =
       AssetsColors.primaryColor; // Initialize with a default color
 
-  List<String> get shapes => _shapes;
-  String? get selectedShape => _selectedShape;
+  List<String> get icons => _icons;
+  String? get selectedIcon => _selectedIcons;
   Color get selectedColor => _selectedColor;
 
-  void setSelectedShape(String? shape) {
-    _selectedShape = shape;
+  void setSelectedIcons(String? icons) {
+    _selectedIcons = icons;
     notifyListeners();
   }
 
@@ -36,22 +36,22 @@ class ShapeProvider extends ChangeNotifier {
   }
 }
 
-class AddShape extends StatefulWidget {
-  const AddShape({Key? key}) : super(key: key);
+class AddIcon extends StatefulWidget {
+  const AddIcon({Key? key}) : super(key: key);
 
   @override
-  State<AddShape> createState() => _AddShapeState();
+  State<AddIcon> createState() => _AddIconState();
 }
 
-class _AddShapeState extends State<AddShape> {
+class _AddIconState extends State<AddIcon> {
   @override
   Widget build(BuildContext context) {
-    int? selectedShapeIndex;
+    int? selectedIconsIndex;
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA).withOpacity(.5),
       appBar: CustomAppBarForTools(
         text: const Text(
-          'Shapes',
+          'Icons',
           style: TextStyle(fontSize: 24, color: Colors.black),
         ),
         onPressed: () {
@@ -61,14 +61,14 @@ class _AddShapeState extends State<AddShape> {
           );
         },
       ),
-      body: Consumer<ShapeProvider>(
-        builder: (context, shapeProvider, _) {
+      body: Consumer<IconProvider>(
+        builder: (context, iconProvider, _) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                shapeProvider.selectedShape != null
+                iconProvider.selectedIcon != null
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Container(
@@ -83,11 +83,11 @@ class _AddShapeState extends State<AddShape> {
                             ),
                           ),
                           child: Image.asset(
-                            shapeProvider.selectedShape!,
+                            iconProvider.selectedIcon!,
                             height: 160,
                             width: 160,
-                            fit: BoxFit.cover,
-                            color: shapeProvider.selectedColor,
+                            // fit: BoxFit.cover,
+                            color: iconProvider.selectedColor,
                             colorBlendMode: BlendMode.modulate,
                           ),
                         ),
@@ -114,7 +114,7 @@ class _AddShapeState extends State<AddShape> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 24),
                     child: Text(
-                      'Shape Color',
+                      'Icon Color',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -128,9 +128,9 @@ class _AddShapeState extends State<AddShape> {
                 ),
                 Center(
                   child: ColorPickerButton(
-                    initialColor: shapeProvider.selectedColor,
+                    initialColor: iconProvider.selectedColor,
                     onColorChanged: (Color color) {
-                      shapeProvider.setSelectedColor(color);
+                      iconProvider.setSelectedColor(color);
                     },
                   ),
                 ),
@@ -139,43 +139,43 @@ class _AddShapeState extends State<AddShape> {
                 ),
                 Expanded(
                     child: GridView.builder(
-                  itemCount: shapeProvider.shapes.length,
+                  itemCount: iconProvider.icons.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                   ),
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        if (selectedShapeIndex == index) {
-                          selectedShapeIndex =
+                        if (selectedIconsIndex == index) {
+                          selectedIconsIndex =
                               null; // Deselect the shape if it's already selected
                         } else {
-                          selectedShapeIndex =
+                          selectedIconsIndex =
                               index; // Select the shape if it's not already selected
                         }
-                        shapeProvider.setSelectedShape(
-                            shapeProvider.shapes[selectedShapeIndex!]);
+                        iconProvider.setSelectedIcons(
+                            iconProvider.icons[selectedIconsIndex!]);
                       },
                       child: Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 2,
-                            color: selectedShapeIndex == index
+                            color: selectedIconsIndex == index
                                 ? AssetsColors
                                     .primaryColor // Border color for selected shape
                                 : Colors.transparent,
                           ),
                         ),
                         child: Image.asset(
-                          shapeProvider.shapes[index],
+                          iconProvider.icons[index],
                           height: 50,
                           width: 50,
                           fit: BoxFit.cover,
-                          color: selectedShapeIndex == index
-                              ? shapeProvider.selectedColor
+                          color: selectedIconsIndex == index
+                              ? iconProvider.selectedColor
                               : null,
-                          colorBlendMode: selectedShapeIndex == index
+                          colorBlendMode: selectedIconsIndex == index
                               ? BlendMode.modulate
                               : null,
                         ),
