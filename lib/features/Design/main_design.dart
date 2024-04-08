@@ -7,6 +7,7 @@ import 'package:custom_craft/core/widget/custom_app_bar_for_design.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/photos.dart';
 import 'package:custom_craft/features/Design/AddText/add_text_screen.dart';
+import 'package:custom_craft/features/Design/AiGenerator/ai_generator.dart';
 import 'package:custom_craft/features/Design/ChooseColor/choose_color.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,7 @@ class _MainDesignState extends State<MainDesign> {
     final selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
-    bool isInteractingWithImage = false;
+    bool isInteractingWithText = false;
     Widget? lastClickedWidget;
 
     return BackGroundImage(
@@ -142,12 +143,12 @@ class _MainDesignState extends State<MainDesign> {
                                       child: GestureDetector(
                                         onDoubleTap: () {
                                           setState(() {
-                                            isInteractingWithImage =
-                                                !isInteractingWithImage;
+                                            isInteractingWithText =
+                                                !isInteractingWithText;
                                           });
                                         },
                                         child: IgnorePointer(
-                                          ignoring: isInteractingWithImage,
+                                          ignoring: isInteractingWithText,
                                           child: InteractiveViewer(
                                             boundaryMargin:
                                                 EdgeInsets.symmetric(
@@ -194,7 +195,7 @@ class _MainDesignState extends State<MainDesign> {
                                 left: 100,
                                 right: 100,
                                 child: IgnorePointer(
-                                  ignoring: isInteractingWithImage,
+                                  ignoring: isInteractingWithText,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
@@ -285,38 +286,108 @@ class _MainDesignState extends State<MainDesign> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xffD9D9D9)
-                                          .withOpacity(.5),
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: TextButton(
-                                      onPressed: () {},
-                                      child: Consumer<TextModel>(
-                                        builder: (context, textModel, child) {
-                                          return Text(
-                                            textModel.text.isEmpty
-                                                ? 'Text'
-                                                : textModel.text,
-                                            style: GoogleFonts.getFont(
-                                              textModel.font,
-                                              fontSize: textModel.text.isEmpty
-                                                  ? 16.0
-                                                  : 16.0,
-                                              color: textModel.text.isEmpty
-                                                  ? const Color(0xff8E8E8E)
-                                                  : textModel.color,
-                                            ),
-                                            textAlign: textModel.align,
-                                          );
-                                        },
-                                      )),
-                                ),
-                              ),
+                              textModel.text.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffD9D9D9)
+                                                .withOpacity(.5),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: TextButton(
+                                            onPressed: () {},
+                                            child: Consumer<TextModel>(
+                                              builder:
+                                                  (context, textModel, child) {
+                                                return Text(
+                                                  textModel.text.isEmpty
+                                                      ? 'Text'
+                                                      : textModel.text,
+                                                  style: GoogleFonts.getFont(
+                                                    textModel.font,
+                                                    fontSize:
+                                                        textModel.text.isEmpty
+                                                            ? 16.0
+                                                            : 16.0,
+                                                    color:
+                                                        textModel.text.isEmpty
+                                                            ? const Color(
+                                                                0xff8E8E8E)
+                                                            : textModel.color,
+                                                  ),
+                                                  textAlign: textModel.align,
+                                                );
+                                              },
+                                            )),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              selectedPhoto != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffD9D9D9)
+                                                .withOpacity(.5),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: TextButton(
+                                          onPressed: () {},
+                                          child: Image.memory(
+                                            selectedPhoto.data,
+                                            // height: 200,
+                                            // width: 200,
+                                          ),
+                                        ),
+                                      ))
+                                  : const SizedBox(),
+                              selectedIcons != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffD9D9D9)
+                                                .withOpacity(.5),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: TextButton(
+                                          onPressed: () {},
+                                          child: Image.asset(
+                                            selectedIcons,
+                                            color: selectedIconColor,
+                                            colorBlendMode: BlendMode.modulate,
+                                          ),
+                                        ),
+                                      ))
+                                  : const SizedBox(),
+                              selectedShape != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 56,
+                                        width: 56,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffD9D9D9)
+                                                .withOpacity(.5),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: TextButton(
+                                          onPressed: () {},
+                                          child: Image.asset(
+                                            selectedShape,
+                                            color: selectedIconColor,
+                                            colorBlendMode: BlendMode.modulate,
+                                          ),
+                                        ),
+                                      ))
+                                  : const SizedBox(),
                             ],
                           ),
                         ),
@@ -346,7 +417,26 @@ class _MainDesignState extends State<MainDesign> {
                                   child: Column(
                                     children: [
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          final height = MediaQuery.of(context)
+                                              .size
+                                              .height;
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Container(
+                                                color: Colors.black.withOpacity(
+                                                    0.5), // Change this to your desired color and opacity
+                                                child: SizedBox(
+                                                  height: height *
+                                                      0.75, // This makes the bottom sheet take up 3/4 of the screen height
+                                                  child: const AiGenerator(),
+                                                ),
+                                              );
+                                            },
+                                            isScrollControlled: true,
+                                          );
+                                        },
                                         icon: const Icon(
                                           Icons.auto_fix_high_outlined,
                                         ),
@@ -513,7 +603,7 @@ class _MainDesignState extends State<MainDesign> {
                                           );
                                         },
                                         icon: const Icon(
-                                          Icons.insert_emoticon_rounded,
+                                          Icons.insert_emoticon_outlined,
                                         ),
                                         iconSize: 28,
                                       ),

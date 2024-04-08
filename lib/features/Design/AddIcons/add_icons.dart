@@ -84,8 +84,8 @@ class _AddIconState extends State<AddIcon> {
                           ),
                           child: Image.asset(
                             iconProvider.selectedIcon!,
-                            height: 160,
-                            width: 160,
+                            // height: 270,
+                            // width: 270,
                             // fit: BoxFit.cover,
                             color: iconProvider.selectedColor,
                             colorBlendMode: BlendMode.modulate,
