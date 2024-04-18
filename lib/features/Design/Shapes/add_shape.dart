@@ -86,7 +86,7 @@ class _AddShapeState extends State<AddShape> {
                             shapeProvider.selectedShape!,
                             height: 160,
                             width: 160,
-                            fit: BoxFit.cover,
+                            // fit: BoxFit.cover,
                             color: shapeProvider.selectedColor,
                             colorBlendMode: BlendMode.modulate,
                           ),

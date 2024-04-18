@@ -1,5 +1,4 @@
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:flutter/material.dart';
 
 class AiGenerator extends StatefulWidget {
@@ -53,6 +52,9 @@ class _AiGeneratorState extends State<AiGenerator> {
                     color: Color(0xff888888),
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Align(
                 alignment: Alignment.bottomCenter,

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: AiGenerator(),
+            child: MainDesign(),
           )
         ],
       ),

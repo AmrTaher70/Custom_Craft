@@ -84,13 +84,13 @@ class _MainDesignState extends State<MainDesign> {
     final color = textModel.color;
     final align = textModel.align;
     final font = textModel.font;
-    final selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
+    var selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
     final selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
-    bool isInteractingWithText = false;
+    var isInteractingWithText = false;
     Widget? lastClickedWidget;
 
     return BackGroundImage(
@@ -133,6 +133,17 @@ class _MainDesignState extends State<MainDesign> {
                                 color: colorItemModel.colorOfItem,
                                 colorBlendMode: BlendMode.modulate,
                               ),
+                              if (selectedShape != null)
+                                Positioned(
+                                  height: 450,
+                                  left: 100,
+                                  right: 100,
+                                  child: Image.asset(
+                                    selectedShape,
+                                    color: selectedColor,
+                                    colorBlendMode: BlendMode.modulate,
+                                  ),
+                                ),
                               // Selected photo widget (Interactive)
                               selectedPhoto != null
                                   ? Positioned(
@@ -141,10 +152,9 @@ class _MainDesignState extends State<MainDesign> {
                                       right:
                                           100, // Adjust positioning as needed
                                       child: GestureDetector(
-                                        onDoubleTap: () {
+                                        onTap: () {
                                           setState(() {
-                                            isInteractingWithText =
-                                                !isInteractingWithText;
+                                            isInteractingWithText = true;
                                           });
                                         },
                                         child: IgnorePointer(
@@ -168,17 +178,6 @@ class _MainDesignState extends State<MainDesign> {
                                       ),
                                     )
                                   : const SizedBox(),
-                              if (selectedShape != null)
-                                Positioned(
-                                  height: 450,
-                                  left: 100,
-                                  right: 100,
-                                  child: Image.asset(
-                                    selectedShape,
-                                    color: selectedColor,
-                                    colorBlendMode: BlendMode.modulate,
-                                  ),
-                                ),
                               if (selectedIcons != null)
                                 Positioned(
                                   height: 450,
@@ -195,7 +194,7 @@ class _MainDesignState extends State<MainDesign> {
                                 left: 100,
                                 right: 100,
                                 child: IgnorePointer(
-                                  ignoring: isInteractingWithText,
+                                  ignoring: !isInteractingWithText,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
@@ -289,104 +288,212 @@ class _MainDesignState extends State<MainDesign> {
                               textModel.text.isNotEmpty
                                   ? Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 56,
-                                        width: 56,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xffD9D9D9)
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: TextButton(
-                                            onPressed: () {},
-                                            child: Consumer<TextModel>(
-                                              builder:
-                                                  (context, textModel, child) {
-                                                return Text(
-                                                  textModel.text.isEmpty
-                                                      ? 'Text'
-                                                      : textModel.text,
-                                                  style: GoogleFonts.getFont(
-                                                    textModel.font,
-                                                    fontSize:
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 56,
+                                            width: 56,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffD9D9D9)
+                                                  .withOpacity(.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: TextButton(
+                                                  onPressed: () {},
+                                                  child: Consumer<TextModel>(
+                                                    builder: (context,
+                                                        textModel, child) {
+                                                      return Text(
                                                         textModel.text.isEmpty
-                                                            ? 16.0
-                                                            : 16.0,
-                                                    color:
-                                                        textModel.text.isEmpty
-                                                            ? const Color(
-                                                                0xff8E8E8E)
-                                                            : textModel.color,
-                                                  ),
-                                                  textAlign: textModel.align,
-                                                );
+                                                            ? 'Text'
+                                                            : textModel.text,
+                                                        style:
+                                                            GoogleFonts.getFont(
+                                                          textModel.font,
+                                                          fontSize: textModel
+                                                                  .text.isEmpty
+                                                              ? 12.0
+                                                              : 12.0,
+                                                          color: textModel
+                                                                  .text.isEmpty
+                                                              ? const Color(
+                                                                  0xff8E8E8E)
+                                                              : textModel.color,
+                                                        ),
+                                                        textAlign:
+                                                            textModel.align,
+                                                      );
+                                                    },
+                                                  )),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -10,
+                                            left: -10,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.close_outlined,
+                                                color: Colors.red,
+                                                size: 16,
+                                              ), // replace with your desired icon
+                                              onPressed: () {
+                                                Provider.of<TextModel>(context,
+                                                        listen: false)
+                                                    .updateText('');
                                               },
-                                            )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              selectedShape != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 56,
+                                            width: 56,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffD9D9D9)
+                                                  .withOpacity(.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: TextButton(
+                                                onPressed: () {},
+                                                child: Image.asset(
+                                                  selectedShape,
+                                                  color: selectedColor,
+                                                  colorBlendMode:
+                                                      BlendMode.modulate,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -10,
+                                            left: -10,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.close_outlined,
+                                                size: 16,
+                                                color: Colors.red,
+                                              ), // replace with your desired icon
+                                              onPressed: () {
+                                                Provider.of<ShapeProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setSelectedShape(null);
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     )
                                   : const SizedBox(),
                               selectedPhoto != null
                                   ? Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 56,
-                                        width: 56,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xffD9D9D9)
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: Image.memory(
-                                            selectedPhoto.data,
-                                            // height: 200,
-                                            // width: 200,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 56,
+                                            width: 56,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffD9D9D9)
+                                                  .withOpacity(.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: Image.memory(
+                                                selectedPhoto.data,
+                                                // height: 200,
+                                                // width: 200,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ))
+                                          Positioned(
+                                            top: -10,
+                                            left: -10,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.close_outlined,
+                                                size: 16,
+                                                color: Colors.red,
+                                              ), // replace with your desired icon
+                                              onPressed: () {
+                                                Provider.of<PhotoProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setSelectedPhoto(null);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   : const SizedBox(),
                               selectedIcons != null
                                   ? Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 56,
-                                        width: 56,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xffD9D9D9)
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: Image.asset(
-                                            selectedIcons,
-                                            color: selectedIconColor,
-                                            colorBlendMode: BlendMode.modulate,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 56,
+                                            width: 56,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffD9D9D9)
+                                                  .withOpacity(.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  selectedPhoto =
+                                                      null; // This will remove the widget
+                                                });
+                                              },
+                                              child: TextButton(
+                                                onPressed: () {},
+                                                child: Image.asset(
+                                                  selectedIcons,
+                                                  color: selectedIconColor,
+                                                  colorBlendMode:
+                                                      BlendMode.modulate,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ))
-                                  : const SizedBox(),
-                              selectedShape != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: 56,
-                                        width: 56,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xffD9D9D9)
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: TextButton(
-                                          onPressed: () {},
-                                          child: Image.asset(
-                                            selectedShape,
-                                            color: selectedIconColor,
-                                            colorBlendMode: BlendMode.modulate,
+                                          Positioned(
+                                            top: -10,
+                                            left: -10,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.close_outlined,
+                                                color: Colors.red,
+                                                size: 16,
+                                              ), // replace with your desired icon
+                                              onPressed: () {
+                                                Provider.of<IconProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setSelectedIcons(null);
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                      ))
+                                        ],
+                                      ),
+                                    )
                                   : const SizedBox(),
                             ],
                           ),
