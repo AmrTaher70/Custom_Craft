@@ -1,3 +1,4 @@
+import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
@@ -12,6 +13,7 @@ import 'package:custom_craft/features/Design/ChooseColor/choose_color.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/utils/models/text_model.dart';
@@ -87,7 +89,7 @@ class _MainDesignState extends State<MainDesign> {
     var selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
-    final selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
+    var selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
     var isInteractingWithText = false;
@@ -99,11 +101,11 @@ class _MainDesignState extends State<MainDesign> {
         appBar: const CustomAppBarDesign(),
         body: GestureDetector(
           // onVerticalDragUpdate: _handleVerticalDragUpdate,
-          onScaleUpdate: (details) {
-            setState(() {
-              _fontSize = 16 * details.scale.clamp(0.1, 55);
-            });
-          },
+          // onScaleUpdate: (details) {
+          //   setState(() {
+          //     _fontSize = 16 * details.scale.clamp(0.1, 55);
+          //   });
+          // },
           child: Center(
             child: Column(
               children: [
@@ -145,39 +147,38 @@ class _MainDesignState extends State<MainDesign> {
                                   ),
                                 ),
                               // Selected photo widget (Interactive)
-                              selectedPhoto != null
-                                  ? Positioned(
-                                      height: 450,
-                                      left: 100,
-                                      right:
-                                          100, // Adjust positioning as needed
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            isInteractingWithText = true;
-                                          });
-                                        },
-                                        child: IgnorePointer(
-                                          ignoring: isInteractingWithText,
-                                          child: InteractiveViewer(
-                                            boundaryMargin:
-                                                EdgeInsets.symmetric(
-                                              horizontal: 35,
-                                              vertical:
-                                                  _calculateBoundaryMargin(),
-                                            ),
-                                            minScale: 0.1,
-                                            maxScale: 1.6,
-                                            child: Image.memory(
-                                              selectedPhoto.data,
-                                              height: 200,
-                                              width: 200,
-                                            ),
-                                          ),
+                              if (selectedPhoto != null &&
+                                  _currentPageIndex == 0)
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100, // Adjust positioning as needed
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isInteractingWithText = true;
+                                      });
+                                    },
+                                    child: IgnorePointer(
+                                      ignoring: !isInteractingWithText,
+                                      child: InteractiveViewer(
+                                        boundaryMargin: EdgeInsets.symmetric(
+                                          horizontal: 35,
+                                          vertical: _calculateBoundaryMargin(),
+                                        ),
+                                        minScale: 0.1,
+                                        maxScale: 1.6,
+                                        child: Image.memory(
+                                          selectedPhoto.data,
+                                          height: 200,
+                                          width: 200,
                                         ),
                                       ),
-                                    )
-                                  : const SizedBox(),
+                                    ),
+                                  ),
+                                )
+                              else
+                                const SizedBox(),
                               if (selectedIcons != null)
                                 Positioned(
                                   height: 450,
@@ -194,7 +195,7 @@ class _MainDesignState extends State<MainDesign> {
                                 left: 100,
                                 right: 100,
                                 child: IgnorePointer(
-                                  ignoring: !isInteractingWithText,
+                                  ignoring: isInteractingWithText,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
@@ -237,12 +238,40 @@ class _MainDesignState extends State<MainDesign> {
                                   index == _currentPageIndex ? 1.0 : 0.7;
                               return Transform.scale(
                                 scale: scaleFactor,
-                                child: Image.asset(
-                                  images[index],
-                                  fit: BoxFit.contain,
-                                  color: colorItemModel.colorOfItem,
-                                  colorBlendMode: BlendMode.modulate,
-                                ),
+                                child: Stack(children: [
+                                  Image.asset(
+                                    images[index],
+                                    fit: BoxFit.contain,
+                                    color: colorItemModel.colorOfItem,
+                                    colorBlendMode: BlendMode.modulate,
+                                  ),
+                                  Center(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: Container(
+                                        height: 46,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          border: const GradientBoxBorder(
+                                              width: 1,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xffC9E9FF),
+                                                  Color(0xffFFDACC),
+                                                  Color(0xffFFE7BB),
+                                                  Color(0xffE1FFB9),
+                                                  Color(0xffFDA9FF),
+                                                ],
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
                               );
                             },
                           ),
