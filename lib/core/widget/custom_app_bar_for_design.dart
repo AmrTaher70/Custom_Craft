@@ -7,10 +7,12 @@ import '../../features/Category/category.dart';
 
 class CustomAppBarDesign extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppBarDesign({Key? key}) : super(key: key);
+  const CustomAppBarDesign({Key? key, required this.onPressed})
+      : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(70);
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class CustomAppBarDesign extends StatelessWidget
               height: 39,
               width: 75,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: onPressed,
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
                       AssetsColors.primaryColor, // Background color

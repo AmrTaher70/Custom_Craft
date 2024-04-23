@@ -1,11 +1,13 @@
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
+import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/AiGenerator/ai_generator.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
+import 'package:custom_craft/features/Similarity/similarity_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,6 +24,7 @@ void main() {
           ChangeNotifierProvider(create: (context) => PhotoProvider()),
           ChangeNotifierProvider(create: (context) => ShapeProvider()),
           ChangeNotifierProvider(create: (context) => IconProvider()),
+          ChangeNotifierProvider(create: (context) => SavedPhotoProvider()),
         ],
         child: const MyApp(),
       ),

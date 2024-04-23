@@ -1,4 +1,9 @@
-import 'package:custom_craft/constans/colors/colors.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:custom_craft/features/Similarity/similarity_screen.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
@@ -12,6 +17,7 @@ import 'package:custom_craft/features/Design/AiGenerator/ai_generator.dart';
 import 'package:custom_craft/features/Design/ChooseColor/choose_color.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +36,7 @@ class MainDesign extends StatefulWidget {
 }
 
 class _MainDesignState extends State<MainDesign> {
+  final GlobalKey _designKey = GlobalKey();
   final PageController _pageController = PageController(viewportFraction: 0.2);
   int _currentPageIndex = 0;
 
@@ -75,6 +82,49 @@ class _MainDesignState extends State<MainDesign> {
     return margin.clamp(0, 100); // Clamp the value between 0 and 100
   }
 
+  Future<Uint8List?> _saveDesign() async {
+    print("Saving design...");
+    try {
+      Uint8List? designImage = await _captureDesign();
+      if (designImage != null) {
+        final blob = html.Blob([designImage]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..setAttribute("download", "design_image.png")
+          ..click();
+        html.Url.revokeObjectUrl(url);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Design saved')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to save design')),
+        );
+      }
+    } catch (e) {
+      print("Error saving design: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save design')),
+      );
+    }
+    return null;
+  }
+
+  Future<Uint8List?> _captureDesign() async {
+    try {
+      RenderRepaintBoundary boundary = _designKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List? pngBytes = byteData?.buffer.asUint8List();
+      return pngBytes;
+    } catch (e) {
+      print("Error capturing design: $e");
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -98,11 +148,24 @@ class _MainDesignState extends State<MainDesign> {
     return BackGroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const CustomAppBarDesign(),
+        appBar: CustomAppBarDesign(
+          onPressed: () async {
+            Uint8List? savedPhoto = await _saveDesign();
+            {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      SimilarityScreen(savedPhoto: savedPhoto),
+                ),
+              );
+            }
+          },
+        ),
         body: GestureDetector(
           // onVerticalDragUpdate: _handleVerticalDragUpdate,
           // onScaleUpdate: (details) {
           //   setState(() {
+
           //     _fontSize = 16 * details.scale.clamp(0.1, 55);
           //   });
           // },
@@ -125,103 +188,106 @@ class _MainDesignState extends State<MainDesign> {
                                       : selectedPhoto) as Widget;
                             });
                           },
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                images[_currentPageIndex],
-                                height: 407,
-                                width: 343,
-                                fit: BoxFit.fitHeight,
-                                color: colorItemModel.colorOfItem,
-                                colorBlendMode: BlendMode.modulate,
-                              ),
-                              if (selectedShape != null)
+                          child: RepaintBoundary(
+                            key: _designKey,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  images[_currentPageIndex],
+                                  height: 407,
+                                  width: 343,
+                                  fit: BoxFit.fitHeight,
+                                  color: colorItemModel.colorOfItem,
+                                  colorBlendMode: BlendMode.modulate,
+                                ),
+                                if (selectedShape != null)
+                                  Positioned(
+                                    height: 450,
+                                    left: 100,
+                                    right: 100,
+                                    child: Image.asset(
+                                      selectedShape,
+                                      color: selectedColor,
+                                      colorBlendMode: BlendMode.modulate,
+                                    ),
+                                  ),
+                                // Selected photo widget (Interactive)
+                                if (selectedPhoto != null)
+                                  Positioned(
+                                    height: 350,
+                                    left: 100,
+                                    right: 100, // Adjust positioning as needed
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isInteractingWithText = true;
+                                        });
+                                      },
+                                      child: IgnorePointer(
+                                        ignoring: !isInteractingWithText,
+                                        child: InteractiveViewer(
+                                          boundaryMargin: EdgeInsets.symmetric(
+                                            horizontal: 35,
+                                            vertical:
+                                                _calculateBoundaryMargin(),
+                                          ),
+                                          minScale: 0.1,
+                                          maxScale: 1.6,
+                                          child: Image.memory(
+                                            selectedPhoto.data,
+                                            height: 200,
+                                            width: 200,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                if (selectedIcons != null)
+                                  Positioned(
+                                    height: 450,
+                                    left: 100,
+                                    right: 100,
+                                    child: Image.asset(
+                                      selectedIcons,
+                                      color: selectedIconColor,
+                                      colorBlendMode: BlendMode.modulate,
+                                    ),
+                                  ),
                                 Positioned(
                                   height: 450,
                                   left: 100,
                                   right: 100,
-                                  child: Image.asset(
-                                    selectedShape,
-                                    color: selectedColor,
-                                    colorBlendMode: BlendMode.modulate,
-                                  ),
-                                ),
-                              // Selected photo widget (Interactive)
-                              if (selectedPhoto != null &&
-                                  _currentPageIndex == 0)
-                                Positioned(
-                                  height: 350,
-                                  left: 100,
-                                  right: 100, // Adjust positioning as needed
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isInteractingWithText = true;
-                                      });
-                                    },
-                                    child: IgnorePointer(
-                                      ignoring: !isInteractingWithText,
-                                      child: InteractiveViewer(
-                                        boundaryMargin: EdgeInsets.symmetric(
-                                          horizontal: 35,
-                                          vertical: _calculateBoundaryMargin(),
-                                        ),
-                                        minScale: 0.1,
-                                        maxScale: 1.6,
-                                        child: Image.memory(
-                                          selectedPhoto.data,
-                                          height: 200,
-                                          width: 200,
+                                  child: IgnorePointer(
+                                    ignoring: isInteractingWithText,
+                                    child: InteractiveViewer(
+                                      boundaryMargin:
+                                          const EdgeInsets.symmetric(
+                                        horizontal: 35,
+                                        vertical: 75,
+                                      ),
+                                      minScale: 0.1,
+                                      maxScale: 1.6,
+                                      child: Center(
+                                        child: Consumer<TextModel>(
+                                          builder: (context, textModel, child) {
+                                            return Text(
+                                              textModel.text,
+                                              style: GoogleFonts.getFont(
+                                                textModel.font,
+                                                fontSize: _fontSize,
+                                                color: textModel.color,
+                                              ),
+                                              textAlign: textModel.align,
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
                                   ),
                                 )
-                              else
-                                const SizedBox(),
-                              if (selectedIcons != null)
-                                Positioned(
-                                  height: 450,
-                                  left: 100,
-                                  right: 100,
-                                  child: Image.asset(
-                                    selectedIcons,
-                                    color: selectedIconColor,
-                                    colorBlendMode: BlendMode.modulate,
-                                  ),
-                                ),
-                              Positioned(
-                                height: 450,
-                                left: 100,
-                                right: 100,
-                                child: IgnorePointer(
-                                  ignoring: isInteractingWithText,
-                                  child: InteractiveViewer(
-                                    boundaryMargin: const EdgeInsets.symmetric(
-                                      horizontal: 35,
-                                      vertical: 75,
-                                    ),
-                                    minScale: 0.1,
-                                    maxScale: 1.6,
-                                    child: Center(
-                                      child: Consumer<TextModel>(
-                                        builder: (context, textModel, child) {
-                                          return Text(
-                                            textModel.text,
-                                            style: GoogleFonts.getFont(
-                                              textModel.font,
-                                              fontSize: _fontSize,
-                                              color: textModel.color,
-                                            ),
-                                            textAlign: textModel.align,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
