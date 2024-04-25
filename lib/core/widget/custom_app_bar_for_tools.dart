@@ -5,12 +5,12 @@ class CustomAppBarForTools extends StatelessWidget
     implements PreferredSizeWidget {
   const CustomAppBarForTools({
     super.key,
-    required this.text,
+    this.text,
     required this.onPressed,
   });
   @override
   Size get preferredSize => const Size.fromHeight(70);
-  final Text text;
+  final Text? text;
   final VoidCallback onPressed;
 
   @override

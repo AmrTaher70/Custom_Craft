@@ -2,6 +2,7 @@
 
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/features/Similarity/similarity_screen.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets.dart';
@@ -82,6 +83,21 @@ class _MainDesignState extends State<MainDesign> {
     return margin.clamp(0, 100); // Clamp the value between 0 and 100
   }
 
+  Future<Uint8List?> _captureDesign() async {
+    try {
+      RenderRepaintBoundary boundary = _designKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List? pngBytes = byteData?.buffer.asUint8List();
+      return pngBytes;
+    } catch (e) {
+      print("Error capturing design: $e");
+      return null;
+    }
+  }
+
   Future<Uint8List?> _saveDesign() async {
     print("Saving design...");
     try {
@@ -96,6 +112,9 @@ class _MainDesignState extends State<MainDesign> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Design saved')),
         );
+        // Save the image to the ImageModel
+        Provider.of<SavedImageModel>(context, listen: false)
+            .saveImage(designImage);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to save design')),
@@ -108,21 +127,6 @@ class _MainDesignState extends State<MainDesign> {
       );
     }
     return null;
-  }
-
-  Future<Uint8List?> _captureDesign() async {
-    try {
-      RenderRepaintBoundary boundary = _designKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List? pngBytes = byteData?.buffer.asUint8List();
-      return pngBytes;
-    } catch (e) {
-      print("Error capturing design: $e");
-      return null;
-    }
   }
 
   @override
@@ -154,8 +158,7 @@ class _MainDesignState extends State<MainDesign> {
             {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) =>
-                      SimilarityScreen(savedPhoto: savedPhoto),
+                  builder: (context) => const SimilarityScreen(),
                 ),
               );
             }
@@ -224,7 +227,7 @@ class _MainDesignState extends State<MainDesign> {
                                         });
                                       },
                                       child: IgnorePointer(
-                                        ignoring: !isInteractingWithText,
+                                        ignoring: isInteractingWithText,
                                         child: InteractiveViewer(
                                           boundaryMargin: EdgeInsets.symmetric(
                                             horizontal: 35,
@@ -242,7 +245,6 @@ class _MainDesignState extends State<MainDesign> {
                                       ),
                                     ),
                                   ),
-
                                 if (selectedIcons != null)
                                   Positioned(
                                     height: 450,
@@ -264,7 +266,7 @@ class _MainDesignState extends State<MainDesign> {
                                       boundaryMargin:
                                           const EdgeInsets.symmetric(
                                         horizontal: 35,
-                                        vertical: 75,
+                                        vertical: 150,
                                       ),
                                       minScale: 0.1,
                                       maxScale: 1.6,

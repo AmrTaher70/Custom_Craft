@@ -24,7 +24,7 @@ void main() {
           ChangeNotifierProvider(create: (context) => PhotoProvider()),
           ChangeNotifierProvider(create: (context) => ShapeProvider()),
           ChangeNotifierProvider(create: (context) => IconProvider()),
-          ChangeNotifierProvider(create: (context) => SavedPhotoProvider()),
+          ChangeNotifierProvider(create: (context) => SavedImageModel()),
         ],
         child: const MyApp(),
       ),
