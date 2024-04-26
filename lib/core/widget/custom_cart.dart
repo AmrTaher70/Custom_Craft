@@ -29,8 +29,9 @@ class CustomCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         child: GestureDetector(
           onTap: () {
-            Get.to(
-              () => const MainDesign(),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MainDesign()),
             );
           },
           child: Card(

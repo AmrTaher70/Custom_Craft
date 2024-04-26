@@ -51,12 +51,14 @@ class SimilarityScreenState extends State<SimilarityScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 100),
-                      child: Image.asset(
-                        AssetsData.hoodie,
-                        height: 407,
-                        width: 343,
-                        fit: BoxFit.fitHeight,
-                      ),
+                      child: savedPhoto != null
+                          ? Image.memory(
+                              savedPhoto,
+                              height: 407,
+                              width: 343,
+                              fit: BoxFit.fitHeight,
+                            )
+                          : const Text('No saved photo'),
                     ),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBarForSimilarity extends StatelessWidget
@@ -68,8 +69,10 @@ class CustomAppBarForSimilarity extends StatelessWidget
               size: 30,
             ),
             onPressed: () {
-              Navigator.pop(
-                  context); // Navigate back when close button is pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
             },
           ),
         ),

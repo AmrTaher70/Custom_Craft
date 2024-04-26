@@ -68,7 +68,7 @@ class _MainDesignState extends State<MainDesign> {
     });
   }
 
-  void _handleVerticalDragUpdate(DragUpdateDetails details) {
+  void handleVerticalDragUpdate(DragUpdateDetails details) {
     setState(() {
       _fontSize = (_fontSize + details.delta.dy).clamp(5, 55);
     });
@@ -146,9 +146,6 @@ class _MainDesignState extends State<MainDesign> {
     var selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
-    var isInteractingWithText = false;
-    Widget? lastClickedWidget;
-
     return BackGroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -165,13 +162,6 @@ class _MainDesignState extends State<MainDesign> {
           },
         ),
         body: GestureDetector(
-          // onVerticalDragUpdate: _handleVerticalDragUpdate,
-          // onScaleUpdate: (details) {
-          //   setState(() {
-
-          //     _fontSize = 16 * details.scale.clamp(0.1, 55);
-          //   });
-          // },
           child: Center(
             child: Column(
               children: [
@@ -181,115 +171,106 @@ class _MainDesignState extends State<MainDesign> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              lastClickedWidget =
-                                  // ignore: unrelated_type_equality_checks
-                                  (lastClickedWidget == selectedPhoto
-                                      ? null
-                                      : selectedPhoto) as Widget;
-                            });
-                          },
-                          child: RepaintBoundary(
-                            key: _designKey,
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  images[_currentPageIndex],
-                                  height: 407,
-                                  width: 343,
-                                  fit: BoxFit.fitHeight,
-                                  color: colorItemModel.colorOfItem,
-                                  colorBlendMode: BlendMode.modulate,
-                                ),
-                                if (selectedShape != null)
-                                  Positioned(
-                                    height: 450,
-                                    left: 100,
-                                    right: 100,
+                        RepaintBoundary(
+                          key: _designKey,
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                images[_currentPageIndex],
+                                height: 407,
+                                width: 343,
+                                fit: BoxFit.fitHeight,
+                                color: colorItemModel.colorOfItem,
+                                colorBlendMode: BlendMode.modulate,
+                              ),
+                              if (selectedShape != null)
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100,
+                                  child: InteractiveViewer(
+                                    boundaryMargin: EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: _calculateBoundaryMargin(),
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
                                     child: Image.asset(
                                       selectedShape,
                                       color: selectedColor,
                                       colorBlendMode: BlendMode.modulate,
                                     ),
                                   ),
-                                // Selected photo widget (Interactive)
-                                if (selectedPhoto != null)
-                                  Positioned(
-                                    height: 350,
-                                    left: 100,
-                                    right: 100, // Adjust positioning as needed
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          isInteractingWithText = true;
-                                        });
-                                      },
-                                      child: IgnorePointer(
-                                        ignoring: isInteractingWithText,
-                                        child: InteractiveViewer(
-                                          boundaryMargin: EdgeInsets.symmetric(
-                                            horizontal: 35,
-                                            vertical:
-                                                _calculateBoundaryMargin(),
-                                          ),
-                                          minScale: 0.1,
-                                          maxScale: 1.6,
-                                          child: Image.memory(
-                                            selectedPhoto.data,
-                                            height: 200,
-                                            width: 200,
-                                          ),
-                                        ),
-                                      ),
+                                ),
+                              // Selected photo widget (Interactive)
+                              if (selectedPhoto != null)
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100, // Adjust positioning as needed
+                                  child: InteractiveViewer(
+                                    boundaryMargin: EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: _calculateBoundaryMargin(),
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
+                                    child: Image.memory(
+                                      selectedPhoto.data,
+                                      height: 200,
+                                      width: 200,
                                     ),
                                   ),
-                                if (selectedIcons != null)
-                                  Positioned(
-                                    height: 450,
-                                    left: 100,
-                                    right: 100,
+                                ),
+                              if (selectedIcons != null)
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100,
+                                  child: InteractiveViewer(
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                      horizontal: 35,
+                                      vertical: 150,
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
                                     child: Image.asset(
                                       selectedIcons,
                                       color: selectedIconColor,
                                       colorBlendMode: BlendMode.modulate,
                                     ),
                                   ),
-                                Positioned(
-                                  height: 450,
-                                  left: 100,
-                                  right: 100,
-                                  child: IgnorePointer(
-                                    ignoring: isInteractingWithText,
-                                    child: InteractiveViewer(
-                                      boundaryMargin:
-                                          const EdgeInsets.symmetric(
-                                        horizontal: 35,
-                                        vertical: 150,
-                                      ),
-                                      minScale: 0.1,
-                                      maxScale: 1.6,
-                                      child: Center(
-                                        child: Consumer<TextModel>(
-                                          builder: (context, textModel, child) {
-                                            return Text(
-                                              textModel.text,
-                                              style: GoogleFonts.getFont(
-                                                textModel.font,
-                                                fontSize: _fontSize,
-                                                color: textModel.color,
-                                              ),
-                                              textAlign: textModel.align,
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                ),
+                              // Entire Positioned widget containing the text is now wrapped with InteractiveViewer
+                              Positioned(
+                                height: 450,
+                                left: 100,
+                                right: 100,
+                                child: InteractiveViewer(
+                                  boundaryMargin: const EdgeInsets.symmetric(
+                                    horizontal: 35,
+                                    vertical: 150,
+                                  ),
+                                  minScale: 0.1,
+                                  maxScale: 1.6,
+                                  child: Center(
+                                    child: Consumer<TextModel>(
+                                      builder: (context, textModel, child) {
+                                        return Text(
+                                          textModel.text,
+                                          style: GoogleFonts.getFont(
+                                            textModel.font,
+                                            fontSize: _fontSize,
+                                            color: textModel.color,
+                                          ),
+                                          textAlign: textModel.align,
+                                        );
+                                      },
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         SizedBox(
