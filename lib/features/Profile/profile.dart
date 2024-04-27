@@ -1,5 +1,6 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,16 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return BackGroundImage(
       child: Scaffold(
+        appBar: const CustomAppBar(
+          text: Text(
+            'Profile',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [

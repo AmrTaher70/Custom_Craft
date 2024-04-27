@@ -151,6 +151,7 @@ class _MainDesignState extends State<MainDesign> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBarDesign(
           onPressed: () async {
+            // ignore: unused_local_variable
             Uint8List? savedPhoto = await _saveDesign();
             {
               Navigator.of(context).push(
@@ -252,7 +253,7 @@ class _MainDesignState extends State<MainDesign> {
                                     vertical: 150,
                                   ),
                                   minScale: 0.1,
-                                  maxScale: 1.6,
+                                  maxScale: 1,
                                   child: Center(
                                     child: Consumer<TextModel>(
                                       builder: (context, textModel, child) {

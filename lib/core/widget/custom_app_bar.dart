@@ -4,7 +4,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({super.key, required this.text});
+  final Text text;
 
   @override
   Size get preferredSize => const Size.fromHeight(62);
@@ -21,14 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         toolbarHeight: 72,
         elevation: 0,
-        title: const Text(
-          'Choose a Blank',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
+        title: text,
         backgroundColor: const Color(0xffFAFAFA).withOpacity(.6),
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),

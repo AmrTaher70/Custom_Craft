@@ -10,7 +10,16 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackGroundImage(
       child: Scaffold(
-        appBar: const CustomAppBar(),
+        appBar: const CustomAppBar(
+          text: Text(
+            'Choose a Blank',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
