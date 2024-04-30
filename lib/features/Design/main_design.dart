@@ -93,18 +93,21 @@ class _MainDesignState extends State<MainDesign> {
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
+      // ignore: avoid_print
       print("Error capturing design: $e");
       return null;
     }
   }
 
   Future<Uint8List?> _saveDesign() async {
+    // ignore: avoid_print
     print("Saving design...");
     try {
       Uint8List? designImage = await _captureDesign();
       if (designImage != null) {
         final blob = html.Blob([designImage]);
         final url = html.Url.createObjectUrlFromBlob(blob);
+        // ignore: unused_local_variable
         final anchor = html.AnchorElement(href: url)
           ..setAttribute("download", "design_image.png")
           ..click();
@@ -121,6 +124,7 @@ class _MainDesignState extends State<MainDesign> {
         );
       }
     } catch (e) {
+      // ignore: avoid_print
       print("Error saving design: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to save design')),
@@ -248,12 +252,12 @@ class _MainDesignState extends State<MainDesign> {
                                 left: 100,
                                 right: 100,
                                 child: InteractiveViewer(
-                                  boundaryMargin: const EdgeInsets.symmetric(
+                                  boundaryMargin: EdgeInsets.symmetric(
                                     horizontal: 35,
-                                    vertical: 150,
+                                    vertical: _calculateBoundaryMargin(),
                                   ),
                                   minScale: 0.1,
-                                  maxScale: 1,
+                                  maxScale: 1.6,
                                   child: Center(
                                     child: Consumer<TextModel>(
                                       builder: (context, textModel, child) {

@@ -11,6 +11,7 @@ class AssetsData {
   static const BackGroundOfBoarding = 'assets/images/BackgroundOfBoarding.png';
   static const BackGroundOfItem = 'assets/images/backgroundForItem.png';
   static const homePage = 'assets/images/homePage.png';
+  static const imageProfile = 'assets/images/imageProfile.jpg';
   static const navBarBackGround = 'assets/images/navBarBackGround.png';
   static const hoodie = 'assets/images/hodi.png';
   static const hoodieBack = 'assets/images/hoodieBack.png';

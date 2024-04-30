@@ -5,6 +5,7 @@ import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../Category/category.dart';
 
@@ -124,16 +125,167 @@ class _ProfileState extends State<Profile> {
                 )
               ],
             ),
-            const Center(
-              child: Text(
-                'Page 2',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage(AssetsData.imageProfile),
+                        minRadius: 32,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Amr Taher',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const HomeScreen(),
+                          transition: Transition.fadeIn);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.brush_outlined),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          'My Designs',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        Spacer(),
+                        Icon(Icons.keyboard_arrow_right_outlined),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  width: 343,
+                  color: const Color(0xffD8D8D8),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const HomeScreen(),
+                          transition: Transition.fadeIn);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.key),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          'Change Password',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        Spacer(),
+                        Icon(Icons.keyboard_arrow_right_outlined),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  width: 343,
+                  color: const Color(0xffD8D8D8),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const HomeScreen(),
+                          transition: Transition.fadeIn);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.help_outline),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          'Help & Support',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        Spacer(),
+                        Icon(Icons.keyboard_arrow_right_outlined),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  width: 343,
+                  color: const Color(0xffD8D8D8),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const HomeScreen(),
+                          transition: Transition.fadeIn);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.logout_outlined),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          'Sign out',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        // Spacer(),
+                        // Icon(Icons.keyboard_arrow_right_outlined),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  width: 343,
+                  color: const Color(0xffD8D8D8),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+              ],
+            )
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
