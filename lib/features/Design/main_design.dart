@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/features/Similarity/similarity_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
@@ -39,6 +40,7 @@ class MainDesign extends StatefulWidget {
 class _MainDesignState extends State<MainDesign> {
   final GlobalKey _designKey = GlobalKey();
   final PageController _pageController = PageController(viewportFraction: 0.2);
+  final TransformationController _controller = TransformationController();
   int _currentPageIndex = 0;
 
   List<String> images = [
@@ -54,6 +56,21 @@ class _MainDesignState extends State<MainDesign> {
   void initState() {
     super.initState();
     _pageController.addListener(_handlePageChange);
+    _loadState();
+  }
+
+  Future<void> _loadState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Matrix4? matrix = Matrix4.fromList(
+        prefs.getStringList('matrix')?.map((e) => double.parse(e)).toList() ??
+            []);
+    _controller.value = matrix;
+  }
+
+  Future<void> _saveState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('matrix',
+        _controller.value.storage.toList().map((e) => e.toString()).toList());
   }
 
   @override
@@ -252,12 +269,16 @@ class _MainDesignState extends State<MainDesign> {
                                 left: 100,
                                 right: 100,
                                 child: InteractiveViewer(
+                                  transformationController: _controller,
                                   boundaryMargin: EdgeInsets.symmetric(
                                     horizontal: 35,
                                     vertical: _calculateBoundaryMargin(),
                                   ),
                                   minScale: 0.1,
                                   maxScale: 1.6,
+                                  onInteractionEnd: (details) {
+                                    _saveState();
+                                  },
                                   child: Center(
                                     child: Consumer<TextModel>(
                                       builder: (context, textModel, child) {
@@ -274,7 +295,7 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),

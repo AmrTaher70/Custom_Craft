@@ -29,7 +29,7 @@ class AddText extends StatefulWidget {
 
 class _AddTextState extends State<AddText> {
   late final TextEditingController _textControllerOfAddText;
-  String dropdownValue = 'Roboto';
+  String dropdownValue = 'Bitter';
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
   TextAlign textAlign = TextAlign.center;
