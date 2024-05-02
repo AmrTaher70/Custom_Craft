@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/features/Similarity/similarity_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
@@ -30,8 +32,10 @@ class MainDesign extends StatefulWidget {
   const MainDesign({
     Key? key,
     this.selectedPhoto,
+    this.image,
   }) : super(key: key);
   final Photo? selectedPhoto;
+  final Uint8List? image;
 
   @override
   State<MainDesign> createState() => _MainDesignState();
@@ -60,17 +64,22 @@ class _MainDesignState extends State<MainDesign> {
   }
 
   Future<void> _loadState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Matrix4? matrix = Matrix4.fromList(
-        prefs.getStringList('matrix')?.map((e) => double.parse(e)).toList() ??
-            []);
-    _controller.value = matrix;
+    // Retrieve matrix data from local storage
+    final jsonString = window.localStorage['matrix'];
+    if (jsonString != null) {
+      final List<dynamic> list = json.decode(jsonString);
+      final List<double> matrixList =
+          list.map<double>((value) => value.toDouble()).toList();
+      final Matrix4 matrix = Matrix4.fromList(matrixList);
+      _controller.value = matrix;
+    }
   }
 
   Future<void> _saveState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('matrix',
-        _controller.value.storage.toList().map((e) => e.toString()).toList());
+    // Save matrix data to local storage
+    final List<double> matrixList = _controller.value.storage.toList();
+    final jsonString = json.encode(matrixList);
+    window.localStorage['matrix'] = jsonString;
   }
 
   @override
@@ -263,6 +272,38 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                   ),
                                 ),
+                              Consumer<AiPhotoProvider>(
+                                builder: (context, aiPhotoProvider, _) {
+                                  final selectedAiPhoto =
+                                      aiPhotoProvider.selectedAiPhoto;
+                                  if (selectedAiPhoto != null) {
+                                    return Positioned(
+                                      height: 350,
+                                      left: 100,
+                                      right: 100,
+                                      child: Container(
+                                        width: 200,
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          color: Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          child: Image.memory(
+                                            selectedAiPhoto.data,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                },
+                              ),
                               // Entire Positioned widget containing the text is now wrapped with InteractiveViewer
                               Positioned(
                                 height: 450,

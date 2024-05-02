@@ -1,18 +1,29 @@
+import 'dart:typed_data';
+
+import 'package:custom_craft/api/imageGenerator/conver_text_to_image.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../core/utils/models/ai_image.dart';
 
 class AiGenerator extends StatefulWidget {
-  const AiGenerator({super.key});
+  final Uint8List? image;
+
+  const AiGenerator({super.key, this.image});
 
   @override
   State<AiGenerator> createState() => _AiGeneratorState();
 }
 
+// bool isLoading = false;
+Future<void>? _future;
 final TextEditingController _textOfImage = TextEditingController();
 
 class _AiGeneratorState extends State<AiGenerator> {
   @override
   Widget build(BuildContext context) {
+    var selectedAiPhoto = Provider.of<AiPhotoProvider>(context).selectedAiPhoto;
     return Scaffold(
         backgroundColor: const Color(0xffFAFAFA).withOpacity(.5),
         appBar: AppBar(
@@ -71,7 +82,7 @@ class _AiGeneratorState extends State<AiGenerator> {
                           controller: _textOfImage,
                           cursorColor: const Color(0xffD9D9D9),
                           decoration: InputDecoration(
-                            filled: true, // Set filled to true
+                            //    filled: true, // Set filled to true
                             fillColor: const Color(
                                 0xffD9D9D9), // Set fill color to Color(0xffD9D9D9)
                             hintText: 'Enter your prompt',
@@ -92,7 +103,12 @@ class _AiGeneratorState extends State<AiGenerator> {
                         height: 45,
                         width: 105,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              _future = convertTextToImage(
+                                  _textOfImage.text, context);
+                            });
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AssetsColors.primaryColor,
                             shape: RoundedRectangleBorder(
@@ -105,9 +121,26 @@ class _AiGeneratorState extends State<AiGenerator> {
                             ),
                             elevation: 1, // Button elevation
                           ),
-                          child: const Text(
-                            'Generate',
-                            style: TextStyle(color: Colors.white),
+                          child: FutureBuilder<void>(
+                            future: _future,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<void> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                );
+                              } else {
+                                return const Text(
+                                  'Generate',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              }
+                            },
                           ),
                         ),
                       ),

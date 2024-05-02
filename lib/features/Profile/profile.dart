@@ -2,10 +2,10 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../Category/category.dart';
 
@@ -30,14 +30,24 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return BackGroundImage(
       child: Scaffold(
-        appBar: const CustomAppBar(
-          text: Text(
+        appBar: CustomAppBar(
+          text: const Text(
             'Profile',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Color(0xff2E2E2E),
+              size: 24,
+            ),
+            onPressed: () {
+              Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
+            },
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -186,7 +196,7 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const HomeScreen(),
+                      Get.to(() => const NewPasswordScreen(),
                           transition: Transition.fadeIn);
                     },
                     child: const Row(

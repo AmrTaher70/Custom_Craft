@@ -1,11 +1,10 @@
-import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.text});
+  const CustomAppBar({Key? key, required this.text, this.leading})
+      : super(key: key);
   final Text text;
+  final Widget? leading;
 
   @override
   Size get preferredSize => const Size.fromHeight(62);
@@ -26,16 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: const Color(0xffFAFAFA).withOpacity(.6),
         leading: Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Color(0xff2E2E2E),
-              size: 24,
-            ),
-            onPressed: () {
-              Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
-            },
-          ),
+          child: leading,
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
+import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Category/category.dart';
 import 'package:custom_craft/features/Profile/profile.dart';
@@ -43,6 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return BackGroundImage(
       child: Scaffold(
+        appBar: const CustomAppBar(
+          text: Text(
+            'Home',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -240,10 +251,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(bottom: 25),
           child: FloatingActionButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CategoryScreen()),
-              );
+              Get.to(() => const CategoryScreen(),
+                  transition: Transition.fadeIn);
             },
             backgroundColor: AssetsColors.primaryColor,
             elevation: 5,

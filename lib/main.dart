@@ -1,4 +1,5 @@
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
+import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
@@ -20,6 +21,7 @@ void main() {
           ChangeNotifierProvider(create: (context) => TextModel()),
           ChangeNotifierProvider(create: (context) => ColorItemModel()),
           ChangeNotifierProvider(create: (context) => PhotoProvider()),
+          ChangeNotifierProvider(create: (context) => AiPhotoProvider()),
           ChangeNotifierProvider(create: (context) => ShapeProvider()),
           ChangeNotifierProvider(create: (context) => IconProvider()),
           ChangeNotifierProvider(create: (context) => SavedImageModel()),
