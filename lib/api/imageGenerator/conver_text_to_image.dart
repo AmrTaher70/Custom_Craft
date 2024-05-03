@@ -46,7 +46,7 @@ Future<dynamic> convertTextToImage(
       'Content-Type': 'application/json',
       'Authorization':
           //add ypur secreat key here
-          'Bearer sk-YyGUKwXTP9xeyPRSkXvya6eFgFCiiDxX1CGeT9Wn8if0Wv9X',
+          'Bearer sk-gp5jNKnm2Rfq1qayMNQwmngrkkFMpoJuDFDi7XuIlEa1DbeK',
       'Accept': 'image/png',
     },
     body: jsonEncode({

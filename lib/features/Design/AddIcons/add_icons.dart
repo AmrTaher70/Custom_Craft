@@ -16,6 +16,7 @@ class IconProvider extends ChangeNotifier {
     AssetsData.icons6,
     AssetsData.icons7,
     AssetsData.icons8,
+    
   ];
   String? _selectedIcons;
   Color _selectedColor =
