@@ -78,7 +78,7 @@ class _ProfileState extends State<Profile> {
                                 },
                                 icon: const Icon(Icons.home_outlined,
                                     color: Color(0xff8E8E8E)),
-                                iconSize: 24,
+                                iconSize: 32,
                               ),
                               const Text(
                                 'Home',
@@ -117,7 +117,7 @@ class _ProfileState extends State<Profile> {
                                 },
                                 icon: const Icon(Icons.person_2_outlined,
                                     color: AssetsColors.primaryColor),
-                                iconSize: 24,
+                                iconSize: 32,
                               ),
                               const Text(
                                 'Profile',

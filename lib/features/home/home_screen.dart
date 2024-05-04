@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: _selectedIndex == 0
                                         ? AssetsColors.primaryColor
                                         : const Color(0xff8E8E8E)),
-                                iconSize: 24,
+                                iconSize: 32,
                               ),
                               const Text(
                                 'Home',
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: _selectedIndex == 1
                                         ? AssetsColors.primaryColor
                                         : const Color(0xff8E8E8E)),
-                                iconSize: 24,
+                                iconSize: 32,
                               ),
                               Text(
                                 'Profile',
