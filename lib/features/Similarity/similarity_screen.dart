@@ -23,7 +23,8 @@ class SimilarityScreenState extends State<SimilarityScreen> {
     final screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
     final double height = screenSize.height;
-    Uint8List? savedPhoto = Provider.of<SavedImageModel>(context).savedImage;
+    List<Uint8List?> savedPhotos =
+        Provider.of<SavedImageModel>(context).savedImages;
     return BackGroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -51,9 +52,9 @@ class SimilarityScreenState extends State<SimilarityScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 100),
-                      child: savedPhoto != null
+                      child: savedPhotos.isNotEmpty
                           ? Image.memory(
-                              savedPhoto,
+                              savedPhotos.last!,
                               height: 407,
                               width: 343,
                               fit: BoxFit.fitHeight,

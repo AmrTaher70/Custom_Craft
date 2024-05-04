@@ -1,14 +1,13 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 
 class SavedImageModel extends ChangeNotifier {
-  Uint8List? _savedImage;
+  final List<Uint8List?> _savedImages = [];
 
-  Uint8List? get savedImage => _savedImage;
+  List<Uint8List?> get savedImages => _savedImages;
 
   void saveImage(Uint8List? image) {
-    _savedImage = image;
+    _savedImages.add(image);
     notifyListeners();
   }
 }

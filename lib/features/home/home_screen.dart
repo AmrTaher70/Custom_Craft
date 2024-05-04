@@ -40,8 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Uint8List? savedPhoto = Provider.of<SavedImageModel>(context).savedImage;
-
+    List<Uint8List?> savedPhotos =
+        Provider.of<SavedImageModel>(context).savedImages;
     return BackGroundImage(
       child: Scaffold(
         appBar: const CustomAppBar(
@@ -146,12 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Center(
-              child: savedPhoto != null
+              child: savedPhotos.isNotEmpty
                   ? Padding(
                       padding:
                           const EdgeInsets.only(top: 10, left: 15, right: 15),
                       child: GridView.builder(
-                        itemCount: 1,
+                        itemCount: savedPhotos.length,
                         clipBehavior: Clip.none,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -198,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Center(
                                         child: Image.memory(
-                                          savedPhoto,
+                                          savedPhotos[index]!,
                                           height: 118,
                                           width: 98,
                                           fit: BoxFit.fitHeight,

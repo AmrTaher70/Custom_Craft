@@ -20,14 +20,14 @@ class ResizableDraggableImage extends StatefulWidget {
 class _ResizableDraggableImageState extends State<ResizableDraggableImage> {
   final double _width = 0.0;
   final double _height = 0.0;
-  double _top = 0.0;
-  double _left = 0.0;
+  double top = 0.0;
+  double left = 0.0;
   final double _scale = 1.0;
 
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
-      _left += details.delta.dx;
-      _top += details.delta.dy;
+      left += details.delta.dx;
+      top += details.delta.dy;
     });
   }
 
