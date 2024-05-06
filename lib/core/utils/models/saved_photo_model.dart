@@ -10,4 +10,9 @@ class SavedImageModel extends ChangeNotifier {
     _savedImages.add(image);
     notifyListeners();
   }
+
+  void removeImage(int index) {
+    _savedImages.removeAt(index);
+    notifyListeners();
+  }
 }

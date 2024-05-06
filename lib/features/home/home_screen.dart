@@ -163,55 +163,103 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSpacing: 0,
                         ),
                         itemBuilder: (context, index) {
-                          return Container(
-                            height: 153,
-                            width: 164,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 20,
-                                  color: Colors.grey.withOpacity(.1),
-                                  spreadRadius: 20,
-                                  offset: const Offset(10, 10),
-                                )
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MainDesign()),
-                                  );
-                                },
-                                child: Card(
-                                  color:
-                                      const Color(0xffADADAD).withOpacity(.1),
-                                  elevation: 0,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Image.memory(
-                                          savedPhotos[index]!,
-                                          height: 118,
-                                          width: 98,
-                                          fit: BoxFit.fitHeight,
-                                        ),
+                          return Stack(
+                            children: [
+                              Container(
+                                height: 153,
+                                width: 164,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 20,
+                                      color: Colors.grey.withOpacity(.1),
+                                      spreadRadius: 20,
+                                      offset: const Offset(10, 10),
+                                    )
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainDesign()),
+                                      );
+                                    },
+                                    child: Card(
+                                      color: const Color(0xffADADAD)
+                                          .withOpacity(.1),
+                                      elevation: 0,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: Image.memory(
+                                              savedPhotos[index]!,
+                                              height: 118,
+                                              width: 98,
+                                              fit: BoxFit.fitHeight,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              Positioned(
+                                top: 0,
+                                left: 5,
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.close_outlined,
+                                    color: Colors.red,
+                                    size: 24,
+                                  ), // replace with your desired icon
+                                  onPressed: () {
+                                    Provider.of<SavedImageModel>(context,
+                                            listen: false)
+                                        .removeImage(index);
+                                  },
+                                ),
+                              ),
+                              Positioned(
+                                top: 10,
+                                right: 20,
+                                child: Container(
+                                  height: 20,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                        color: AssetsColors.primaryColor,
+                                        width: 1),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Center(
+                                    child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                      icon: const Icon(
+                                        Icons.open_in_full_sharp,
+                                        color: AssetsColors.primaryColor,
+                                        size: 16,
+                                      ), // replace with your desired icon
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           );
                         },
                       ),
