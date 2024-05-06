@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
+import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/features/Similarity/similarity_screen.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets.dart';
@@ -171,6 +172,7 @@ class _MainDesignState extends State<MainDesign> {
     final align = textModel.align;
     final font = textModel.font;
     var selectedPhoto = Provider.of<PhotoProvider>(context).selectedPhoto;
+    var selectedAiPhoto = Provider.of<AiPhotoProvider>(context).selectedAiPhoto;
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
     var selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
@@ -186,7 +188,7 @@ class _MainDesignState extends State<MainDesign> {
             {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const SimilarityScreen(),
+                  builder: (context) => const SearchOnItem(),
                 ),
               );
             }
@@ -580,6 +582,48 @@ class _MainDesignState extends State<MainDesign> {
                                                         context,
                                                         listen: false)
                                                     .setSelectedPhoto(null);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              selectedAiPhoto != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 56,
+                                            width: 56,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffD9D9D9)
+                                                  .withOpacity(.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: () {},
+                                              child: Image.memory(
+                                                selectedAiPhoto.data,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -10,
+                                            left: -10,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.close_outlined,
+                                                size: 16,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () {
+                                                Provider.of<AiPhotoProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .selectedAiPhoto = null;
                                               },
                                             ),
                                           ),

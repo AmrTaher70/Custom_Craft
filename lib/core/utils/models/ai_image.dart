@@ -11,6 +11,10 @@ class AiPhotoProvider with ChangeNotifier {
 
   // Getter for selectedPhoto
   Photo? get selectedAiPhoto => _selectedAiPhoto;
+  set selectedAiPhoto(Photo? photo) {
+    _selectedAiPhoto = photo;
+    notifyListeners();
+  }
 
   void addPhoto(Uint8List data) {
     if (data.isNotEmpty) {

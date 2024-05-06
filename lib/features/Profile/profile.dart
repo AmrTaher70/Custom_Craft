@@ -59,8 +59,11 @@ class _ProfileState extends State<Profile> {
               children: [
                 Stack(
                   children: [
-                    Image.asset(
-                      AssetsData.navBarBackGround,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Image.asset(
+                        AssetsData.navBarBackGround,
+                      ),
                     ),
                     Row(
                       children: [
@@ -92,7 +95,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         const Spacer(),
                         const Padding(
-                          padding: EdgeInsets.only(top: 58, bottom: 16),
+                          padding: EdgeInsets.only(top: 70, bottom: 16),
                           child: Center(
                               child: Text(
                             'Customize',

@@ -5,6 +5,9 @@ class AssetsData {
   static const onBoarding2 = 'assets/images/onBoardingImage2.png';
   static const onBoarding3 = 'assets/images/onBoardingImage3.png';
   static const googleLogo = 'assets/images/google_logo.png';
+  static const googleLensLogo = 'assets/images/Google_Lens_Icon.svg.png';
+  static const sheIn = 'assets/images/sheinLogo.png';
+  static const bingLogo = 'assets/images/Bing-Emblem.png';
   static const forgetPassword = 'assets/images/forgotPasswordImage.png';
   static const newPassword = 'assets/images/newPasswordImage.png';
   static const verify = 'assets/images/verifyImage.png';
