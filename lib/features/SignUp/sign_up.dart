@@ -1,12 +1,16 @@
+import 'package:custom_craft/api/sign_up_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/services/post_sign_up.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+
+import '../../helper/api.helper.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({
@@ -18,12 +22,94 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
   bool _showPassword = false;
+  Api api = Api();
+// Function to handle sign-up
+  Future signUp() async {
+    try {
+      // Validate the form
+      if (!formKey.currentState!.validate()) {
+        return;
+      }
+
+      // Show loading indicator
+      setState(() {
+        isLoading = true;
+      });
+
+      // Create an instance of SignUpModel using user input
+      SignUpModel signUpData = SignUpModel(
+        userName: userNameController.text,
+        email: emailController.text,
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+      );
+
+      // Convert SignUpModel to JSON
+      Map<String, dynamic> signUpJson = signUpData.toJson();
+
+      // Make API call to sign up
+      dynamic response = await api.post(
+        url: 'http://customcraftt.somee.com/api/Account/register',
+        body: signUpJson,
+      );
+
+      // Handle response (e.g., show success message)
+      print('Sign up successful: $response');
+
+      // Navigate to sign-in screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } catch (e) {
+      // Handle any exceptions
+      print('Error signing up: $e');
+
+      // Hide loading indicator
+      setState(() {
+        isLoading = false;
+      });
+
+      // Check for specific error messages and provide feedback to the user
+      if (e.toString().contains('This UserName is already taken')) {
+        // Show a snackbar to the user indicating that the username is already taken
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('This UserName is already taken. Please try another one.'),
+          ),
+        );
+      } else if (e.toString().contains('This email is already in use!')) {
+        // Show a snackbar to the user indicating that the email is already taken
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('This email is already taken. Please try another one.'),
+          ),
+        );
+      } else {
+        // Show a generic error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('An error occurred. Please try again later.'),
+          ),
+        );
+      }
+    } finally {
+      // Hide loading indicator
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,208 +144,311 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  AssetsData.logo,
-                                  height: 59,
-                                  width: 70,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: width < 600
-                                      ? 40
-                                      : 80), // Adjust padding based on screen size
-                              child: const Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width < 600 ? 40 : width - 80),
-                              child: TextFiledData(
-                                labelText: 'User Name',
-                                controller: _userNameController,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.person_2_outlined),
-                                ),
-                                // Adding email icon
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 40),
-                              child: TextFiledData(
-                                labelText: 'Email',
-                                controller: _emailController,
-                                suffixIcon: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.email_outlined),
-                                ),
-                                title: 'Email', // Adding email icon
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width < 600 ? 40 : width - 80),
-                              child: TextFiledData(
-                                labelText: 'Password',
-                                controller: _passwordController,
-                                obscureText: !_showPassword,
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showPassword = !_showPassword;
-                                    });
-                                  },
-                                  icon: _showPassword
-                                      ? const Icon(Icons.visibility_outlined)
-                                      : const Icon(
-                                          Icons.visibility_off_outlined),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width < 600 ? 40 : width - 80),
-                              child: TextFiledData(
-                                labelText: 'Confirm Password',
-                                controller: _confirmPasswordController,
-                                obscureText: !_showPassword,
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showPassword = !_showPassword;
-                                    });
-                                  },
-                                  icon: _showPassword
-                                      ? const Icon(Icons.visibility_outlined)
-                                      : const Icon(
-                                          Icons.visibility_off_outlined),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            // Sign Up Button
-                            Align(
-                              alignment: Alignment.center,
-                              child: SizedBox(
-                                height: 45,
-                                width: 305,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AssetsColors.primaryColor,
-                                    // Background color
-                                    // foregroundColor:
-                                    //     Colors.white, // Text color
-                                    // Button padding
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          12), // Button border radius
-                                    ),
-                                    textStyle: const TextStyle(
-                                      fontSize: 18, // Text size
-                                      fontWeight:
-                                          FontWeight.w400, // Text weight
-                                    ),
-                                    elevation: 5, // Button elevation
+                        Form(
+                          key: formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    AssetsData.logo,
+                                    height: 59,
+                                    width: 70,
                                   ),
-                                  child: const Text(AssetsStrings.appSignUp),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 28,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 90,
-                                  height: 2,
-                                  color: const Color(0xff8E8E8E),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: width < 600
+                                        ? 40
+                                        : 80), // Adjust padding based on screen size
+                                child: const Align(
+                                  alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Or Sign Up with',
+                                    'Sign Up',
                                     style: TextStyle(
-                                      color: Color(0xff8E8E8E),
-                                    ),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                Container(
-                                  width: 90,
-                                  height: 2,
-                                  color: const Color(0xff8E8E8E),
+                              ),
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width < 600 ? 40 : width - 80),
+                                child: TextFiledData(
+                                  labelText: 'User Name',
+                                  controller: userNameController,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.person_2_outlined),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Username is required';
+                                    }
+                                    return null;
+                                  },
+                                  // Adding email icon
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Center(
-                              child: Image.asset(AssetsData.googleLogo,
-                                  height: 40, width: 40),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 84, bottom: 40),
-                              child: Row(
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: TextFiledData(
+                                  labelText: 'Email',
+                                  controller: emailController,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.email_outlined),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Email is required';
+                                    } else if (!value.contains('@') ||
+                                        !value.contains('.')) {
+                                      return 'Invalid email format';
+                                    }
+                                    return null; // Return null if validation succeeds
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width < 600 ? 40 : width - 80),
+                                child: TextFiledData(
+                                  labelText: 'Password',
+                                  controller: passwordController,
+                                  obscureText: !_showPassword,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _showPassword = !_showPassword;
+                                      });
+                                    },
+                                    icon: _showPassword
+                                        ? const Icon(Icons.visibility_outlined)
+                                        : const Icon(
+                                            Icons.visibility_off_outlined,
+                                          ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Password is required';
+                                    } else if (!value
+                                        .contains(RegExp(r'[A-Z]'))) {
+                                      return 'Password must contain at least one capital letter';
+                                    } else if (!value.contains(
+                                        RegExp(r'[!@#$%^&*(),.?":{}|<>_]'))) {
+                                      return 'Password must contain at least one special character';
+                                    } else if (!value
+                                        .contains(RegExp(r'[0-9]'))) {
+                                      return 'Password must contain at least one number';
+                                    }
+
+                                    return null; // Return null if validation succeeds
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width < 600 ? 40 : width - 80),
+                                child: TextFiledData(
+                                  labelText: 'Confirm Password',
+                                  controller: confirmPasswordController,
+                                  obscureText: !_showPassword,
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _showPassword = !_showPassword;
+                                      });
+                                    },
+                                    icon: _showPassword
+                                        ? const Icon(Icons.visibility_outlined)
+                                        : const Icon(
+                                            Icons.visibility_off_outlined,
+                                          ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Confirm Password is required';
+                                    } else if (value !=
+                                        passwordController.text) {
+                                      return 'Passwords do not match';
+                                    }
+                                    return null; // Return null if validation succeeds
+                                  },
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              // Sign Up Button
+                              Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  height: 45,
+                                  width: 305,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      // Validate the form
+                                      if (formKey.currentState!.validate()) {
+                                        try {
+                                          // Show loading indicator on the button
+                                          setState(() {
+                                            isLoading = true;
+                                          });
+
+                                          // Attempt sign-up
+                                          await signUp();
+
+                                          // Navigate to sign-in screen if sign-up succeeds
+                                          // Navigator.pushReplacement(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           const LoginScreen()),
+                                          // );
+                                        } catch (e) {
+                                          // Hide loading indicator
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+
+                                          // Display debug message with error
+                                          debugPrint(
+                                              'Error during sign-up: $e');
+
+                                          // Show snackbar with error message
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'An error occurred. Please try again later.'),
+                                            ),
+                                          );
+                                        } finally {
+                                          // Hide loading indicator after sign-up attempt is completed
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                        }
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          AssetsColors.primaryColor,
+                                      // Background color
+                                      // foregroundColor:
+                                      //     Colors.white, // Text color
+                                      // Button padding
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            12), // Button border radius
+                                      ),
+                                      textStyle: const TextStyle(
+                                        fontSize: 18, // Text size
+                                        fontWeight:
+                                            FontWeight.w400, // Text weight
+                                      ),
+                                      elevation: 5, // Button elevation
+                                    ),
+                                    child: isLoading
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Colors.white),
+                                            ),
+                                          )
+                                        : const Text(AssetsStrings.appSignUp),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 28,
+                              ),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    'Already have an account?',
-                                    style: TextStyle(fontSize: 18),
+                                  Container(
+                                    width: 90,
+                                    height: 2,
+                                    color: const Color(0xff8E8E8E),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Get.to(
-                                        () => const LoginScreen(),
-                                      );
-                                    },
-                                    child: const Text(
-                                      'Log In',
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    child: Text(
+                                      'Or Sign Up with',
                                       style: TextStyle(
-                                        color: AssetsColors.primaryColor,
-                                        fontSize: 18,
+                                        color: Color(0xff8E8E8E),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  Container(
+                                    width: 90,
+                                    height: 2,
+                                    color: const Color(0xff8E8E8E),
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Center(
+                                child: Image.asset(AssetsData.googleLogo,
+                                    height: 40, width: 40),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 84, bottom: 40),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Already have an account?',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.to(
+                                          () => const LoginScreen(),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Log In',
+                                        style: TextStyle(
+                                          color: AssetsColors.primaryColor,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
