@@ -153,6 +153,6 @@ class SimilarityScreenState extends State<SimilarityScreen> {
   }
 }
 
- // savedPhoto != null
-              //     ? Image.memory(savedPhoto)
-              //     : const Text('No saved photo'),
+// savedPhoto != null
+//     ? Image.memory(savedPhoto)
+//     : const Text('No saved photo'),

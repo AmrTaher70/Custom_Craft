@@ -18,6 +18,8 @@ class AssetsData {
   static const navBarBackGround = 'assets/images/navBarBackGround.png';
   static const hoodie = 'assets/images/hodi.png';
   static const hoodieBack = 'assets/images/hoodieBack.png';
+  static const bag = 'assets/images/bag.png';
+  static const phone = 'assets/images/phone.png';
   static const star = 'assets/images/Star.png';
   static const circle = 'assets/images/Star3.png';
   static const icons1 = 'assets/images/Capa_1.png';

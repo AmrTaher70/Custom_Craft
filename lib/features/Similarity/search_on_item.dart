@@ -198,6 +198,6 @@ class SearchOnItemState extends State<SearchOnItem> {
   }
 }
 
- // savedPhoto != null
-              //     ? Image.memory(savedPhoto)
-              //     : const Text('No saved photo'),
+// savedPhoto != null
+//     ? Image.memory(savedPhoto)
+//     : const Text('No saved photo'),
