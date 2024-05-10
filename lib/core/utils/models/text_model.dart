@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextModel extends ChangeNotifier {
-  String text = '';
+  String text = "";
   Color color = Colors.white;
   TextAlign align = TextAlign.center;
   String font = 'Bitter';

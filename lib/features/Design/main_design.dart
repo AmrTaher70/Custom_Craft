@@ -194,15 +194,18 @@ class _MainDesignState extends State<MainDesign> {
             }
           },
         ),
-        body: GestureDetector(
-          child: Center(
-            child: Column(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    Image.asset(AssetsData.BackGroundOfItem),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                Image.asset(AssetsData.BackGroundOfItem),
+                Center(
+                  child: GestureDetector(
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RepaintBoundary(
                           key: _designKey,
@@ -217,21 +220,22 @@ class _MainDesignState extends State<MainDesign> {
                                 colorBlendMode: BlendMode.modulate,
                               ),
                               if (selectedShape != null)
-                                Positioned(
-                                  height: 350,
-                                  left: 100,
-                                  right: 100,
-                                  child: InteractiveViewer(
-                                    boundaryMargin: EdgeInsets.symmetric(
-                                      horizontal: 35,
-                                      vertical: _calculateBoundaryMargin(),
-                                    ),
-                                    minScale: 0.1,
-                                    maxScale: 1.6,
-                                    child: Image.asset(
-                                      selectedShape,
-                                      color: selectedColor,
-                                      colorBlendMode: BlendMode.modulate,
+                                Positioned.fill(
+                                  child: Center(
+                                    child: InteractiveViewer(
+                                      boundaryMargin:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 35, vertical: 140),
+                                      minScale: 0.1,
+                                      maxScale: 1.6,
+                                      child: Container(
+                                        color: Colors.amber,
+                                        child: Image.asset(
+                                          selectedShape,
+                                          color: selectedColor,
+                                          colorBlendMode: BlendMode.modulate,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -248,18 +252,22 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                     minScale: 0.1,
                                     maxScale: 1.6,
-                                    child: Image.memory(
-                                      selectedPhoto.data,
-                                      height: 200,
-                                      width: 200,
+                                    child: Container(
+                                      color: Colors.amber,
+                                      child: Image.memory(
+                                        selectedPhoto.data,
+                                        height: 200,
+                                        width: 200,
+                                      ),
                                     ),
                                   ),
                                 ),
                               if (selectedIcons != null)
                                 Positioned(
-                                  height: 350,
+                                  height: 200, // Adjust these values
+                                  width: 200, // Adjust these values
+                                  top: 50, // Adjust these values
                                   left: 100,
-                                  right: 100,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
@@ -267,10 +275,13 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                     minScale: 0.1,
                                     maxScale: 1.6,
-                                    child: Image.asset(
-                                      selectedIcons,
-                                      color: selectedIconColor,
-                                      colorBlendMode: BlendMode.modulate,
+                                    child: Container(
+                                      color: Colors.red,
+                                      child: Image.asset(
+                                        selectedIcons,
+                                        color: selectedIconColor,
+                                        colorBlendMode: BlendMode.modulate,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -306,35 +317,34 @@ class _MainDesignState extends State<MainDesign> {
                                   }
                                 },
                               ),
-                              // Entire Positioned widget containing the text is now wrapped with InteractiveViewer
-                              Positioned(
-                                height: 450,
-                                left: 100,
-                                right: 100,
-                                child: InteractiveViewer(
-                                  transformationController: _controller,
-                                  boundaryMargin: EdgeInsets.symmetric(
-                                    horizontal: 35,
-                                    vertical: _calculateBoundaryMargin(),
-                                  ),
-                                  minScale: 0.1,
-                                  maxScale: 1.6,
-                                  onInteractionEnd: (details) {
-                                    _saveState();
-                                  },
-                                  child: Center(
-                                    child: Consumer<TextModel>(
-                                      builder: (context, textModel, child) {
-                                        return Text(
-                                          textModel.text,
-                                          style: GoogleFonts.getFont(
-                                            textModel.font,
-                                            fontSize: _fontSize,
-                                            color: textModel.color,
-                                          ),
-                                          textAlign: textModel.align,
-                                        );
-                                      },
+                              Positioned.fill(
+                                child: Center(
+                                  child: InteractiveViewer(
+                                    transformationController: _controller,
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                      horizontal: 400,
+                                      vertical: 400,
+                                    ),
+                                    minScale: 0.1,
+                                    maxScale: 2,
+                                    onInteractionEnd: (details) {
+                                      _saveState();
+                                    },
+                                    child: Container(
+                                      color: Colors.blue,
+                                      child: Consumer<TextModel>(
+                                        builder: (context, textModel, child) {
+                                          return Text(
+                                            textModel.text,
+                                            style: GoogleFonts.getFont(
+                                              textModel.font,
+                                              fontSize: _fontSize,
+                                              color: textModel.color,
+                                            ),
+                                            textAlign: textModel.align,
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -959,11 +969,11 @@ class _MainDesignState extends State<MainDesign> {
                         )
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
