@@ -9,6 +9,7 @@ import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
+import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
 import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: CreateNewPasswordScreen(),
+            child: ForgotPasswordScreen(),
           ),
         ],
       ),

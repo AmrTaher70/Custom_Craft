@@ -136,7 +136,7 @@ class SearchOnItemState extends State<SearchOnItem> {
                             GestureDetector(
                               onTap: () async {
                                 const url =
-                                    'https://m.shein.com/presearch?pageType=all&pagefrom=page_home&search_button=1';
+                                    'https://m.shein.com/pdsearch/hoodie/?ici=s1%60DefaultSearch%60Dress%60_fb%60d0%60PagePreSearch&search_source=3&src_identifier=st%3D3%60sc%3DDress%60sr%3D0%60ps%3D1&src_module=search&src_tab_page_id=page_pre_search1715444298219';
                                 // ignore: deprecated_member_use
                                 if (await canLaunch(url)) {
                                   // ignore: deprecated_member_use

@@ -39,13 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       // Create an instance of SignUpModel using user input
-      LoginModel signUpData = LoginModel(
+      LoginModel logInData = LoginModel(
           email: emailController.text,
           password: passwordController.text,
           rememberMe: rememberMe);
 
       // Convert SignUpModel to JSON
-      Map<String, dynamic> logInJson = signUpData.toJson();
+      Map<String, dynamic> logInJson = logInData.toJson();
 
       // Make API call to sign up
       dynamic response = await api.post(
