@@ -4,10 +4,13 @@ import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
 import 'package:custom_craft/features/Design/main_design.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
+import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
+import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:device_preview/device_preview.dart';
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: LoginScreen(),
+            child: CreateNewPasswordScreen(),
           ),
         ],
       ),

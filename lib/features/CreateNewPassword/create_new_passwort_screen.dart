@@ -2,6 +2,7 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
+import 'package:custom_craft/features/Profile/profile.dart';
 import 'package:custom_craft/features/forgotPassword/verify_email_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,19 +10,22 @@ import 'package:get/get_navigation/get_navigation.dart';
 
 import '../login/login_screen.dart';
 
-class NewPasswordScreen extends StatefulWidget {
-  const NewPasswordScreen({super.key});
+class CreateNewPasswordScreen extends StatefulWidget {
+  const CreateNewPasswordScreen({super.key});
 
   @override
-  State<NewPasswordScreen> createState() => _NewPasswordScreenState();
+  State<CreateNewPasswordScreen> createState() =>
+      _CreateNewPasswordScreenState();
 }
 
 final TextEditingController _newPasswordController = TextEditingController();
+final TextEditingController _previousPasswordController =
+    TextEditingController();
 final TextEditingController _confirmNewPasswordController =
     TextEditingController();
 bool _showPassword = false;
 
-class _NewPasswordScreenState extends State<NewPasswordScreen> {
+class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return BackGroundImage(
@@ -46,8 +50,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Get.to(() => const VerifyEmailScreen(),
-                          transition: Transition.fadeIn);
+                      Get.to(
+                        () => const Profile(),
+                      );
                     },
                     icon: const Icon(
                       Icons.arrow_back_outlined,
@@ -70,15 +75,15 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
-                    height: 64,
+                    height: 16,
                   ),
                   Image.asset(
-                    AssetsData.newPassword,
-                    height: 187,
-                    width: 187,
+                    AssetsData.createNewPassword,
+                    height: 251,
+                    width: 232,
                   ),
                   const SizedBox(
-                    height: 48,
+                    height: 16,
                   ),
                   const Center(
                     child: Text(
@@ -93,6 +98,27 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   ),
                   const SizedBox(
                     height: 24,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextFiledData(
+                      labelText: 'Previous Password',
+                      controller: _previousPasswordController,
+                      obscureText: !_showPassword,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                        icon: _showPassword
+                            ? const Icon(Icons.visibility_outlined)
+                            : const Icon(Icons.visibility_off_outlined),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -141,8 +167,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(() => const LoginScreen(),
-                            transition: Transition.fadeIn);
+                        Get.to(
+                          () => const LoginScreen(),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
@@ -164,7 +191,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 109, bottom: 30),
+                    padding: const EdgeInsets.only(top: 49, bottom: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

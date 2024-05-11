@@ -42,9 +42,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Get.to(
-                        () => const LoginScreen(),
-                      );
+                      Get.to(() => const LoginScreen(),
+                          transition: Transition.fadeIn);
                     },
                     icon: const Icon(
                       Icons.arrow_back_outlined,
@@ -114,9 +113,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(
-                          () => const VerifyEmailScreen(),
-                        );
+                        Get.to(() => const VerifyEmailScreen(),
+                            transition: Transition.fadeIn);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:

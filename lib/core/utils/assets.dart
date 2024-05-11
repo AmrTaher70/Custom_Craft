@@ -10,6 +10,7 @@ class AssetsData {
   static const bingLogo = 'assets/images/Bing-Emblem.png';
   static const forgetPassword = 'assets/images/forgotPasswordImage.png';
   static const newPassword = 'assets/images/newPasswordImage.png';
+  static const createNewPassword = 'assets/images/createNewPassword.png';
   static const verify = 'assets/images/verifyImage.png';
   static const BackGroundOfBoarding = 'assets/images/BackgroundOfBoarding.png';
   static const BackGroundOfItem = 'assets/images/backgroundForItem.png';
