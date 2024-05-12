@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:custom_craft/core/utils/models/ai_image.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
+import 'package:custom_craft/features/Design/Main/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;

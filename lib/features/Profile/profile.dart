@@ -2,6 +2,7 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
@@ -234,12 +235,12 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const HomeScreen(),
+                      Get.to(() => const ContactUs(),
                           transition: Transition.fadeIn);
                     },
                     child: const Row(
                       children: [
-                        Icon(Icons.help_outline),
+                        Icon(Icons.headset_mic_outlined),
                         SizedBox(
                           width: 15,
                         ),

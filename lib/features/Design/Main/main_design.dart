@@ -27,7 +27,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/utils/models/text_model.dart';
+import '../../../core/utils/models/text_model.dart';
 
 class MainDesign extends StatefulWidget {
   const MainDesign({

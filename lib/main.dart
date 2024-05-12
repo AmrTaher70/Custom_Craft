@@ -8,7 +8,7 @@ import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
+import 'package:custom_craft/features/Design/Main/main_design.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';

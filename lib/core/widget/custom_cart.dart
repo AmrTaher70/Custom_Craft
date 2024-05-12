@@ -1,5 +1,5 @@
 import 'package:custom_craft/core/utils/assets/assets.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
+import 'package:custom_craft/features/Design/Main/main_design.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {

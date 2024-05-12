@@ -1,7 +1,7 @@
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/widget/color_picker_for_items.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
-import 'package:custom_craft/features/Design/main_design.dart';
+import 'package:custom_craft/features/Design/Main/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
