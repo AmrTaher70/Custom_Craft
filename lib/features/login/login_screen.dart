@@ -1,7 +1,7 @@
 import 'package:custom_craft/api/login_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';

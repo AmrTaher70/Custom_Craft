@@ -1,4 +1,4 @@
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 
 import 'package:custom_craft/core/widget/sliding_text.dart';
 import 'package:custom_craft/features/onBoarding/on_boarding.dart';

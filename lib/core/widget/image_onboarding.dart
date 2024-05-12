@@ -1,4 +1,4 @@
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

@@ -1,5 +1,5 @@
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/features/Design/main_design.dart';

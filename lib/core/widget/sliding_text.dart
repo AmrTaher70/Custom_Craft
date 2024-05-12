@@ -1,4 +1,4 @@
-import 'package:custom_craft/core/utils/style.dart';
+import 'package:custom_craft/core/utils/assets/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 

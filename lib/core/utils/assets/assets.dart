@@ -14,6 +14,8 @@ class AssetsData {
   static const verify = 'assets/images/verifyImage.png';
   static const BackGroundOfBoarding = 'assets/images/BackgroundOfBoarding.png';
   static const BackGroundOfItem = 'assets/images/backgroundForItem.png';
+  static const backGroundOfContactUs =
+      'assets/images/backGroundOfContantUs.png';
   static const homePage = 'assets/images/homePage.png';
   static const imageProfile = 'assets/images/imageProfile.jpg';
   static const navBarBackGround = 'assets/images/navBarBackGround.png';

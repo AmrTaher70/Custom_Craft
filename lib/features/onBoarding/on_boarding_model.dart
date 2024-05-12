@@ -1,5 +1,5 @@
 import 'package:custom_craft/constans/app_string/app_string.dart';
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 
 class OnBoardingModel {
   final String imgPath;

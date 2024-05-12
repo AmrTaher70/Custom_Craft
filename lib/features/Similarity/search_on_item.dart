@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_similarity.dart';
 import 'package:custom_craft/core/widget/image_background.dart';

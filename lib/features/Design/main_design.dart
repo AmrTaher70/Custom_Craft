@@ -9,7 +9,7 @@ import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/features/Similarity/similarity_screen.dart';
 import 'package:universal_html/html.dart' as html;
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';

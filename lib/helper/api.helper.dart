@@ -52,7 +52,7 @@ class Api {
       {required String url, @required dynamic body, String? token}) async {
     Map<String, String> headers = {};
 
-    headers.addAll({'Content-Type': 'application/x-www-form-urlencoded'});
+    headers.addAll({'Content-Type': 'application/json'});
     if (token != null) {
       headers.addAll({'Authorization': 'Bearer $token'});
     }

@@ -1,5 +1,5 @@
 import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/core/utils/assets.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
