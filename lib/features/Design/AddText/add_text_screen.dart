@@ -6,7 +6,7 @@ import 'package:custom_craft/core/widget/add_text_on_photo.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/core/widget/font_selector.dart';
-import 'package:custom_craft/features/Design/Main/main_design.dart';
+import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

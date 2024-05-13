@@ -1,3 +1,4 @@
+import 'package:custom_craft/TryWidgets/try_confirm_screen.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
@@ -8,7 +9,7 @@ import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
 import 'package:custom_craft/features/Design/Shapes/add_shape.dart';
-import 'package:custom_craft/features/Design/Main/main_design.dart';
+import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: ContactUs(),
+            child: SignUpScreen(),
           ),
         ],
       ),

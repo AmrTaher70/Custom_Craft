@@ -2,13 +2,13 @@ import 'package:custom_craft/api/sign_up_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
-import 'package:custom_craft/core/utils/services/post_sign_up.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:universal_html/js.dart';
 
 import '../../helper/api.helper.dart';
 
@@ -65,10 +65,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print('Sign up successful: $response');
 
       // Navigate to sign-in screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+      // );
     } catch (e) {
       // Handle any exceptions
       print('Error signing up: $e');
@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Check for specific error messages and provide feedback to the user
       if (e.toString().contains('This UserName is already taken')) {
         // Show a snackbar to the user indicating that the username is already taken
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
           const SnackBar(
             content:
                 Text('This UserName is already taken. Please try another one.'),
@@ -89,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } else if (e.toString().contains('This email is already in use!')) {
         // Show a snackbar to the user indicating that the email is already taken
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
           const SnackBar(
             content:
                 Text('This email is already taken. Please try another one.'),
@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } else {
         // Show a generic error message to the user
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
           const SnackBar(
             content: Text('An error occurred. Please try again later.'),
           ),
@@ -318,6 +318,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                           // Attempt sign-up
                                           await signUp();
+                                          showSuccessDialog(
+                                              context, emailController.text);
 
                                           // Navigate to sign-in screen if sign-up succeeds
                                           // Navigator.pushReplacement(
@@ -461,4 +463,129 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
     );
   }
+}
+
+void showSuccessDialog(BuildContext context, String email) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: _contentBox(context, email),
+      );
+    },
+  );
+}
+
+Widget _contentBox(BuildContext context, String email) {
+  return Center(
+    child: Stack(
+      children: <Widget>[
+        Container(
+          height: 314,
+          width: 343,
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(top: 120.0),
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: const Color(0xffFAFAFA).withOpacity(.6),
+              borderRadius: BorderRadius.circular(20.0),
+              border: Border.all(color: Colors.white, width: 3)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Positioned(
+                  left: 20.0,
+                  right: 20.0,
+                  child: Image.asset(
+                      AssetsData.goConfirmEmail) // Change to your image path
+                  ),
+              const Text(
+                'Confirm Your Email Address',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              const Text(
+                'We sent a confirmation email to ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Color(0xff8E8E8E),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                email,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const Text(
+                '. Check your email and click on the confirmation link to continue.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Color(0xff8E8E8E),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 20.0),
+              SizedBox(
+                height: 40,
+                width: 120,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        AssetsColors.primaryColor, // Background color
+                    // foregroundColor:
+                    //     Colors.white, // Text color
+                    // Button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(12), // Button border radius
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 18, // Text size
+                      fontWeight: FontWeight.w400, // Text weight
+                    ),
+                    elevation: 5, // Button elevation
+                  ),
+                  child: const Text('Login'),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 120),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.close, size: 40),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

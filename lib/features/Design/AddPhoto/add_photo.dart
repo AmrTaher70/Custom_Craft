@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/widget/customappbarforaddphoto%20.dart';
-import 'package:custom_craft/features/Design/Main/main_design.dart';
+import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
