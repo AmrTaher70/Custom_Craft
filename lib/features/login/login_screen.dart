@@ -4,6 +4,7 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
+import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
@@ -26,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
   Api api = Api();
+
   Future logIn() async {
     try {
       // Validate the form
@@ -38,58 +40,51 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
 
-      // Create an instance of SignUpModel using user input
-      LoginModel logInData = LoginModel(
-          email: emailController.text,
-          password: passwordController.text,
-          rememberMe: rememberMe);
-
-      // Convert SignUpModel to JSON
-      Map<String, dynamic> logInJson = logInData.toJson();
-
-      // Make API call to sign up
-      dynamic response = await api.post(
-        url: 'http://customcraftt.somee.com/api/Account/login',
-        body: logInJson,
+      // Create an instance of LoginModel using user input
+      LoginModel loginData = LoginModel(
+        email: emailController.text,
+        password: passwordController.text,
+        rememberMe: rememberMe,
       );
 
-      // Handle response (e.g., show success message)
+      // Convert LoginModel to JSON
+      Map<String, dynamic> loginJson = loginData.toJson();
+
+      // Make API call to login
+      dynamic response = await api.post(
+        url: 'http://customcraftt.somee.com/api/Account/login',
+        body: loginJson,
+      );
+      // Handle response
       print('LogIn successful: $response');
 
-      // Navigate to sign-in screen
+      // Retrieve token from the response
+      String? token = response['token'];
+
+      // Save token
+      api.saveToken(token!);
+
+      // Show snackbar with success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('LogIn successful'),
+        ),
+      );
+
+      // Navigate to home screen
       Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
     } catch (e) {
       // Handle any exceptions
-      print('Error Login up: $e');
-
-      // Hide loading indicator
-      setState(() {
-        isLoading = false;
-      });
-
-      // Check for specific error messages and provide feedback to the user
-      String errorMessage = 'An error occurred. Please try again later.';
-      if (e is Exception) {
-        // Extract the error message from the exception
-        errorMessage = e.toString();
-        int messageIndex = errorMessage.indexOf("message:");
-        if (messageIndex != -1) {
-          // Extract the message part from the error string
-          errorMessage = errorMessage.substring(messageIndex + 9).trim();
-        }
-        if (errorMessage.toLowerCase().contains("unauthorized")) {
-          errorMessage = 'Wrong email or password.';
-        }
-      }
+      print('Error during logIn: $e');
 
       // Show snackbar with error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(errorMessage),
+          content: Text('An error occurred: $e'),
         ),
       );
     } finally {
-      // Hide loading indicator after login attempt is completed
+      // Hide loading indicator
       setState(() {
         isLoading = false;
       });
@@ -308,15 +303,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                           // Attempt sign-up
                                           await logIn();
-
-                                          // Navigate to sign-in screen if sign-up succeeds
-                                          // Navigator.pushReplacement(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) =>
-                                          //           const LoginScreen()),
-                                          // );
-
                                           // Your login logic here
                                         } catch (e) {
                                           // Hide loading indicator
@@ -328,6 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           debugPrint('Error during logIn: $e');
 
                                           // Show snackbar with error message
+                                          // ignore: use_build_context_synchronously
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(

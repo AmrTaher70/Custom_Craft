@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
+import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -30,26 +33,21 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
     );
   }
 
-  void showSuccessDialog(BuildContext context, String email) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: _contentBox(context, email),
-        );
-      },
-    );
-  }
-
-  Widget _contentBox(BuildContext context, String email) {
+  Widget contentBox(BuildContext context, String email) {
     return Center(
       child: Stack(
         children: <Widget>[
+          // BackdropFilter to blur the background
+          Positioned.fill(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+              child: Container(
+                color: Colors.black
+                    .withOpacity(0.6), // Adjust the opacity as needed
+                constraints: const BoxConstraints.expand(),
+              ),
+            ),
+          ),
           Container(
             height: 314,
             width: 343,

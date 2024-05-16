@@ -1,3 +1,4 @@
+import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:flutter/material.dart';
 
 class PngImage extends StatefulWidget {
@@ -10,21 +11,22 @@ class PngImage extends StatefulWidget {
 class _PngImageState extends State<PngImage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Image.network(
-        'https://cdn0.iconfinder.com/data/icons/phosphor-fill-vol-4/256/play-fill-1024.png',
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    (loadingProgress.expectedTotalBytes ?? 1)
-                : null,
-          );
-        },
-      )),
+    return BackGroundImage(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: AspectRatio(
+              aspectRatio: 2.7 / 4,
+              child: Image.network(
+                'http://customcraftt.somee.com/images/items/cover.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

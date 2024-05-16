@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:custom_craft/api/sign_up_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
@@ -31,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _showPassword = false;
   Api api = Api();
+
 // Function to handle sign-up
   Future signUp() async {
     try {
@@ -117,6 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context) {
         final screenSize = MediaQuery.of(context).size;
         final double width = screenSize.width;
+        final double h = screenSize.height;
 
         return BackGroundImage(
           child: Scaffold(
@@ -475,16 +479,17 @@ void showSuccessDialog(BuildContext context, String email) {
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        child: _contentBox(context, email),
+        child: contentBox(context, email),
       );
     },
   );
 }
 
-Widget _contentBox(BuildContext context, String email) {
+Widget contentBox(BuildContext context, String email) {
   return Center(
     child: Stack(
       children: <Widget>[
+        // BackdropFilter to blur the background
         Container(
           height: 314,
           width: 343,
@@ -492,7 +497,7 @@ Widget _contentBox(BuildContext context, String email) {
           margin: const EdgeInsets.only(top: 120.0),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: const Color(0xffFAFAFA).withOpacity(.6),
+              color: const Color(0xffFAFAFA).withOpacity(.8),
               borderRadius: BorderRadius.circular(20.0),
               border: Border.all(color: Colors.white, width: 3)),
           child: Column(
@@ -516,27 +521,22 @@ Widget _contentBox(BuildContext context, String email) {
                 'We sent a confirmation email to ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14.0,
-                  color: Color(0xff8E8E8E),
-                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
                 ),
               ),
               Text(
                 email,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 14.0,
+                  fontSize: 16.0,
                   color: Colors.blue,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
               const Text(
                 '. Check your email and click on the confirmation link to continue.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14.0,
-                  color: Color(0xff8E8E8E),
-                  fontWeight: FontWeight.w500,
+                  fontSize: 16.0,
                 ),
               ),
               const SizedBox(height: 20.0),

@@ -15,6 +15,7 @@ class PhotoProvider with ChangeNotifier {
     // Check if the same photo already exists in the list
     if (!_photos.any((photo) => photo.data == data)) {
       _photos.add(Photo(data: data));
+      print(data.toString());
       notifyListeners();
     } else {
       // Optionally handle the case where the photo already exists

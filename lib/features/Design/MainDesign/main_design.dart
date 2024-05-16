@@ -7,7 +7,6 @@ import 'dart:ui' as ui;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
-import 'package:custom_craft/features/Similarity/similarity_screen.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
@@ -142,6 +141,7 @@ class _MainDesignState extends State<MainDesign> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Design saved')),
         );
+        // print(designImage);
         // Save the image to the ImageModel
         Provider.of<SavedImageModel>(context, listen: false)
             .saveImage(designImage);
@@ -246,12 +246,14 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100, // Adjust positioning as needed
                                   child: InteractiveViewer(
-                                    boundaryMargin: EdgeInsets.symmetric(
-                                      horizontal: 35,
-                                      vertical: _calculateBoundaryMargin(),
-                                    ),
+                                    transformationController: _controller,
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                        horizontal: 35, vertical: 100),
                                     minScale: 0.1,
                                     maxScale: 1.6,
+                                    onInteractionEnd: (details) {
+                                      _saveState();
+                                    },
                                     child: Container(
                                       color: Colors.amber,
                                       child: Image.memory(
@@ -317,7 +319,10 @@ class _MainDesignState extends State<MainDesign> {
                                   }
                                 },
                               ),
-                              Positioned.fill(
+                              Positioned(
+                                height: 450,
+                                left: 100,
+                                right: 100,
                                 child: Center(
                                   child: InteractiveViewer(
                                     transformationController: _controller,

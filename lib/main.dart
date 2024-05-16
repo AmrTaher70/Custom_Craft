@@ -1,4 +1,5 @@
 import 'package:custom_craft/TryWidgets/try_confirm_screen.dart';
+import 'package:custom_craft/TryWidgets/try_png_photo.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: SignUpScreen(),
+            child: PngImage(),
           ),
         ],
       ),
