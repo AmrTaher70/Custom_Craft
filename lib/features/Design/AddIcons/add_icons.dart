@@ -103,10 +103,7 @@ class _AddIconState extends State<AddIcon> {
                             ),
                           ),
                           child: Image.network(
-                            'http//customcraftt.somee.com/images/icons/emojione-monotone_deer.png',
-                            // height: 270,
-                            // width: 270,
-                            // fit: BoxFit.cover,
+                            iconProvider.selectedIcon!,
                             color: iconProvider.selectedColor,
                             colorBlendMode: BlendMode.modulate,
                           ),

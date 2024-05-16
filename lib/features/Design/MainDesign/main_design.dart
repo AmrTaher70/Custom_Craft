@@ -176,6 +176,7 @@ class _MainDesignState extends State<MainDesign> {
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
     var selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
+    print('Selected icon: $selectedIcons');
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
     return BackGroundImage(
@@ -266,10 +267,9 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                               if (selectedIcons != null)
                                 Positioned(
-                                  height: 200, // Adjust these values
-                                  width: 200, // Adjust these values
-                                  top: 50, // Adjust these values
+                                  height: 350,
                                   left: 100,
+                                  right: 100,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
@@ -278,9 +278,12 @@ class _MainDesignState extends State<MainDesign> {
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     child: Container(
-                                      color: Colors.red,
-                                      child: Image.asset(
+                                      color: Colors
+                                          .transparent, // Placeholder color for the container
+                                      child: Image.network(
                                         selectedIcons,
+                                        height: 200,
+                                        width: 200,
                                         color: selectedIconColor,
                                         colorBlendMode: BlendMode.modulate,
                                       ),
@@ -669,7 +672,7 @@ class _MainDesignState extends State<MainDesign> {
                                               },
                                               child: TextButton(
                                                 onPressed: () {},
-                                                child: Image.asset(
+                                                child: Image.network(
                                                   selectedIcons,
                                                   color: selectedIconColor,
                                                   colorBlendMode:
