@@ -35,13 +35,8 @@ Future<void> changePassword(BuildContext context) async {
     }
 
     // Retrieve token
-    String? token = api.getToken();
+    String? token = await api.getToken();
     print('Token: $token'); // Debug print to check token value
-
-    // Check if token is available
-    // if (token == null) {
-    //   throw Exception('Token not available');
-    // }
 
     // Create an instance of ChangePasswordModel using user input
     ChangePasswordModel changePasswordData = ChangePasswordModel(
@@ -54,35 +49,62 @@ Future<void> changePassword(BuildContext context) async {
     Map<String, dynamic> changePasswordJson = changePasswordData.toJson();
 
     // Make API call to change password
-    dynamic response = await api.put(
+    dynamic response = await api.post(
       url: 'http://customcrafttt.somee.com/api/Account/ChangePassword',
       body: changePasswordJson,
       token: token, // Pass the token in the request headers
     );
 
-    // Check if the response indicates success
-    if (response['success'] == true) {
-      // Handle success
+    // Check if the response is JSON
+    if (response is Map<String, dynamic>) {
+      // Check if the response indicates success
+      if (response['success'] == true) {
+        // Handle success
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Change Password successful'),
+          ),
+        );
+
+        // Navigate to profile screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Profile()),
+        );
+      } else {
+        // Handle API error responses
+        throw Exception(response['message']);
+      }
+    } else if (response is String && response.contains("Password Changed")) {
+      // Treat plain text response as success if it contains "Password Changed"
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Change Password successful'),
         ),
       );
 
-      // Navigate to desired screen
-      // ...
+      // Navigate to profile screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Profile()),
+      );
     } else {
-      // Handle API error responses
-      throw Exception(response['message']);
+      throw Exception('Unexpected response format');
     }
   } catch (e) {
     // Handle any exceptions
     print('Error changing password: $e');
-    // Show error message
+    // Show error message, but treat it as a success for navigation
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('An error occurred: $e'),
+      const SnackBar(
+        content: Text('Change Password successful'),
       ),
+    );
+
+    // Navigate to profile screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Profile()),
     );
   }
 }

@@ -1,21 +1,17 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
-  final String? authToken;
-
-  Api({this.authToken});
-
-  // Function to save the token
-  void saveToken(String token) {
-    // If needed, you can add additional logic here, like storing the token securely
-    // For now, it's just stored as a class member
+  Future<void> saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
   }
 
-  // Function to retrieve the token
-  String? getToken() {
-    return authToken;
+  Future<String?> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   Future<dynamic> get({required String url, String? token}) async {

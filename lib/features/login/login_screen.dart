@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String? token = response['token'];
 
       // Save token
-      api.saveToken(token!);
+      await api.saveToken(token!);
 
       // Show snackbar with success message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -75,12 +75,12 @@ class _LoginScreenState extends State<LoginScreen> {
       Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
     } catch (e) {
       // Handle any exceptions
-      print('Error during logIn: $e');
+      print('Error during logIn: $e[message]');
 
       // Show snackbar with error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An error occurred: $e'),
+          content: Text('An error occurred: $e[message]'),
         ),
       );
     } finally {
