@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Make API call to login
       dynamic response = await api.post(
-        url: 'http://customcraftt.somee.com/api/Account/login',
+        url: 'http://customcrafttt.somee.com/api/Account/login',
         body: loginJson,
       );
       // Handle response

@@ -7,6 +7,7 @@ import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
+import 'package:custom_craft/features/Category/category.dart';
 import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/Design/AddIcons/add_icons.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: MainDesign(),
+            child: CategoryScreen(),
           ),
         ],
       ),

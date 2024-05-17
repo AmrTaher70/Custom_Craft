@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       // Make API call to sign up
       dynamic response = await api.post(
-        url: 'http://customcraftt.somee.com/api/Account/register',
+        url: 'http://customcrafttt.somee.com/api/Account/register',
         body: signUpJson,
       );
 

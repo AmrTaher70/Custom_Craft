@@ -55,7 +55,7 @@ Future<void> changePassword(BuildContext context) async {
 
     // Make API call to change password
     dynamic response = await api.put(
-      url: 'http://customcraftt.somee.com/api/Account/ChangePassword',
+      url: 'http://customcrafttt.somee.com/api/Account/ChangePassword',
       body: changePasswordJson,
       token: token, // Pass the token in the request headers
     );
