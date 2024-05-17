@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
+import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets/assets.dart';
@@ -45,6 +46,9 @@ class _MainDesignState extends State<MainDesign> {
   final GlobalKey _designKey = GlobalKey();
   final PageController _pageController = PageController(viewportFraction: 0.2);
   final TransformationController _controller = TransformationController();
+  final TransformationController _controllerIcon = TransformationController();
+  final TransformationController _controllerShape = TransformationController();
+  final TransformationController _controllerImage = TransformationController();
   int _currentPageIndex = 0;
 
   List<String> images = [
@@ -75,7 +79,28 @@ class _MainDesignState extends State<MainDesign> {
     }
   }
 
-  Future<void> _saveState() async {
+  Future<void> _saveStateForText() async {
+    // Save matrix data to local storage
+    final List<double> matrixList = _controller.value.storage.toList();
+    final jsonString = json.encode(matrixList);
+    window.localStorage['matrix'] = jsonString;
+  }
+
+  Future<void> _saveStateForIcons() async {
+    // Save matrix data to local storage
+    final List<double> matrixList = _controller.value.storage.toList();
+    final jsonString = json.encode(matrixList);
+    window.localStorage['matrix'] = jsonString;
+  }
+
+  Future<void> _saveStateForShape() async {
+    // Save matrix data to local storage
+    final List<double> matrixList = _controller.value.storage.toList();
+    final jsonString = json.encode(matrixList);
+    window.localStorage['matrix'] = jsonString;
+  }
+
+  Future<void> _saveStateForImage() async {
     // Save matrix data to local storage
     final List<double> matrixList = _controller.value.storage.toList();
     final jsonString = json.encode(matrixList);
@@ -176,7 +201,6 @@ class _MainDesignState extends State<MainDesign> {
     final selectedShape = Provider.of<ShapeProvider>(context).selectedShape;
     final selectedColor = Provider.of<ShapeProvider>(context).selectedColor;
     var selectedIcons = Provider.of<IconProvider>(context).selectedIcon;
-    print('Selected icon: $selectedIcons');
     final selectedIconColor = Provider.of<IconProvider>(context).selectedColor;
 
     return BackGroundImage(
@@ -221,22 +245,23 @@ class _MainDesignState extends State<MainDesign> {
                                 colorBlendMode: BlendMode.modulate,
                               ),
                               if (selectedShape != null)
-                                Positioned.fill(
-                                  child: Center(
-                                    child: InteractiveViewer(
-                                      boundaryMargin:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 35, vertical: 140),
-                                      minScale: 0.1,
-                                      maxScale: 1.6,
-                                      child: Container(
-                                        color: Colors.amber,
-                                        child: Image.asset(
-                                          selectedShape,
-                                          color: selectedColor,
-                                          colorBlendMode: BlendMode.modulate,
-                                        ),
-                                      ),
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100,
+                                  child: InteractiveViewer(
+                                    transformationController: _controllerShape,
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                        horizontal: 35, vertical: 140),
+                                    onInteractionEnd: (details) {
+                                      _saveStateForShape();
+                                    },
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
+                                    child: Image.network(
+                                      selectedShape,
+                                      color: selectedColor,
+                                      colorBlendMode: BlendMode.modulate,
                                     ),
                                   ),
                                 ),
@@ -247,21 +272,17 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100, // Adjust positioning as needed
                                   child: InteractiveViewer(
-                                    transformationController: _controller,
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 100),
+                                        horizontal: 35, vertical: 150),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     onInteractionEnd: (details) {
-                                      _saveState();
+                                      _saveStateForImage();
                                     },
-                                    child: Container(
-                                      color: Colors.amber,
-                                      child: Image.memory(
-                                        selectedPhoto.data,
-                                        height: 200,
-                                        width: 200,
-                                      ),
+                                    child: Image.memory(
+                                      selectedPhoto.data,
+                                      height: 200,
+                                      width: 200,
                                     ),
                                   ),
                                 ),
@@ -271,22 +292,22 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100,
                                   child: InteractiveViewer(
+                                    transformationController: _controller,
+                                    onInteractionEnd: (details) {
+                                      _saveStateForImage();
+                                    },
                                     boundaryMargin: const EdgeInsets.symmetric(
                                       horizontal: 35,
                                       vertical: 150,
                                     ),
                                     minScale: 0.1,
                                     maxScale: 1.6,
-                                    child: Container(
-                                      color: Colors
-                                          .transparent, // Placeholder color for the container
-                                      child: Image.network(
-                                        selectedIcons,
-                                        height: 200,
-                                        width: 200,
-                                        color: selectedIconColor,
-                                        colorBlendMode: BlendMode.modulate,
-                                      ),
+                                    child: Image.network(
+                                      selectedIcons,
+                                      height: 200,
+                                      width: 200,
+                                      color: selectedIconColor,
+                                      colorBlendMode: BlendMode.modulate,
                                     ),
                                   ),
                                 ),
@@ -322,41 +343,43 @@ class _MainDesignState extends State<MainDesign> {
                                   }
                                 },
                               ),
-                              Positioned(
-                                height: 450,
-                                left: 100,
-                                right: 100,
-                                child: Center(
-                                  child: InteractiveViewer(
-                                    transformationController: _controller,
-                                    boundaryMargin: const EdgeInsets.symmetric(
-                                      horizontal: 400,
-                                      vertical: 400,
-                                    ),
-                                    minScale: 0.1,
-                                    maxScale: 2,
-                                    onInteractionEnd: (details) {
-                                      _saveState();
-                                    },
-                                    child: Container(
-                                      color: Colors.blue,
-                                      child: Consumer<TextModel>(
-                                        builder: (context, textModel, child) {
-                                          return Text(
-                                            textModel.text,
-                                            style: GoogleFonts.getFont(
-                                              textModel.font,
-                                              fontSize: _fontSize,
-                                              color: textModel.color,
-                                            ),
-                                            textAlign: textModel.align,
-                                          );
-                                        },
+                              textModel.text.isNotEmpty
+                                  ? Positioned(
+                                      height: 350,
+                                      left: 100,
+                                      right: 100,
+                                      child: Container(
+                                        color: Colors.black,
+                                        child: InteractiveViewer(
+                                          transformationController: _controller,
+                                          boundaryMargin:
+                                              const EdgeInsets.symmetric(
+                                            horizontal: 30,
+                                            vertical: 150,
+                                          ),
+                                          minScale: 0.1,
+                                          maxScale: 1.6,
+                                          onInteractionEnd: (details) {
+                                            _saveStateForText();
+                                          },
+                                          child: Consumer<TextModel>(
+                                            builder:
+                                                (context, textModel, child) {
+                                              return Text(
+                                                textModel.text,
+                                                style: GoogleFonts.getFont(
+                                                  textModel.font,
+                                                  fontSize: _fontSize,
+                                                  color: textModel.color,
+                                                ),
+                                                textAlign: textModel.align,
+                                              );
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                         ),
@@ -533,7 +556,7 @@ class _MainDesignState extends State<MainDesign> {
                                               onPressed: () {},
                                               child: TextButton(
                                                 onPressed: () {},
-                                                child: Image.asset(
+                                                child: Image.network(
                                                   selectedShape,
                                                   color: selectedColor,
                                                   colorBlendMode:
@@ -727,7 +750,7 @@ class _MainDesignState extends State<MainDesign> {
                               children: [
                                 // Ai Generator
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(
@@ -753,6 +776,7 @@ class _MainDesignState extends State<MainDesign> {
                                         },
                                         icon: const Icon(
                                           Icons.auto_fix_high_outlined,
+                                          color: Colors.purpleAccent,
                                         ),
                                         iconSize: 28,
                                       ),

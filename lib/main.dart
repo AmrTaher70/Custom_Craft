@@ -4,6 +4,7 @@ import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
+import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/core/utils/models/text_model.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';

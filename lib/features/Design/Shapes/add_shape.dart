@@ -1,40 +1,31 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
+import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ShapeProvider extends ChangeNotifier {
-  final List<String> _shapes = <String>[
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle,
-    AssetsData.circle
-  ]; // Fill the list with 16 hoodie images
-  String? _selectedShape;
-  Color _selectedColor =
-      AssetsColors.primaryColor; // Initialize with a default color
+// class ShapeProvider extends ChangeNotifier {
+//   final List<String> _shapes = <String>[];
+//   String? _selectedShape;
+//   Color _selectedColor =AssetsColors.primaryColor; // Initialize with a default color
 
-  List<String> get shapes => _shapes;
-  String? get selectedShape => _selectedShape;
-  Color get selectedColor => _selectedColor;
+//   List<String> get shapes => _shapes;
+//   String? get selectedShape => _selectedShape;
+//   Color get selectedColor => _selectedColor;
 
-  void setSelectedShape(String? shape) {
-    _selectedShape = shape;
-    notifyListeners();
-  }
+//   void setSelectedShape(String? shape) {
+//     _selectedShape = shape;
+//     notifyListeners();
+//   }
 
-  void setSelectedColor(Color color) {
-    _selectedColor = color;
-    notifyListeners();
-  }
-}
+//   void setSelectedColor(Color color) {
+//     _selectedColor = color;
+//     notifyListeners();
+//   }
+// }
 
 class AddShape extends StatefulWidget {
   const AddShape({Key? key}) : super(key: key);
@@ -44,6 +35,12 @@ class AddShape extends StatefulWidget {
 }
 
 class _AddShapeState extends State<AddShape> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ShapeProvider>(context, listen: false).fetchShapes();
+  }
+
   @override
   Widget build(BuildContext context) {
     int? selectedShapeIndex;
@@ -82,7 +79,7 @@ class _AddShapeState extends State<AddShape> {
                               color: const Color(0xff8E8E8E),
                             ),
                           ),
-                          child: Image.asset(
+                          child: Image.network(
                             shapeProvider.selectedShape!,
                             height: 160,
                             width: 160,
@@ -167,7 +164,7 @@ class _AddShapeState extends State<AddShape> {
                                 : Colors.transparent,
                           ),
                         ),
-                        child: Image.asset(
+                        child: Image.network(
                           shapeProvider.shapes[index],
                           height: 50,
                           width: 50,
