@@ -82,11 +82,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       await api.saveToken(token!);
 
       // Navigate to sign-in screen
-      Get.to(
-          () => NewPasswordScreen(
-                forgotemail: forgetEmailController.text,
-              ),
-          transition: Transition.fadeIn);
+      // Get.to(
+      //     () => NewPasswordScreen(
+      //           forgotemail: forgetEmailController.text,
+      //         ),
+      //     transition: Transition.fadeIn);
     } catch (e) {
       // Handle any exceptions
       print('Error Login up: $e');
@@ -240,6 +240,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               });
 
                               await forgotPass();
+                              showSuccessDialog(
+                                  context, forgetEmailController.text);
                             } catch (e) {
                               // Hide loading indicator
                               setState(() {
@@ -301,4 +303,125 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+}
+
+void showSuccessDialog(BuildContext context, String email) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: contentBox(context, email),
+      );
+    },
+  );
+}
+
+Widget contentBox(BuildContext context, String email) {
+  return Center(
+    child: Stack(
+      children: <Widget>[
+        // BackdropFilter to blur the background
+        Container(
+          height: 320,
+          width: 343,
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(top: 120.0),
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: const Color(0xffFAFAFA).withOpacity(.8),
+              borderRadius: BorderRadius.circular(20.0),
+              border: Border.all(color: Colors.white, width: 3)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Positioned(
+                  left: 20.0,
+                  right: 20.0,
+                  child: Image.asset(
+                      AssetsData.goConfirmEmail) // Change to your image path
+                  ),
+              const Text(
+                'Confirm Your Email Address',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              const Text(
+                'We sent a confirmation email to ',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+              Text(
+                email,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.blue,
+                ),
+              ),
+              const Text(
+                '. Check your email and click on the confirmation link to continue.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              SizedBox(
+                height: 40,
+                width: 140,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => const NewPasswordScreen(),
+                        transition: Transition.fadeIn);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        AssetsColors.primaryColor, // Background color
+                    // foregroundColor:
+                    //     Colors.white, // Text color
+                    // Button padding
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(12), // Button border radius
+                    ),
+                    textStyle: const TextStyle(
+                      fontSize: 18, // Text size
+                      fontWeight: FontWeight.w400, // Text weight
+                    ),
+                    elevation: 5, // Button elevation
+                  ),
+                  child: const Text(
+                    'Reset Password',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 120),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.close, size: 40),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

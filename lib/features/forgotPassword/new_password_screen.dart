@@ -165,7 +165,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Get.to(() => const VerifyEmailScreen(),
+                        Get.to(() => const ForgotPasswordScreen(),
                             transition: Transition.fadeIn);
                       },
                       icon: const Icon(
