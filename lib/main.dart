@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: LoginScreen(),
+            child: ForgotPasswordScreen(),
           ),
         ],
       ),

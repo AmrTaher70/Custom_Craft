@@ -4,7 +4,6 @@ import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/core/widget/text_filed_data.dart';
-import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/SignUp/sign_up.dart';
 import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
@@ -75,16 +74,35 @@ class _LoginScreenState extends State<LoginScreen> {
       Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
     } catch (e) {
       // Handle any exceptions
-      print('Error during logIn: $e[message]');
+      print('Error Login up: $e');
+
+      // Hide loading indicator
+      setState(() {
+        isLoading = false;
+      });
+
+      // Check for specific error messages and provide feedback to the user
+      String errorMessage = 'An error occurred. Please try again later.';
+      if (e is Exception) {
+        // Extract the error message from the exception
+        errorMessage = e.toString();
+        if (errorMessage.toLowerCase().contains("unauthorized")) {
+          errorMessage = 'Wrong email or password.';
+        }
+      }
+      errorMessage = e.toString();
+      if (errorMessage.endsWith('BadRequest}')) {
+        errorMessage = "'User not Found, Couldn't sent please try again!'";
+      }
 
       // Show snackbar with error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('An error occurred: $e[message]'),
+          content: Text(errorMessage),
         ),
       );
     } finally {
-      // Hide loading indicator
+      // Hide loading indicator after login attempt is completed
       setState(() {
         isLoading = false;
       });

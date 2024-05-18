@@ -10,6 +10,7 @@ import 'package:custom_craft/helper/api.helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -23,6 +24,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
   Api api = Api();
+  @override
+  void initState() {
+    super.initState();
+    // Load saved email if available
+    _loadEmail();
+  }
+
+  // Function to load saved email
+  _loadEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedEmail = prefs.getString('forget_email');
+    if (savedEmail != null) {
+      setState(() {
+        forgetEmailController.text = savedEmail;
+      });
+    }
+  }
+
+  Future _saveEmail(String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('forget_email', email);
+  }
+
   Future forgotPass() async {
     try {
       // Validate the form
@@ -34,6 +58,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       setState(() {
         isLoading = true;
       });
+      await _saveEmail(forgetEmailController.text);
 
       // Create an instance of SignUpModel using user input
       ForgotPasswordModel forgotPasswordData = ForgotPasswordModel(
@@ -45,15 +70,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       // Make API call to sign up
       dynamic response = await api.post(
-        url: 'http://customcraftt.somee.com/api/Account/forgetPassword',
+        url: 'http://customcrafttt.somee.com/api/Account/forgetPassword',
         body: forgotPasswordJson,
       );
 
       // Handle response (e.g., show success message)
       print('successful: $response');
+      String? token = response['token'];
+
+      // Save token
+      await api.saveToken(token!);
 
       // Navigate to sign-in screen
-      Get.to(() => const NewPasswordScreen(), transition: Transition.fadeIn);
+      Get.to(
+          () => NewPasswordScreen(
+                forgotemail: forgetEmailController.text,
+              ),
+          transition: Transition.fadeIn);
     } catch (e) {
       // Handle any exceptions
       print('Error Login up: $e');

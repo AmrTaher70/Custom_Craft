@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:custom_craft/api/change_password_model.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
@@ -7,6 +9,8 @@ import 'package:custom_craft/features/Profile/profile.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/helper/api.helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -34,10 +38,6 @@ Future<void> changePassword(BuildContext context) async {
       return;
     }
 
-    // Retrieve token
-    String? token = await api.getToken();
-    print('Token: $token'); // Debug print to check token value
-
     // Create an instance of ChangePasswordModel using user input
     ChangePasswordModel changePasswordData = ChangePasswordModel(
       confirmPassword: confirmNewPasswordController.text,
@@ -49,52 +49,62 @@ Future<void> changePassword(BuildContext context) async {
     Map<String, dynamic> changePasswordJson = changePasswordData.toJson();
 
     // Make API call to change password
-    dynamic response = await api.post(
+    http.Response response = await api.post(
       url: 'http://customcrafttt.somee.com/api/Account/ChangePassword',
       body: changePasswordJson,
-      token: token, // Pass the token in the request headers
     );
 
-    // Check if the response is JSON
-    if (response is Map<String, dynamic>) {
-      // Check if the response indicates success
-      if (response['success'] == true) {
-        // Handle success
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Change Password successful'),
-          ),
-        );
+    // Check if the response is successful
+    if (response.statusCode == 200) {
+      try {
+        // Try to parse the response as JSON
+        dynamic jsonResponse = jsonDecode(response.body);
+        if (jsonResponse is Map<String, dynamic> &&
+            jsonResponse['success'] == true) {
+          // Handle success
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Change Password successful'),
+            ),
+          );
 
-        // Navigate to profile screen
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Profile()),
-        );
-      } else {
-        // Handle API error responses
-        throw Exception(response['message']);
+          // Navigate to profile screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Profile()),
+          );
+        } else {
+          // Handle unexpected JSON structure
+          throw Exception('Unexpected response format');
+        }
+      } catch (e) {
+        // Handle FormatException for non-JSON response
+        if (e is FormatException &&
+            response.body.contains("Password Changed")) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Change Password successful'),
+            ),
+          );
+
+          // Navigate to profile screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Profile()),
+          );
+        } else {
+          // Rethrow other exceptions
+          rethrow;
+        }
       }
-    } else if (response is String && response.contains("Password Changed")) {
-      // Treat plain text response as success if it contains "Password Changed"
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Change Password successful'),
-        ),
-      );
-
-      // Navigate to profile screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const Profile()),
-      );
     } else {
-      throw Exception('Unexpected response format');
+      throw Exception(
+          'There is a problem with the status code ${response.statusCode}');
     }
   } catch (e) {
     // Handle any exceptions
     print('Error changing password: $e');
-    // Show error message, but treat it as a success for navigation
+    // Show error message
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Change Password successful'),
@@ -187,26 +197,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                       const SizedBox(
                         height: 24,
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 16),
-                      //   child: TextFiledData(
-                      //     labelText: 'User Name',
-                      //     controller: userNameController,
-                      //     suffixIcon: IconButton(
-                      //       onPressed: () {},
-                      //       icon: const Icon(Icons.person_2_outlined),
-                      //     ),
-                      //     validator: (value) {
-                      //       if (value!.isEmpty) {
-                      //         return 'Username is required';
-                      //       }
-                      //       return null;
-                      //     },
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 16,
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextFiledData(
@@ -293,7 +283,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                             } else if (!value.contains(RegExp(r'[0-9]'))) {
                               return 'Password must contain at least one number';
                             }
-
                             return null; // Return null if validation succeeds
                           },
                           obscureText: !_showPassword,
@@ -327,20 +316,6 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
 
                                 // Attempt sign-up
                                 await changePassword(context);
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(
-                                //     content:
-                                //         Text('Change Password successfully'),
-                                //   ),
-                                // );
-
-                                // Navigate to sign-in screen if sign-up succeeds
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           const LoginScreen()),
-                                // );
                               } catch (e) {
                                 // Hide loading indicator
                                 setState(() {
