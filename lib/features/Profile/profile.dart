@@ -6,6 +6,8 @@ import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
 import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
+import 'package:custom_craft/features/login/login_screen.dart';
+import 'package:custom_craft/helper/api.helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +19,8 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _ProfileState();
 }
+
+Api api = Api();
 
 class _ProfileState extends State<Profile> {
   void _onItemTapped(int index) {
@@ -268,9 +272,13 @@ class _ProfileState extends State<Profile> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
-                    onTap: () {
-                      Get.to(() => const HomeScreen(),
-                          transition: Transition.fadeIn);
+                    onTap: () async {
+                      // Navigate to the home screen after logout
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                      );
                     },
                     child: const Row(
                       children: [

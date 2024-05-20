@@ -19,6 +19,7 @@ import 'package:custom_craft/features/forgotPassword/forgot_password_screen.dart
 import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
+import 'package:custom_craft/features/splash/splash/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: ForgotPasswordScreen(),
+            child: CategoryScreen(),
           ),
         ],
       ),

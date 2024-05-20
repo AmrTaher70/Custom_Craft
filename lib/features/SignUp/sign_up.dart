@@ -392,43 +392,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 28,
+                                height: 15,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 2,
-                                    color: const Color(0xff8E8E8E),
-                                  ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    child: Text(
-                                      'Or Sign Up with',
-                                      style: TextStyle(
-                                        color: Color(0xff8E8E8E),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 90,
-                                    height: 2,
-                                    color: const Color(0xff8E8E8E),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Center(
-                                child: Image.asset(AssetsData.googleLogo,
-                                    height: 40, width: 40),
-                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       width: 90,
+                              //       height: 2,
+                              //       color: const Color(0xff8E8E8E),
+                              //     ),
+                              //     const Padding(
+                              //       padding:
+                              //           EdgeInsets.symmetric(horizontal: 5),
+                              //       child: Text(
+                              //         'Or Sign Up with',
+                              //         style: TextStyle(
+                              //           color: Color(0xff8E8E8E),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     Container(
+                              //       width: 90,
+                              //       height: 2,
+                              //       color: const Color(0xff8E8E8E),
+                              //     ),
+                              //   ],
+                              // ),
+                              // const SizedBox(
+                              //   height: 16,
+                              // ),
+                              // Center(
+                              //   child: Image.asset(AssetsData.googleLogo,
+                              //       height: 40, width: 40),
+                              // ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 84, bottom: 40),
+                                    const EdgeInsets.only(top: 30, bottom: 160),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

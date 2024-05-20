@@ -19,7 +19,7 @@ class IconProvider extends ChangeNotifier {
   Future<void> _fetchIcons() async {
     try {
       final dynamic response = await _api.get(
-          url: 'http://customcrafttt.somee.com/api/Icon/GetIcons');
+          url: 'https://customcraftt.somee.com/api/Icon/GetIcons');
       if (response != null && response is List<dynamic>) {
         final List<GetIconsModel> newIcons =
             response.map((item) => GetIconsModel.fromJson(item)).toList();

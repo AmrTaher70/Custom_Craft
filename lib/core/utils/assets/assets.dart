@@ -1,6 +1,6 @@
 class AssetsData {
-  static const logo = 'assets/images/custom_craft_logo.png';
-  static const backGround = 'assets/images/backGroundDarft2.png';
+  static const logo = 'assets/images/ccLogo.png';
+  static const backGround = 'assets/images/backGroundImage123.png';
   static const onBoarding1 = 'assets/images/onBoardingImage1.png';
   static const onBoarding2 = 'assets/images/onBoardingImage2.png';
   static const onBoarding3 = 'assets/images/onBoardingImage3.png';
@@ -20,12 +20,15 @@ class AssetsData {
   static const homePage = 'assets/images/homePage.png';
   static const imageProfile = 'assets/images/imageProfile.jpg';
   static const navBarBackGround = 'assets/images/navBarBackGround.png';
+  //Items
   static const hoodie = 'assets/images/hodi.png';
   static const hoodieBack = 'assets/images/hoodieBack.png';
   static const bag = 'assets/images/bag.png';
   static const phone = 'assets/images/phone.png';
+  //shapes
   static const star = 'assets/images/Star.png';
   static const circle = 'assets/images/Star3.png';
+  //Icons
   static const icons1 = 'assets/images/Capa_1.png';
   static const icons2 = 'assets/images/emojione-monotone_dog-face.png';
   static const icons3 = 'assets/images/emojione-monotone_penguin.png';

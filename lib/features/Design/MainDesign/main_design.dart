@@ -4,11 +4,11 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
 import 'package:custom_craft/core/utils/models/color_item_model.dart';
@@ -63,48 +63,65 @@ class _MainDesignState extends State<MainDesign> {
   @override
   void initState() {
     super.initState();
+    _loadStateForText();
+    _loadStateForIcons();
+    _loadStateForShape();
+    _loadStateForImage();
     _pageController.addListener(_handlePageChange);
-    _loadState();
   }
 
-  Future<void> _loadState() async {
+  Future<void> _loadState(
+      String key, TransformationController controller) async {
     // Retrieve matrix data from local storage
-    final jsonString = window.localStorage['matrix'];
+    final jsonString = window.localStorage[key];
     if (jsonString != null) {
       final List<dynamic> list = json.decode(jsonString);
       final List<double> matrixList =
           list.map<double>((value) => value.toDouble()).toList();
       final Matrix4 matrix = Matrix4.fromList(matrixList);
-      _controller.value = matrix;
+      controller.value = matrix;
     }
   }
 
-  Future<void> _saveStateForText() async {
+  Future<void> _saveState(
+      String key, TransformationController controller) async {
     // Save matrix data to local storage
-    final List<double> matrixList = _controller.value.storage.toList();
+    final List<double> matrixList = controller.value.storage.toList();
     final jsonString = json.encode(matrixList);
-    window.localStorage['matrix'] = jsonString;
+    window.localStorage[key] = jsonString;
+  }
+
+// Usage of the above functions for specific transformations
+  Future<void> _saveStateForText() async {
+    await _saveState('matrix_text', _controller);
   }
 
   Future<void> _saveStateForIcons() async {
-    // Save matrix data to local storage
-    final List<double> matrixList = _controller.value.storage.toList();
-    final jsonString = json.encode(matrixList);
-    window.localStorage['matrix'] = jsonString;
+    await _saveState('matrix_icons', _controller);
   }
 
   Future<void> _saveStateForShape() async {
-    // Save matrix data to local storage
-    final List<double> matrixList = _controller.value.storage.toList();
-    final jsonString = json.encode(matrixList);
-    window.localStorage['matrix'] = jsonString;
+    await _saveState('matrix_shape', _controller);
   }
 
   Future<void> _saveStateForImage() async {
-    // Save matrix data to local storage
-    final List<double> matrixList = _controller.value.storage.toList();
-    final jsonString = json.encode(matrixList);
-    window.localStorage['matrix'] = jsonString;
+    await _saveState('matrix_image', _controller);
+  }
+
+  Future<void> _loadStateForText() async {
+    await _loadState('matrix_text', _controller);
+  }
+
+  Future<void> _loadStateForIcons() async {
+    await _loadState('matrix_icons', _controller);
+  }
+
+  Future<void> _loadStateForShape() async {
+    await _loadState('matrix_shape', _controller);
+  }
+
+  Future<void> _loadStateForImage() async {
+    await _loadState('matrix_image', _controller);
   }
 
   @override
@@ -138,27 +155,27 @@ class _MainDesignState extends State<MainDesign> {
     try {
       RenderRepaintBoundary boundary = _designKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      double pixelRatio = window.devicePixelRatio as double; // Cast to double
+      print("Pixel Ratio: $pixelRatio");
+
+      ui.Image image = await boundary.toImage(pixelRatio: pixelRatio);
       ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
-      // ignore: avoid_print
       print("Error capturing design: $e");
       return null;
     }
   }
 
   Future<Uint8List?> _saveDesign() async {
-    // ignore: avoid_print
     print("Saving design...");
     try {
       Uint8List? designImage = await _captureDesign();
       if (designImage != null) {
         final blob = html.Blob([designImage]);
         final url = html.Url.createObjectUrlFromBlob(blob);
-        // ignore: unused_local_variable
         final anchor = html.AnchorElement(href: url)
           ..setAttribute("download", "design_image.png")
           ..click();
@@ -166,8 +183,6 @@ class _MainDesignState extends State<MainDesign> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Design saved')),
         );
-        // print(designImage);
-        // Save the image to the ImageModel
         Provider.of<SavedImageModel>(context, listen: false)
             .saveImage(designImage);
       } else {
@@ -176,7 +191,6 @@ class _MainDesignState extends State<MainDesign> {
         );
       }
     } catch (e) {
-      // ignore: avoid_print
       print("Error saving design: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to save design')),
@@ -229,8 +243,6 @@ class _MainDesignState extends State<MainDesign> {
                 Center(
                   child: GestureDetector(
                     child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RepaintBoundary(
                           key: _designKey,
@@ -252,7 +264,7 @@ class _MainDesignState extends State<MainDesign> {
                                   child: InteractiveViewer(
                                     transformationController: _controllerShape,
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 140),
+                                        horizontal: 35, vertical: 100),
                                     onInteractionEnd: (details) {
                                       _saveStateForShape();
                                     },
@@ -265,15 +277,14 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                   ),
                                 ),
-                              // Selected photo widget (Interactive)
                               if (selectedPhoto != null)
                                 Positioned(
                                   height: 350,
                                   left: 100,
-                                  right: 100, // Adjust positioning as needed
+                                  right: 100,
                                   child: InteractiveViewer(
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 150),
+                                        horizontal: 35, vertical: 100),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     onInteractionEnd: (details) {
@@ -297,9 +308,7 @@ class _MainDesignState extends State<MainDesign> {
                                       _saveStateForImage();
                                     },
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                      horizontal: 35,
-                                      vertical: 150,
-                                    ),
+                                        horizontal: 35, vertical: 100),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     child: Image.network(
@@ -354,9 +363,8 @@ class _MainDesignState extends State<MainDesign> {
                                           transformationController: _controller,
                                           boundaryMargin:
                                               const EdgeInsets.symmetric(
-                                            horizontal: 30,
-                                            vertical: 150,
-                                          ),
+                                                  horizontal: 30,
+                                                  vertical: 100),
                                           minScale: 0.1,
                                           maxScale: 1.6,
                                           onInteractionEnd: (details) {
@@ -379,7 +387,7 @@ class _MainDesignState extends State<MainDesign> {
                                         ),
                                       ),
                                     )
-                                  : const SizedBox()
+                                  : const SizedBox(),
                             ],
                           ),
                         ),
@@ -468,8 +476,7 @@ class _MainDesignState extends State<MainDesign> {
                                       borderRadius: BorderRadius.circular(12)),
                                   child: IconButton(
                                     onPressed: () {},
-                                    icon:
-                                        const Icon(Icons.accessibility_rounded),
+                                    icon: const Icon(Icons.layers_outlined),
                                   ),
                                 ),
                               ),
@@ -791,7 +798,7 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                                 // Text
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(
@@ -836,7 +843,7 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                                 // Color
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(
@@ -876,7 +883,7 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                                 // Shapes
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(
@@ -916,7 +923,7 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                                 // Icons
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(
@@ -956,7 +963,7 @@ class _MainDesignState extends State<MainDesign> {
                                 ),
                                 // Photos
                                 Padding(
-                                  padding: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(9.0),
                                   child: Column(
                                     children: [
                                       IconButton(

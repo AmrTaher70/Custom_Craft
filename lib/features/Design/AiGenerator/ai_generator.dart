@@ -101,7 +101,7 @@ class _AiGeneratorState extends State<AiGenerator> {
                               8), // Add space between TextField and ElevatedButton
                       SizedBox(
                         height: 45,
-                        width: 105,
+                        width: 120,
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -137,6 +137,7 @@ class _AiGeneratorState extends State<AiGenerator> {
                               } else {
                                 return const Text(
                                   'Generate',
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(color: Colors.white),
                                 );
                               }

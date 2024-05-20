@@ -14,7 +14,7 @@ class ShapeProvider extends ChangeNotifier {
 
   Future<void> fetchShapes() async {
     final api = Api(); // Instantiate the Api helper
-    const url = 'http://customcrafttt.somee.com/api/Shape/GetShapes';
+    const url = 'https://customcraftt.somee.com/api/Shape/GetShapes';
     try {
       final response = await api.get(url: url);
       if (response is List<dynamic>) {

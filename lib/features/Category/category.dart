@@ -38,6 +38,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       setState(() {
         errorMessage = e.toString();
         isLoading = false;
+        print(errorMessage);
       });
     }
   }

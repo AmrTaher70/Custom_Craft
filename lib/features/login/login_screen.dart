@@ -383,42 +383,42 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(
                                 height: 28,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 90,
-                                    height: 2,
-                                    color: const Color(0xff8E8E8E),
-                                  ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    child: Text(
-                                      'Or Log in with',
-                                      style: TextStyle(
-                                        color: Color(0xff8E8E8E),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 90,
-                                    height: 2,
-                                    color: const Color(0xff8E8E8E),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Center(
-                                child: Image.asset(AssetsData.googleLogo,
-                                    height: 40, width: 40),
-                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       width: 90,
+                              //       height: 2,
+                              //       color: const Color(0xff8E8E8E),
+                              //     ),
+                              //     const Padding(
+                              //       padding:
+                              //           EdgeInsets.symmetric(horizontal: 5),
+                              //       child: Text(
+                              //         'Or Log in with',
+                              //         style: TextStyle(
+                              //           color: Color(0xff8E8E8E),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     Container(
+                              //       width: 90,
+                              //       height: 2,
+                              //       color: const Color(0xff8E8E8E),
+                              //     ),
+                              //   ],
+                              // ),
+                              // const SizedBox(
+                              //   height: 12,
+                              // ),
+                              // Center(
+                              //   child: Image.asset(AssetsData.googleLogo,
+                              //       height: 40, width: 40),
+                              // ),
                               Center(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 102, bottom: 32),
+                                      top: 30, bottom: 32),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
