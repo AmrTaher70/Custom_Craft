@@ -1,14 +1,10 @@
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-
   const CustomCard({
     Key? key,
-    required this.name,
-    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -44,11 +40,16 @@ class CustomCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image.network(
-                  imageUrl,
-                  height: 118,
-                  width: 98,
-                  fit: BoxFit.fitHeight,
+                Positioned(
+                  top: 20,
+                  bottom: 55,
+                  left: 50,
+                  child: Image.asset(
+                    AssetsData.hoodieFront,
+                    height: 118,
+                    width: 98,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
                 const SizedBox(height: 5.27),
                 Padding(
@@ -61,10 +62,10 @@ class CustomCard extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16),
                             bottomRight: Radius.circular(16))),
-                    child: Center(
+                    child: const Center(
                       child: Text(
-                        name,
-                        style: const TextStyle(
+                        'Hoodie',
+                        style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
                           fontWeight: FontWeight.w400,

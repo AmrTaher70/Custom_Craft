@@ -7,7 +7,6 @@ import 'dart:ui' as ui;
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
-import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/features/Similarity/search_on_item.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/utils/models/add_photos_model.dart';
@@ -52,7 +51,7 @@ class _MainDesignState extends State<MainDesign> {
   int _currentPageIndex = 0;
 
   List<String> images = [
-    AssetsData.hoodie,
+    AssetsData.hoodieFront,
     AssetsData.hoodieBack,
     // Add more image paths as needed
   ];
@@ -262,7 +261,7 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100,
                                   child: InteractiveViewer(
-                                    transformationController: _controllerShape,
+                                    transformationController: _controller,
                                     boundaryMargin: const EdgeInsets.symmetric(
                                         horizontal: 35, vertical: 100),
                                     onInteractionEnd: (details) {
@@ -270,7 +269,7 @@ class _MainDesignState extends State<MainDesign> {
                                     },
                                     minScale: 0.1,
                                     maxScale: 1.6,
-                                    child: Image.network(
+                                    child: Image.asset(
                                       selectedShape,
                                       color: selectedColor,
                                       colorBlendMode: BlendMode.modulate,
@@ -311,7 +310,7 @@ class _MainDesignState extends State<MainDesign> {
                                         horizontal: 35, vertical: 100),
                                     minScale: 0.1,
                                     maxScale: 1.6,
-                                    child: Image.network(
+                                    child: Image.asset(
                                       selectedIcons,
                                       height: 200,
                                       width: 200,
@@ -354,13 +353,12 @@ class _MainDesignState extends State<MainDesign> {
                               ),
                               textModel.text.isNotEmpty
                                   ? Positioned(
-                                      height: 350,
-                                      left: 100,
+                                      height: 450,
                                       right: 100,
-                                      child: Container(
-                                        color: Colors.black,
+                                      left: 100,
+                                      child: Center(
                                         child: InteractiveViewer(
-                                          transformationController: _controller,
+                                          // transformationController: _controller,
                                           boundaryMargin:
                                               const EdgeInsets.symmetric(
                                                   horizontal: 30,
@@ -368,7 +366,7 @@ class _MainDesignState extends State<MainDesign> {
                                           minScale: 0.1,
                                           maxScale: 1.6,
                                           onInteractionEnd: (details) {
-                                            _saveStateForText();
+                                            // _saveStateForText();
                                           },
                                           child: Consumer<TextModel>(
                                             builder:

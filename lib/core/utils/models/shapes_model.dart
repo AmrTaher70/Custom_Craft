@@ -1,35 +1,16 @@
-import 'package:custom_craft/constans/colors/colors.dart';
-import 'package:custom_craft/helper/api.helper.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:flutter/material.dart';
-// Import the Api helper
 
 class ShapeProvider extends ChangeNotifier {
-  List<String> _shapes = [];
+  final List<String> _shapes = List<String>.filled(
+      16, AssetsData.shape1); // Fill the list with 16 hoodie images
   String? _selectedShape;
-  Color _selectedColor = AssetsColors.primaryColor;
+  Color _selectedColor =
+      const Color.fromARGB(255, 12, 151, 83); // Initialize with a default color
 
   List<String> get shapes => _shapes;
   String? get selectedShape => _selectedShape;
   Color get selectedColor => _selectedColor;
-
-  Future<void> fetchShapes() async {
-    final api = Api(); // Instantiate the Api helper
-    const url = 'https://customcraftt.somee.com/api/Shape/GetShapes';
-    try {
-      final response = await api.get(url: url);
-      if (response is List<dynamic>) {
-        final List<String> shapeUrls = response
-            .map((shapeData) => shapeData['pictureUrl'].toString())
-            .toList();
-        _shapes = shapeUrls;
-        notifyListeners();
-      } else {
-        throw Exception('Failed to load shapes');
-      }
-    } catch (e) {
-      throw Exception('Failed to fetch shapes: $e');
-    }
-  }
 
   void setSelectedShape(String? shape) {
     _selectedShape = shape;

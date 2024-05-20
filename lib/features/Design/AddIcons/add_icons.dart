@@ -1,44 +1,51 @@
-import 'package:custom_craft/api/get_icons_model/get_icons_model.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
+import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
-import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
-import 'package:custom_craft/helper/api.helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../MainDesign/main_design.dart';
+
 class IconProvider extends ChangeNotifier {
-  final List<String> _icons = [];
-  late Api _api;
-
-  IconProvider() {
-    _api = Api();
-    _fetchIcons();
-  }
-
-  Future<void> _fetchIcons() async {
-    try {
-      final dynamic response = await _api.get(
-          url: 'https://customcraftt.somee.com/api/Icon/GetIcons');
-      if (response != null && response is List<dynamic>) {
-        final List<GetIconsModel> newIcons =
-            response.map((item) => GetIconsModel.fromJson(item)).toList();
-        // Replace the existing icons with the new ones
-        _icons.clear();
-        for (var icon in newIcons) {
-          _icons.add(icon.pictureUrl!);
-        }
-        print('Icons updated successfully.');
-      } else {
-        print('Failed to update icons. Invalid response from the API.');
-      }
-    } catch (e) {
-      print('Failed to fetch icons: $e');
-    }
-  }
-
+  final List<String> _icons = <String>[
+    AssetsData.icons1,
+    AssetsData.icons2,
+    AssetsData.icons3,
+    AssetsData.icons4,
+    AssetsData.icons5,
+    AssetsData.icons6,
+    AssetsData.icons7,
+    AssetsData.icons8,
+    AssetsData.icons9,
+    AssetsData.icons10,
+    AssetsData.icons11,
+    AssetsData.icons12,
+    AssetsData.icons13,
+    AssetsData.icons14,
+    AssetsData.icons15,
+    AssetsData.icons16,
+    AssetsData.icons17,
+    AssetsData.icons18,
+    AssetsData.icons19,
+    AssetsData.icons20,
+    AssetsData.icons21,
+    AssetsData.icons22,
+    AssetsData.icons23,
+    AssetsData.icons24,
+    AssetsData.icons25,
+    AssetsData.icons26,
+    AssetsData.icons27,
+    AssetsData.icons28,
+    AssetsData.icons29,
+    AssetsData.icons30,
+    AssetsData.icons31,
+    AssetsData.icons32,
+    AssetsData.icons33,
+  ];
   String? _selectedIcons;
-  Color _selectedColor = AssetsColors.primaryColor;
+  Color _selectedColor =
+      AssetsColors.primaryColor; // Initialize with a default color
 
   List<String> get icons => _icons;
   String? get selectedIcon => _selectedIcons;
@@ -63,10 +70,9 @@ class AddIcon extends StatefulWidget {
 }
 
 class _AddIconState extends State<AddIcon> {
-  int? selectedIconsIndex;
-
   @override
   Widget build(BuildContext context) {
+    int? selectedIconsIndex;
     return Scaffold(
       backgroundColor: const Color(0xffFAFAFA).withOpacity(.5),
       appBar: CustomAppBarForTools(
@@ -102,8 +108,11 @@ class _AddIconState extends State<AddIcon> {
                               color: const Color(0xff8E8E8E),
                             ),
                           ),
-                          child: Image.network(
+                          child: Image.asset(
                             iconProvider.selectedIcon!,
+                            // height: 270,
+                            // width: 270,
+                            // fit: BoxFit.cover,
                             color: iconProvider.selectedColor,
                             colorBlendMode: BlendMode.modulate,
                           ),
@@ -184,7 +193,7 @@ class _AddIconState extends State<AddIcon> {
                                 : Colors.transparent,
                           ),
                         ),
-                        child: Image.network(
+                        child: Image.asset(
                           iconProvider.icons[index],
                           height: 50,
                           width: 50,

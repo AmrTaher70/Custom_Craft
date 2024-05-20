@@ -1,31 +1,64 @@
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
-import 'package:custom_craft/core/utils/models/shapes_model.dart';
 import 'package:custom_craft/core/widget/color_picker.dart';
 import 'package:custom_craft/core/widget/custom_app_bar_for_tools.dart';
 import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// class ShapeProvider extends ChangeNotifier {
-//   final List<String> _shapes = <String>[];
-//   String? _selectedShape;
-//   Color _selectedColor =AssetsColors.primaryColor; // Initialize with a default color
+class ShapeProvider extends ChangeNotifier {
+  final List<String> _shapes = <String>[
+    AssetsData.shape1,
+    AssetsData.shape2,
+    AssetsData.shape3,
+    AssetsData.shape4,
+    AssetsData.shape5,
+    AssetsData.shape6,
+    AssetsData.shape7,
+    AssetsData.shape8,
+    AssetsData.shape9,
+    AssetsData.shape10,
+    AssetsData.shape11,
+    AssetsData.shape12,
+    AssetsData.shape13,
+    AssetsData.shape14,
+    AssetsData.shape15,
+    AssetsData.shape16,
+    AssetsData.shape17,
+    AssetsData.shape18,
+    AssetsData.shape19,
+    AssetsData.shape20,
+    AssetsData.shape21,
+    AssetsData.shape22,
+    AssetsData.shape23,
+    AssetsData.shape24,
+    AssetsData.shape25,
+    AssetsData.shape26,
+    AssetsData.shape27,
+    AssetsData.shape28,
+    AssetsData.shape29,
+    AssetsData.shape30,
+    AssetsData.shape31,
+    AssetsData.shape32,
+  ]; // Fill the list with 16 hoodie images
+  String? _selectedShape;
+  Color _selectedColor =
+      AssetsColors.primaryColor; // Initialize with a default color
 
-//   List<String> get shapes => _shapes;
-//   String? get selectedShape => _selectedShape;
-//   Color get selectedColor => _selectedColor;
+  List<String> get shapes => _shapes;
+  String? get selectedShape => _selectedShape;
+  Color get selectedColor => _selectedColor;
 
-//   void setSelectedShape(String? shape) {
-//     _selectedShape = shape;
-//     notifyListeners();
-//   }
+  void setSelectedShape(String? shape) {
+    _selectedShape = shape;
+    notifyListeners();
+  }
 
-//   void setSelectedColor(Color color) {
-//     _selectedColor = color;
-//     notifyListeners();
-//   }
-// }
+  void setSelectedColor(Color color) {
+    _selectedColor = color;
+    notifyListeners();
+  }
+}
 
 class AddShape extends StatefulWidget {
   const AddShape({Key? key}) : super(key: key);
@@ -35,12 +68,6 @@ class AddShape extends StatefulWidget {
 }
 
 class _AddShapeState extends State<AddShape> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<ShapeProvider>(context, listen: false).fetchShapes();
-  }
-
   @override
   Widget build(BuildContext context) {
     int? selectedShapeIndex;
@@ -79,7 +106,7 @@ class _AddShapeState extends State<AddShape> {
                               color: const Color(0xff8E8E8E),
                             ),
                           ),
-                          child: Image.network(
+                          child: Image.asset(
                             shapeProvider.selectedShape!,
                             height: 160,
                             width: 160,
@@ -164,7 +191,7 @@ class _AddShapeState extends State<AddShape> {
                                 : Colors.transparent,
                           ),
                         ),
-                        child: Image.network(
+                        child: Image.asset(
                           shapeProvider.shapes[index],
                           height: 50,
                           width: 50,
