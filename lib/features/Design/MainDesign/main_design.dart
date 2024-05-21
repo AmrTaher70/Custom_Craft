@@ -33,9 +33,13 @@ class MainDesign extends StatefulWidget {
     Key? key,
     this.selectedPhoto,
     this.image,
+    required this.frontImage,
+    required this.backImage,
   }) : super(key: key);
   final Photo? selectedPhoto;
   final Uint8List? image;
+  final String frontImage;
+  final String backImage;
 
   @override
   State<MainDesign> createState() => _MainDesignState();
@@ -49,12 +53,8 @@ class _MainDesignState extends State<MainDesign> {
   final TransformationController _controllerShape = TransformationController();
   final TransformationController _controllerImage = TransformationController();
   int _currentPageIndex = 0;
+  late List<String> images;
 
-  List<String> images = [
-    AssetsData.hoodieFront,
-    AssetsData.hoodieBack,
-    // Add more image paths as needed
-  ];
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
   // final Offset _position = const Offset(0, 0);
@@ -62,6 +62,7 @@ class _MainDesignState extends State<MainDesign> {
   @override
   void initState() {
     super.initState();
+    images = [widget.frontImage, widget.backImage];
     _loadStateForText();
     _loadStateForIcons();
     _loadStateForShape();
@@ -251,7 +252,7 @@ class _MainDesignState extends State<MainDesign> {
                                 images[_currentPageIndex],
                                 height: 407,
                                 width: 343,
-                                fit: BoxFit.fitHeight,
+                                fit: BoxFit.contain,
                                 color: colorItemModel.colorOfItem,
                                 colorBlendMode: BlendMode.modulate,
                               ),

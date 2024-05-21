@@ -32,7 +32,11 @@ class SearchOnItemState extends State<SearchOnItem> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MainDesign()),
+              MaterialPageRoute(
+                  builder: (context) => const MainDesign(
+                        frontImage: '',
+                        backImage: '',
+                      )),
             );
           },
         ),

@@ -189,7 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const MainDesign()),
+                                                const MainDesign(
+                                                  frontImage: '',
+                                                  backImage: '',
+                                                )),
                                       );
                                     },
                                     child: Card(

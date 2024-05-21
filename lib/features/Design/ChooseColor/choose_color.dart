@@ -46,7 +46,11 @@ class _ChooseColorState extends State<ChooseColor> {
               currentColor); // Add the selected color to the list of used colors
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDesign()),
+            MaterialPageRoute(
+                builder: (context) => const MainDesign(
+                      frontImage: '',
+                      backImage: '',
+                    )),
           );
         },
       ),

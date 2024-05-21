@@ -44,7 +44,11 @@ class _PhotoUploadScreenState extends State<PhotoUploadScreen> {
           // Call the callback function with the selected photo
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDesign()),
+            MaterialPageRoute(
+                builder: (context) => const MainDesign(
+                      frontImage: '',
+                      backImage: '',
+                    )),
           );
           // }
         },

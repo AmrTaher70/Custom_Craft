@@ -74,7 +74,11 @@ Future<dynamic> convertTextToImage(
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MainDesign(image: imageData),
+            builder: (context) => MainDesign(
+              image: imageData,
+              frontImage: '',
+              backImage: '',
+            ),
           ));
       return imageData;
     } catch (e) {

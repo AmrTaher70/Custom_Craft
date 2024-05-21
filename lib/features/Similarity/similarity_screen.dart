@@ -32,7 +32,11 @@ class SimilarityScreenState extends State<SimilarityScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MainDesign()),
+              MaterialPageRoute(
+                  builder: (context) => const MainDesign(
+                        frontImage: '',
+                        backImage: '',
+                      )),
             );
           },
         ),

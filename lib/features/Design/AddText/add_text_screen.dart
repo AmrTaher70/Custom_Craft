@@ -88,7 +88,11 @@ class _AddTextState extends State<AddText> {
           textModel.updateFont(dropdownValue);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDesign()),
+            MaterialPageRoute(
+                builder: (context) => const MainDesign(
+                      frontImage: '',
+                      backImage: '',
+                    )),
           );
         },
       ),

@@ -83,7 +83,11 @@ class _AddIconState extends State<AddIcon> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDesign()),
+            MaterialPageRoute(
+                builder: (context) => const MainDesign(
+                      frontImage: '',
+                      backImage: '',
+                    )),
           );
         },
       ),

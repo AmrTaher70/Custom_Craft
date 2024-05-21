@@ -81,7 +81,11 @@ class _AddShapeState extends State<AddShape> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainDesign()),
+            MaterialPageRoute(
+                builder: (context) => const MainDesign(
+                      frontImage: '',
+                      backImage: '',
+                    )),
           );
         },
       ),
