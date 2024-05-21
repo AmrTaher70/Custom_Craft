@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:custom_craft/core/utils/models/selected_item.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
 import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
@@ -33,13 +34,13 @@ class MainDesign extends StatefulWidget {
     Key? key,
     this.selectedPhoto,
     this.image,
-    required this.frontImage,
-    required this.backImage,
+    String? backImage,
+    String? frontImage,
   }) : super(key: key);
   final Photo? selectedPhoto;
   final Uint8List? image;
-  final String frontImage;
-  final String backImage;
+  // final String frontImage;
+  // final String backImage;
 
   @override
   State<MainDesign> createState() => _MainDesignState();
@@ -48,13 +49,16 @@ class MainDesign extends StatefulWidget {
 class _MainDesignState extends State<MainDesign> {
   final GlobalKey _designKey = GlobalKey();
   final PageController _pageController = PageController(viewportFraction: 0.2);
-  final TransformationController _controller = TransformationController();
+  final TransformationController _controllerText = TransformationController();
   final TransformationController _controllerIcon = TransformationController();
   final TransformationController _controllerShape = TransformationController();
   final TransformationController _controllerImage = TransformationController();
-  int _currentPageIndex = 0;
-  late List<String> images;
 
+  // late List<String> images;
+  late String? frontImage;
+  late String? backImage;
+  late List<String> images;
+  int _currentPageIndex = 0;
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
   // final Offset _position = const Offset(0, 0);
@@ -62,7 +66,16 @@ class _MainDesignState extends State<MainDesign> {
   @override
   void initState() {
     super.initState();
-    images = [widget.frontImage, widget.backImage];
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final selectedPhotosProvider = context.read<ItemPhotosProvider>();
+      setState(() {
+        frontImage = selectedPhotosProvider.selectedFrontPhoto ?? '';
+        backImage = selectedPhotosProvider.selectedBackPhoto ?? '';
+        images = [frontImage!, backImage!];
+      });
+    });
+    _pageController.addListener(_handlePageChange);
+    // images = [widget.frontImage, widget.backImage];
     _loadStateForText();
     _loadStateForIcons();
     _loadStateForShape();
@@ -93,35 +106,35 @@ class _MainDesignState extends State<MainDesign> {
 
 // Usage of the above functions for specific transformations
   Future<void> _saveStateForText() async {
-    await _saveState('matrix_text', _controller);
+    await _saveState('matrix_text', _controllerText);
   }
 
   Future<void> _saveStateForIcons() async {
-    await _saveState('matrix_icons', _controller);
+    await _saveState('matrix_icons', _controllerIcon);
   }
 
   Future<void> _saveStateForShape() async {
-    await _saveState('matrix_shape', _controller);
+    await _saveState('matrix_shape', _controllerShape);
   }
 
   Future<void> _saveStateForImage() async {
-    await _saveState('matrix_image', _controller);
+    await _saveState('matrix_image', _controllerImage);
   }
 
   Future<void> _loadStateForText() async {
-    await _loadState('matrix_text', _controller);
+    await _loadState('matrix_text', _controllerText);
   }
 
   Future<void> _loadStateForIcons() async {
-    await _loadState('matrix_icons', _controller);
+    await _loadState('matrix_icons', _controllerIcon);
   }
 
   Future<void> _loadStateForShape() async {
-    await _loadState('matrix_shape', _controller);
+    await _loadState('matrix_shape', _controllerShape);
   }
 
   Future<void> _loadStateForImage() async {
-    await _loadState('matrix_image', _controller);
+    await _loadState('matrix_image', _controllerImage);
   }
 
   @override
@@ -262,7 +275,7 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100,
                                   child: InteractiveViewer(
-                                    transformationController: _controller,
+                                    transformationController: _controllerShape,
                                     boundaryMargin: const EdgeInsets.symmetric(
                                         horizontal: 35, vertical: 100),
                                     onInteractionEnd: (details) {
@@ -283,6 +296,7 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100,
                                   child: InteractiveViewer(
+                                    transformationController: _controllerImage,
                                     boundaryMargin: const EdgeInsets.symmetric(
                                         horizontal: 35, vertical: 100),
                                     minScale: 0.1,
@@ -303,9 +317,9 @@ class _MainDesignState extends State<MainDesign> {
                                   left: 100,
                                   right: 100,
                                   child: InteractiveViewer(
-                                    transformationController: _controller,
+                                    transformationController: _controllerIcon,
                                     onInteractionEnd: (details) {
-                                      _saveStateForImage();
+                                      _saveStateForIcons();
                                     },
                                     boundaryMargin: const EdgeInsets.symmetric(
                                         horizontal: 35, vertical: 100),
@@ -397,7 +411,7 @@ class _MainDesignState extends State<MainDesign> {
                             controller: _pageController,
                             itemCount: images.length,
                             onPageChanged: (index) {
-                              _handlePageChange();
+                              _currentPageIndex = index;
                             },
                             itemBuilder: (context, index) {
                               double scaleFactor =

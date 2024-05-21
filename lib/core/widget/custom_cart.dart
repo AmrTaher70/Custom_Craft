@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:custom_craft/core/utils/assets/assets.dart';
+import 'package:provider/provider.dart';
+import 'package:custom_craft/core/utils/models/selected_item.dart';
 import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 
 class CustomCard extends StatelessWidget {
@@ -35,13 +36,13 @@ class CustomCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         child: GestureDetector(
           onTap: () {
+            var selectedPhotosProvider =
+                Provider.of<ItemPhotosProvider>(context, listen: false);
+            selectedPhotosProvider.setSelectedPhotos(frontImage, backImage);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MainDesign(
-                  frontImage: frontImage,
-                  backImage: backImage,
-                ),
+                builder: (context) => const MainDesign(),
               ),
             );
           },
@@ -52,16 +53,11 @@ class CustomCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Positioned(
-                  top: 20,
-                  bottom: 55,
-                  left: 50,
-                  child: Image.asset(
-                    frontImage,
-                    height: 118,
-                    width: 98,
-                    fit: BoxFit.fitHeight,
-                  ),
+                Image.asset(
+                  frontImage,
+                  height: 118,
+                  width: 98,
+                  fit: BoxFit.fitHeight,
                 ),
                 const SizedBox(height: 5.27),
                 Padding(
@@ -80,10 +76,9 @@ class CustomCard extends StatelessWidget {
                       child: Text(
                         itemName,
                         style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                        ),
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),

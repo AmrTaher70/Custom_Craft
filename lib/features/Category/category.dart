@@ -1,10 +1,13 @@
+import 'package:custom_craft/core/utils/models/selected_item.dart';
 import 'package:custom_craft/core/widget/custom_cart.dart';
+import 'package:custom_craft/features/Design/MainDesign/main_design.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -82,18 +85,31 @@ class CategoryScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
           child: GridView.builder(
             itemCount: items.length,
+            clipBehavior: Clip.none,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
+              mainAxisSpacing: 0,
             ),
             itemBuilder: (context, index) {
-              final item = items[index];
-              return CustomCard(
-                frontImage: item['front']!,
-                backImage: item['back']!,
-                itemName: item['name']!,
+              return GestureDetector(
+                onTap: () {
+                  // Access the provider
+                  var selectedPhotosProvider =
+                      Provider.of<ItemPhotosProvider>(context, listen: false);
+
+                  // Set selected photos in the provider
+                  selectedPhotosProvider.setSelectedPhotos(
+                      items[index]['front']!, items[index]['back']!);
+
+                  // Navigate to MainDesign screen
+                  Get.to(() => const MainDesign());
+                },
+                child: CustomCard(
+                  frontImage: items[index]['front']!,
+                  backImage: items[index]['back']!,
+                  itemName: items[index]['name']!,
+                ),
               );
             },
           ),
