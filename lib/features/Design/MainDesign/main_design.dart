@@ -53,6 +53,8 @@ class _MainDesignState extends State<MainDesign> {
   final TransformationController _controllerIcon = TransformationController();
   final TransformationController _controllerShape = TransformationController();
   final TransformationController _controllerImage = TransformationController();
+  final TransformationController _controllerAiImage =
+      TransformationController();
 
   // late List<String> images;
   late String? frontImage;
@@ -121,6 +123,10 @@ class _MainDesignState extends State<MainDesign> {
     await _saveState('matrix_image', _controllerImage);
   }
 
+  Future<void> _saveStateForAiImage() async {
+    await _saveState('matrix_image', _controllerAiImage);
+  }
+
   Future<void> _loadStateForText() async {
     await _loadState('matrix_text', _controllerText);
   }
@@ -135,6 +141,10 @@ class _MainDesignState extends State<MainDesign> {
 
   Future<void> _loadStateForImage() async {
     await _loadState('matrix_image', _controllerImage);
+  }
+
+  Future<void> _loadStateForAiImage() async {
+    await _loadState('matrix_image', _controllerAiImage);
   }
 
   @override
@@ -189,6 +199,7 @@ class _MainDesignState extends State<MainDesign> {
       if (designImage != null) {
         final blob = html.Blob([designImage]);
         final url = html.Url.createObjectUrlFromBlob(blob);
+        // ignore: unused_local_variable
         final anchor = html.AnchorElement(href: url)
           ..setAttribute("download", "design_image.png")
           ..click();
@@ -277,7 +288,7 @@ class _MainDesignState extends State<MainDesign> {
                                   child: InteractiveViewer(
                                     transformationController: _controllerShape,
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 100),
+                                        horizontal: 35, vertical: 170),
                                     onInteractionEnd: (details) {
                                       _saveStateForShape();
                                     },
@@ -322,7 +333,7 @@ class _MainDesignState extends State<MainDesign> {
                                       _saveStateForIcons();
                                     },
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 100),
+                                        horizontal: 35, vertical: 170),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     child: Image.asset(
@@ -343,20 +354,32 @@ class _MainDesignState extends State<MainDesign> {
                                       height: 350,
                                       left: 100,
                                       right: 100,
-                                      child: Container(
-                                        width: 200,
-                                        height: 200,
-                                        decoration: BoxDecoration(
-                                          color: Colors.transparent,
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          child: Image.memory(
-                                            selectedAiPhoto.data,
-                                            fit: BoxFit.contain,
+                                      child: InteractiveViewer(
+                                        transformationController:
+                                            _controllerAiImage,
+                                        onInteractionEnd: (details) {
+                                          _saveStateForAiImage();
+                                        },
+                                        boundaryMargin:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 35, vertical: 170),
+                                        minScale: 0.1,
+                                        maxScale: 1.6,
+                                        child: Container(
+                                          width: 200,
+                                          height: 200,
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            child: Image.memory(
+                                              selectedAiPhoto.data,
+                                              fit: BoxFit.contain,
+                                            ),
                                           ),
                                         ),
                                       ),

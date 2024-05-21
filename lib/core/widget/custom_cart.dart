@@ -53,11 +53,41 @@ class CustomCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image.asset(
-                  frontImage,
-                  height: 118,
-                  width: 98,
-                  fit: BoxFit.fitHeight,
+                Expanded(
+                  child: Stack(
+                    children: [
+                      const Center(child: CircularProgressIndicator()),
+                      Positioned.fill(
+                        child: Image.asset(
+                          frontImage,
+                          height: 118,
+                          width: 98,
+                          fit: BoxFit.fitHeight,
+                          frameBuilder: (BuildContext context, Widget child,
+                              int? frame, bool wasSynchronouslyLoaded) {
+                            if (wasSynchronouslyLoaded) {
+                              return child;
+                            }
+                            return AnimatedOpacity(
+                              opacity: frame == null ? 0 : 1,
+                              duration: const Duration(seconds: 3),
+                              curve: Curves.easeOut,
+                              child: child,
+                            );
+                          },
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return const Center(
+                              child: Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 5.27),
                 Padding(
