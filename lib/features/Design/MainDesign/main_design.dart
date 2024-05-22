@@ -452,7 +452,7 @@ class _MainDesignState extends State<MainDesign> {
                                   Center(
                                     child: Padding(
                                       padding:
-                                          const EdgeInsets.only(bottom: 20),
+                                          const EdgeInsets.only(bottom: 15),
                                       child: Container(
                                         height: 46,
                                         width: 30,
@@ -898,7 +898,7 @@ class _MainDesignState extends State<MainDesign> {
                                                     0.5), // Change this to your desired color and opacity
                                                 child: SizedBox(
                                                   height: height *
-                                                      0.35, // This makes the bottom sheet take up 3/4 of the screen height
+                                                      0.55, // This makes the bottom sheet take up 3/4 of the screen height
                                                   child: const ChooseColor(),
                                                 ),
                                               );
