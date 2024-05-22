@@ -1,3 +1,4 @@
+import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:custom_craft/core/utils/models/selected_item.dart';
@@ -56,7 +57,10 @@ class CustomCard extends StatelessWidget {
                 Expanded(
                   child: Stack(
                     children: [
-                      const Center(child: CircularProgressIndicator()),
+                      const Center(
+                          child: CircularProgressIndicator(
+                        color: AssetsColors.primaryColor,
+                      )),
                       Positioned.fill(
                         child: Image.asset(
                           frontImage,

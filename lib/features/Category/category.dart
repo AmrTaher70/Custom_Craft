@@ -25,22 +25,22 @@ class CategoryScreen extends StatelessWidget {
       'back': 'assets/images/tshirt_back.png'
     },
     {
-      'name': 'Long Sleeve',
+      'name': 'Long Sleeve Woman',
       'front': 'assets/images/long_sleeve_woman_front.png',
       'back': 'assets/images/long_sleeve_woman_back.png'
     },
     {
-      'name': 'Women T-Shirt',
+      'name': 'T-Shirt Women',
       'front': 'assets/images/front_tshirt_woman.png',
       'back': 'assets/images/tshirt_woman_back.png'
     },
     {
-      'name': 'Baby Shirt',
+      'name': 'Baby Bodysuit',
       'front': 'assets/images/baby_shirt_front.png',
       'back': 'assets/images/baby_shirt_back.png'
     },
     {
-      'name': 'Baby',
+      'name': 'Baby T-shirt',
       'front': 'assets/images/baby_front.png',
       'back': 'assets/images/baby_back.png'
     },

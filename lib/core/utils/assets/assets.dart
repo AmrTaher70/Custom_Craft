@@ -1,6 +1,6 @@
 class AssetsData {
   static const logo = 'assets/images/ccLogo.png';
-  static const backGround = 'assets/images/backGroundImage123.png';
+  static const backGround = 'assets/images/lastBackGround.png';
   static const onBoarding1 = 'assets/images/onBoardingImage1.png';
   static const onBoarding2 = 'assets/images/onBoardingImage2.png';
   static const onBoarding3 = 'assets/images/onBoardingImage3.png';

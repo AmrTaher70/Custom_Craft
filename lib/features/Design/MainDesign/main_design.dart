@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/models/selected_item.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:custom_craft/core/utils/models/ai_image.dart';
@@ -819,15 +820,17 @@ class _MainDesignState extends State<MainDesign> {
                                         },
                                         icon: const Icon(
                                           Icons.auto_fix_high_outlined,
-                                          color: Colors.purpleAccent,
+                                          color: AssetsColors.primaryColor,
                                         ),
                                         iconSize: 28,
                                       ),
                                       const Text(
                                         'Ai',
                                         style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: AssetsColors.primaryColor,
+                                        ),
                                       )
                                     ],
                                   ),
