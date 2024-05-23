@@ -18,7 +18,7 @@ class AssetsData {
   static const backGroundOfContactUs =
       'assets/images/backGroundOfContantUs.png';
   static const homePage = 'assets/images/homePage.png';
-  static const imageProfile = 'assets/images/imageProfile.jpg';
+  static const imageProfile = 'assets/images/ProfilePicture.png';
   static const navBarBackGround = 'assets/images/navBarBackGround.png';
   //Items
   static const hoodieFront = 'assets/images/hodi.png';

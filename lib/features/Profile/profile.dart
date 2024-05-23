@@ -1,15 +1,19 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
 import 'package:custom_craft/features/CreateNewPassword/create_new_passwort_screen.dart';
-import 'package:custom_craft/features/forgotPassword/new_password_screen.dart';
 import 'package:custom_craft/features/home/home_screen.dart';
 import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:custom_craft/helper/api.helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Category/category.dart';
 
@@ -23,6 +27,26 @@ class Profile extends StatefulWidget {
 Api api = Api();
 
 class _ProfileState extends State<Profile> {
+  File? _image;
+  Uint8List? _webImage;
+  Future<void> _getImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedImage =
+        await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      if (kIsWeb) {
+        Uint8List imageData = await pickedImage.readAsBytes();
+        setState(() {
+          _webImage = imageData;
+        });
+      } else {
+        setState(() {
+          _image = File(pickedImage.path);
+        });
+      }
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {});
     if (index == 0) {
@@ -34,6 +58,15 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider<Object>? imageProvider;
+    if (kIsWeb && _webImage != null) {
+      imageProvider = MemoryImage(_webImage!);
+    } else if (_image != null) {
+      imageProvider = FileImage(_image!);
+    } else {
+      imageProvider = const AssetImage(
+          AssetsData.imageProfile); // Replace with your asset image path
+    }
     return BackGroundImage(
       child: Scaffold(
         appBar: CustomAppBar(
@@ -146,18 +179,48 @@ class _ProfileState extends State<Profile> {
             ),
             Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(AssetsData.imageProfile),
-                        minRadius: 32,
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: imageProvider,
+                            minRadius: 32,
+                          ),
+                          Positioned(
+                            bottom: -5,
+                            right: 0,
+                            left: 30,
+                            top: 30,
+                            child: Container(
+                              width:
+                                  16, // Adjusted width to fit the icon properly
+                              height:
+                                  16, // Adjusted height to fit the icon properly
+                              decoration: BoxDecoration(
+                                color: const Color(0xffD9D9D9).withOpacity(.5),
+                                borderRadius: BorderRadius.circular(28),
+                              ),
+                              child: Center(
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.photo_camera_outlined,
+                                    color: Colors.black,
+                                    size: 24, // Adjust the icon size as needed
+                                  ),
+                                  onPressed: () => _getImage(context),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
-                      Text(
+                      const Text(
                         'Amr Taher',
                         style: TextStyle(
                             fontSize: 18,
