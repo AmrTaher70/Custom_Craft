@@ -33,12 +33,24 @@ class _ProfileState extends State<Profile> {
   Uint8List? _webImage;
   File? _image;
   String? _profilePictureUrl;
+  Uint8List? cachedImageData;
   final Api api = Api(); // Instantiate your API helper
 
   @override
   void initState() {
     super.initState();
-    _fetchProfilePicture();
+    loadCachedImageData();
+  }
+
+  Future<void> loadCachedImageData() async {
+    Uint8List? cachedImageData = await getProfilePictureData();
+    if (cachedImageData != null) {
+      setState(() {
+        _webImage = cachedImageData;
+      });
+    } else {
+      await _fetchProfilePicture(); // Fetch from API if no cached data
+    }
   }
 
   Future<void> _fetchProfilePicture() async {
@@ -49,12 +61,13 @@ class _ProfileState extends State<Profile> {
       final response = await api.get(url: url);
 
       if (response != null) {
+        Uint8List imageData = base64Decode(response);
         setState(() {
-          _profilePictureUrl = response;
+          _webImage = imageData;
         });
 
-        // Save the profile picture URL in shared preferences
-        await saveProfilePictureUrl(response);
+        // Save the profile picture data in shared preferences
+        await saveProfilePictureData(imageData);
       } else {
         print('Failed to fetch profile picture: No response');
       }
@@ -63,21 +76,28 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> saveProfilePictureUrl(String url) async {
+  Future<void> saveProfilePictureData(Uint8List imageData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('profile_picture_url', url);
+    String base64String = base64Encode(imageData);
+    await prefs.setString('profile_picture_data', base64String);
   }
 
-  Future<void> _getProfilePictureUrl() async {
+  Future<Uint8List?> getProfilePictureData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? savedUrl = prefs.getString('profile_picture_url');
-    if (savedUrl != null) {
-      setState(() {
-        _profilePictureUrl = savedUrl;
-      });
+    String? base64String = prefs.getString('profile_picture_data');
+    if (base64String != null) {
+      return base64Decode(base64String);
     } else {
-      // If URL is not saved in shared preferences, fetch it from API
-      await _fetchProfilePicture();
+      return null;
+    }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {});
+    if (index == 0) {
+      Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
+    } else if (index == 1) {
+      Get.to(() => const Profile(), transition: Transition.fadeIn);
     }
   }
 
@@ -130,28 +150,34 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> saveProfilePictureData(Uint8List imageData) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String base64String = base64Encode(imageData);
-    await prefs.setString('profile_picture_data', base64String);
-  }
+  Future<void> _logout() async {
+    const String url = 'http://customcrafttt.somee.com/api/Account/LogOut';
 
-  Future<Uint8List?> getProfilePictureData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? base64String = prefs.getString('profile_picture_data');
-    if (base64String != null) {
-      return base64Decode(base64String);
-    } else {
-      return null;
-    }
-  }
+    try {
+      final response = await api.post(url: url, body: {});
 
-  void _onItemTapped(int index) {
-    setState(() {});
-    if (index == 0) {
-      Get.to(() => const HomeScreen(), transition: Transition.fadeIn);
-    } else if (index == 1) {
-      Get.to(() => const Profile(), transition: Transition.fadeIn);
+      // Print the full response for debugging
+      print('Logout response: $response');
+
+      if (response != null &&
+          response is String &&
+          response == 'LogOut Success!') {
+        // Clear all shared preferences data
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+
+        // Navigate to the login screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+
+        print('Logged out successfully');
+      } else {
+        print('Failed to log out: Unexpected response');
+      }
+    } catch (e) {
+      print('Error logging out: $e');
     }
   }
 
@@ -162,10 +188,8 @@ class _ProfileState extends State<Profile> {
       imageProvider = MemoryImage(_webImage!);
     } else if (_image != null) {
       imageProvider = FileImage(_image!);
-    } else if (_profilePictureUrl != null) {
-      // Decode Base64 image and display it
-      Uint8List imageData = base64Decode(_profilePictureUrl!);
-      imageProvider = MemoryImage(imageData);
+    } else if (_webImage != null) {
+      imageProvider = MemoryImage(_webImage!);
     } else {
       imageProvider = const AssetImage(
           AssetsData.imageProfile); // Replace with your asset image path
@@ -440,25 +464,19 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () async {
-                      // Navigate to the home screen after logout
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
-                      );
+                      await _logout();
                     },
                     child: const Row(
                       children: [
                         Icon(Icons.logout_outlined),
-                        SizedBox(
-                          width: 15,
-                        ),
+                        SizedBox(width: 15),
                         Text(
                           'Sign out',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
                         ),
                         // Spacer(),
                         // Icon(Icons.keyboard_arrow_right_outlined),
