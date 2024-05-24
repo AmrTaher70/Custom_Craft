@@ -33,7 +33,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   device_preview: ^1.1.0
   dio: ^5.4.3+1
-  file_picker: ^8.0.3
+  # file_picker: ^8.0.3
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.0.3
@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^4.0.4
   gradient_borders: ^1.0.0
   html: ^0.15.0
+  http: ^0.13.3
   image_picker: ^1.0.7
   interactiveviewer_gallery: ^0.6.0
   intl: ^0.18.1

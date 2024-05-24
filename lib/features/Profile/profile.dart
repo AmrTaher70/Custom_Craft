@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -14,6 +15,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Category/category.dart';
 
@@ -27,8 +30,57 @@ class Profile extends StatefulWidget {
 Api api = Api();
 
 class _ProfileState extends State<Profile> {
-  File? _image;
   Uint8List? _webImage;
+  File? _image;
+  String? _profilePictureUrl;
+  final Api api = Api(); // Instantiate your API helper
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProfilePicture();
+  }
+
+  Future<void> _fetchProfilePicture() async {
+    const String url =
+        'http://customcrafttt.somee.com/api/Account/ProfilePicture';
+
+    try {
+      final response = await api.get(url: url);
+
+      if (response != null) {
+        setState(() {
+          _profilePictureUrl = response;
+        });
+
+        // Save the profile picture URL in shared preferences
+        await saveProfilePictureUrl(response);
+      } else {
+        print('Failed to fetch profile picture: No response');
+      }
+    } catch (e) {
+      print('Error fetching profile picture: $e');
+    }
+  }
+
+  Future<void> saveProfilePictureUrl(String url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_picture_url', url);
+  }
+
+  Future<void> _getProfilePictureUrl() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedUrl = prefs.getString('profile_picture_url');
+    if (savedUrl != null) {
+      setState(() {
+        _profilePictureUrl = savedUrl;
+      });
+    } else {
+      // If URL is not saved in shared preferences, fetch it from API
+      await _fetchProfilePicture();
+    }
+  }
+
   Future<void> _getImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
@@ -39,11 +91,58 @@ class _ProfileState extends State<Profile> {
         setState(() {
           _webImage = imageData;
         });
+        String base64Image = base64Encode(imageData);
+        await _uploadImage(base64Image);
       } else {
+        File imageFile = File(pickedImage.path);
         setState(() {
-          _image = File(pickedImage.path);
+          _image = imageFile;
         });
+        Uint8List imageData = await imageFile.readAsBytes();
+        String base64Image = base64Encode(imageData);
+        await _uploadImage(base64Image);
       }
+    }
+  }
+
+  Future<void> _uploadImage(String base64Image) async {
+    const String url =
+        'http://customcrafttt.somee.com/api/Account/ProfilePicture';
+
+    try {
+      // Perform the POST request
+      final response = await api.post(
+        url: url,
+        body: {'profilePictureUrl': base64Image},
+      );
+
+      // Check if response is plain text
+      if (response != null && response is String && response == 'Saved') {
+        // Assume the profile picture URL remains the same if it is saved successfully
+        // Alternatively, you may want to refresh the profile picture URL from the server
+        await _fetchProfilePicture();
+        print('Image uploaded successfully');
+      } else {
+        print('Failed to upload image: Unexpected response');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  Future<void> saveProfilePictureData(Uint8List imageData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String base64String = base64Encode(imageData);
+    await prefs.setString('profile_picture_data', base64String);
+  }
+
+  Future<Uint8List?> getProfilePictureData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? base64String = prefs.getString('profile_picture_data');
+    if (base64String != null) {
+      return base64Decode(base64String);
+    } else {
+      return null;
     }
   }
 
@@ -63,10 +162,15 @@ class _ProfileState extends State<Profile> {
       imageProvider = MemoryImage(_webImage!);
     } else if (_image != null) {
       imageProvider = FileImage(_image!);
+    } else if (_profilePictureUrl != null) {
+      // Decode Base64 image and display it
+      Uint8List imageData = base64Decode(_profilePictureUrl!);
+      imageProvider = MemoryImage(imageData);
     } else {
       imageProvider = const AssetImage(
           AssetsData.imageProfile); // Replace with your asset image path
     }
+
     return BackGroundImage(
       child: Scaffold(
         appBar: CustomAppBar(

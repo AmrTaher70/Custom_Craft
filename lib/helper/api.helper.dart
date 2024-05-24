@@ -17,19 +17,19 @@ class Api {
 
   Future<dynamic> get({required String url}) async {
     try {
-      // Retrieve the token
       String? token = await getToken();
-
-      // Set headers including Bearer token if available
       Map<String, String> headers = {};
       if (token != null) {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      // Perform GET request
       http.Response response = await http.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        try {
+          return jsonDecode(response.body);
+        } catch (e) {
+          return response.body; // Return plain text response
+        }
       } else {
         throw Exception(
             "There's a problem with status code ${response.statusCode}");
@@ -44,10 +44,7 @@ class Api {
     required dynamic body,
   }) async {
     try {
-      // Retrieve the token
       String? token = await getToken();
-
-      // Set headers including Bearer token if available
       Map<String, String> headers = {
         'Content-Type': 'application/json',
       };
@@ -56,7 +53,6 @@ class Api {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      // Perform POST request
       http.Response response = await http.post(
         Uri.parse(url),
         body: jsonEncode(body),
@@ -64,7 +60,11 @@ class Api {
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        try {
+          return jsonDecode(response.body);
+        } catch (e) {
+          return response.body; // Return plain text response
+        }
       } else {
         throw Exception(
             'There is a problem with the status code ${response.statusCode} with body ${response.body}');
@@ -79,10 +79,7 @@ class Api {
     required dynamic body,
   }) async {
     try {
-      // Retrieve the token
       String? token = await getToken();
-
-      // Set headers including Bearer token if available
       Map<String, String> headers = {
         'Content-Type': 'application/json',
       };
@@ -91,7 +88,6 @@ class Api {
         headers['Authorization'] = 'Bearer $token';
       }
 
-      // Perform PUT request
       http.Response response = await http.put(
         Uri.parse(url),
         body: jsonEncode(body),
@@ -99,7 +95,11 @@ class Api {
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        try {
+          return jsonDecode(response.body);
+        } catch (e) {
+          return response.body; // Return plain text response
+        }
       } else {
         throw Exception(
             'There is a problem with the status code ${response.statusCode} with body ${response.body}');
