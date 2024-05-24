@@ -9,10 +9,20 @@ class Api {
     await prefs.setString('token', token);
   }
 
+  Future<void> saveUserName(String userName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', userName);
+  }
+
   // Function to retrieve the token
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+
+  Future<String?> getUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userName');
   }
 
   Future<dynamic> get({required String url}) async {

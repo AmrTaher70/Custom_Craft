@@ -34,12 +34,22 @@ class _ProfileState extends State<Profile> {
   File? _image;
   String? _profilePictureUrl;
   Uint8List? cachedImageData;
+  String? _userName;
   final Api api = Api(); // Instantiate your API helper
 
   @override
   void initState() {
     super.initState();
     loadCachedImageData();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ??
+          'User'; // Default to 'User' if no username is found
+    });
   }
 
   Future<void> loadCachedImageData() async {
@@ -348,13 +358,15 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Text(
-                        'Amr Taher',
-                        style: TextStyle(
+                      if (_userName != null)
+                        Text(
+                          _userName!,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                      ),
+                            color: Colors.black,
+                          ),
+                        ),
                     ],
                   ),
                 ),

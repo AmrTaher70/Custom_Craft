@@ -59,9 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Retrieve token from the response
       String? token = response['token'];
+      String? userName = response['userName'];
 
       // Save token
       await api.saveToken(token!);
+      await api.saveUserName(userName!);
 
       // Show snackbar with success message
       ScaffoldMessenger.of(context).showSnackBar(
