@@ -101,7 +101,6 @@ class CategoryScreen extends StatelessWidget {
                   // Set selected photos in the provider
                   selectedPhotosProvider.setSelectedPhotos(
                       items[index]['front']!, items[index]['back']!);
-
                   // Navigate to MainDesign screen
                   Get.to(() => const MainDesign());
                 },

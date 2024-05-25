@@ -22,7 +22,7 @@ TextEditingController messageSubjectController = TextEditingController();
 String messageBody = messageController.text;
 String messageSubject = messageSubjectController.text;
 
-String recipientEmail = 'amrhafiz47@gmail.com';
+String recipientEmail = 'customcraft2024@gmail.com';
 final formKey = GlobalKey<FormState>();
 bool isLoading = false;
 
