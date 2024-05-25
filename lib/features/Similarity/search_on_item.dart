@@ -9,8 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SearchOnItem extends StatefulWidget {
+  final Uint8List? imageData;
   const SearchOnItem({
     Key? key,
+    this.imageData,
   }) : super(key: key);
 
   @override
@@ -23,8 +25,9 @@ class SearchOnItemState extends State<SearchOnItem> {
     final screenSize = MediaQuery.of(context).size;
     final double width = screenSize.width;
     final double height = screenSize.height;
-    List<Uint8List?> savedPhotos =
-        Provider.of<SavedImageModel>(context).savedImages;
+    Uint8List? displayImage =
+        Provider.of<SavedImageModel>(context).lastAccessedImage;
+
     return BackGroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -32,11 +35,7 @@ class SearchOnItemState extends State<SearchOnItem> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const MainDesign(
-                        frontImage: '',
-                        backImage: '',
-                      )),
+              MaterialPageRoute(builder: (context) => const MainDesign()),
             );
           },
         ),
@@ -56,9 +55,9 @@ class SearchOnItemState extends State<SearchOnItem> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 100),
-                      child: savedPhotos.isNotEmpty
+                      child: displayImage != null
                           ? Image.memory(
-                              savedPhotos.last!,
+                              displayImage,
                               height: 407,
                               width: 343,
                               fit: BoxFit.fitHeight,

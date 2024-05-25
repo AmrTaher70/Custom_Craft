@@ -289,7 +289,7 @@ class _MainDesignState extends State<MainDesign> {
                                   child: InteractiveViewer(
                                     transformationController: _controllerShape,
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 170),
+                                        horizontal: 100, vertical: 170),
                                     onInteractionEnd: (details) {
                                       _saveStateForShape();
                                     },
@@ -310,7 +310,7 @@ class _MainDesignState extends State<MainDesign> {
                                   child: InteractiveViewer(
                                     transformationController: _controllerImage,
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 100),
+                                        horizontal: 100, vertical: 170),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     onInteractionEnd: (details) {
@@ -334,7 +334,7 @@ class _MainDesignState extends State<MainDesign> {
                                       _saveStateForIcons();
                                     },
                                     boundaryMargin: const EdgeInsets.symmetric(
-                                        horizontal: 35, vertical: 170),
+                                        horizontal: 100, vertical: 170),
                                     minScale: 0.1,
                                     maxScale: 1.6,
                                     child: Image.asset(

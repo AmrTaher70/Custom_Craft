@@ -88,6 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                   child: GestureDetector(
                                     onTap: () {
+                                      Provider.of<SavedImageModel>(context,
+                                              listen: false)
+                                          .setLastAccessedImage(
+                                              savedPhotos[index]);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
