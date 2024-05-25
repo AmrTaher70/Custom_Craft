@@ -46,7 +46,7 @@ Future<dynamic> convertTextToImage(
       'Content-Type': 'application/json',
       'Authorization':
           //add ypur secreat key here
-          'Bearer sk-gp5jNKnm2Rfq1qayMNQwmngrkkFMpoJuDFDi7XuIlEa1DbeK',
+          'Bearer sk-VAb6H7zj93P4hqwAzPzqCucMmhVFQ8KziSmirXuPDCiLAH85',
       'Accept': 'image/png',
     },
     body: jsonEncode({
@@ -57,7 +57,7 @@ Future<dynamic> convertTextToImage(
       'samples': 1,
       'steps': 150,
       'seed': 0,
-      'style_preset': "3d-model",
+      'style_preset': "sd3",
       'text_prompts': [
         {
           'text': prompt,

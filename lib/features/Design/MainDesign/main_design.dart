@@ -83,6 +83,7 @@ class _MainDesignState extends State<MainDesign> {
     _loadStateForIcons();
     _loadStateForShape();
     _loadStateForImage();
+    _loadStateForAiImage();
     _pageController.addListener(_handlePageChange);
   }
 
@@ -346,85 +347,67 @@ class _MainDesignState extends State<MainDesign> {
                                     ),
                                   ),
                                 ),
-                              Consumer<AiPhotoProvider>(
-                                builder: (context, aiPhotoProvider, _) {
-                                  final selectedAiPhoto =
-                                      aiPhotoProvider.selectedAiPhoto;
-                                  if (selectedAiPhoto != null) {
-                                    return Positioned(
-                                      height: 350,
-                                      left: 100,
-                                      right: 100,
-                                      child: InteractiveViewer(
-                                        transformationController:
-                                            _controllerAiImage,
-                                        onInteractionEnd: (details) {
-                                          _saveStateForAiImage();
-                                        },
-                                        boundaryMargin:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 35, vertical: 170),
-                                        minScale: 0.1,
-                                        maxScale: 1.6,
-                                        child: Container(
-                                          width: 200,
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            child: Image.memory(
-                                              selectedAiPhoto.data,
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
+                              if (selectedAiPhoto != null)
+                                Positioned(
+                                  height: 350,
+                                  left: 100,
+                                  right: 100,
+                                  child: InteractiveViewer(
+                                    transformationController:
+                                        _controllerAiImage,
+                                    onInteractionEnd: (details) {
+                                      _saveStateForAiImage();
+                                    },
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                        horizontal: 100, vertical: 170),
+                                    minScale: 0.1,
+                                    maxScale: 1.6,
+                                    child: Container(
+                                      width: 200,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.memory(
+                                          selectedAiPhoto.data,
+                                          fit: BoxFit.contain,
                                         ),
                                       ),
-                                    );
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                              textModel.text.isNotEmpty
-                                  ? Positioned(
-                                      height: 450,
-                                      right: 100,
-                                      left: 100,
-                                      child: Center(
-                                        child: InteractiveViewer(
-                                          // transformationController: _controller,
-                                          boundaryMargin:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 30,
-                                                  vertical: 100),
-                                          minScale: 0.1,
-                                          maxScale: 1.6,
-                                          onInteractionEnd: (details) {
-                                            // _saveStateForText();
-                                          },
-                                          child: Consumer<TextModel>(
-                                            builder:
-                                                (context, textModel, child) {
-                                              return Text(
-                                                textModel.text,
-                                                style: GoogleFonts.getFont(
-                                                  textModel.font,
-                                                  fontSize: _fontSize,
-                                                  color: textModel.color,
-                                                ),
-                                                textAlign: textModel.align,
-                                              );
-                                            },
+                                    ),
+                                  ),
+                                ),
+                              if (textModel.text.isNotEmpty)
+                                Positioned(
+                                  height: 450,
+                                  right: 100,
+                                  left: 100,
+                                  child: InteractiveViewer(
+                                    transformationController: _controllerText,
+                                    boundaryMargin: const EdgeInsets.symmetric(
+                                        horizontal: 30, vertical: 300),
+                                    minScale: 0.1,
+                                    maxScale: 3,
+                                    onInteractionEnd: (details) {
+                                      _saveStateForText();
+                                    },
+                                    child: Consumer<TextModel>(
+                                      builder: (context, textModel, child) {
+                                        return Text(
+                                          textModel.text,
+                                          style: GoogleFonts.getFont(
+                                            textModel.font,
+                                            // fontSize: _fontSize,
+                                            color: textModel.color,
                                           ),
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox(),
+                                          textAlign: textModel.align,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         ),
