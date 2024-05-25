@@ -69,7 +69,7 @@ class SearchOnItemState extends State<SearchOnItem> {
               ),
               Container(
                   width: width - 10,
-                  height: height * 0.24,
+                  height: height * 0.35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(width: 3, color: Colors.white),
@@ -183,6 +183,108 @@ class SearchOnItemState extends State<SearchOnItem> {
                                     color: Colors.white),
                                 child: Image.asset(
                                   AssetsData.bingLogo,
+                                  height: 24,
+                                  width: 24,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          'Or you can print your design using the following instagram stores',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff8E8E8E),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                const url =
+                                    'https://www.instagram.com/direct/t/102436881156532?hl=en';
+                                // ignore: deprecated_member_use
+                                if (await canLaunch(url)) {
+                                  // ignore: deprecated_member_use
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Container(
+                                height: 38,
+                                width: 38,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                child: Image.asset(
+                                  AssetsData.printLegLogo,
+                                  height: 24,
+                                  width: 24,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 24,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                const url =
+                                    'https://www.instagram.com/direct/t/102753431123691';
+                                // ignore: deprecated_member_use
+                                if (await canLaunch(url)) {
+                                  // ignore: deprecated_member_use
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Container(
+                                height: 38,
+                                width: 38,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.black),
+                                child: Image.asset(
+                                  AssetsData.printTshirtLogo,
+                                  height: 24,
+                                  width: 24,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 24,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                const url =
+                                    'https://www.instagram.com/direct/t/102984774433894?hl=en';
+                                // ignore: deprecated_member_use
+                                if (await canLaunch(url)) {
+                                  // ignore: deprecated_member_use
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Container(
+                                height: 38,
+                                width: 38,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                child: Image.asset(
+                                  AssetsData.kafLogo,
                                   height: 24,
                                   width: 24,
                                 ),

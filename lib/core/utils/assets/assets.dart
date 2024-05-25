@@ -8,6 +8,9 @@ class AssetsData {
   static const googleLensLogo = 'assets/images/Google_Lens_Icon.svg.png';
   static const sheIn = 'assets/images/sheinLogo.png';
   static const bingLogo = 'assets/images/Bing-Emblem.png';
+  static const printLegLogo = 'assets/images/print_let_logo.jpg';
+  static const printTshirtLogo = 'assets/images/print_tshirt_logo.jpg';
+  static const kafLogo = 'assets/images/design_kaf_logo.jpg';
   static const forgetPassword = 'assets/images/forgotPasswordImage.png';
   static const newPassword = 'assets/images/newPasswordImage.png';
   static const createNewPassword = 'assets/images/createNewPassword.png';
