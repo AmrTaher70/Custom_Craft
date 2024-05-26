@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
+import 'package:custom_craft/core/utils/models/saved_photo_model.dart';
 import 'package:custom_craft/core/widget/custom_app_bar.dart';
 import 'package:custom_craft/core/widget/image_background.dart';
 import 'package:custom_craft/features/Contact%20US/contact_us_screen.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Category/category.dart';
@@ -160,7 +162,7 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> _logout() async {
+  Future<void> _logout(BuildContext context) async {
     const String url = 'http://customcrafttt.somee.com/api/Account/LogOut';
 
     try {
@@ -175,6 +177,13 @@ class _ProfileState extends State<Profile> {
         // Clear all shared preferences data
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.clear();
+
+        // Clear provider data
+        // Assuming you use the provider package, this will depend on how you set up your providers.
+        // This example assumes you have a provider called SavedImageModel that needs to be cleared.
+        final savedImageModel =
+            Provider.of<SavedImageModel>(context, listen: false);
+        savedImageModel.clear();
 
         // Navigate to the login screen
         Navigator.pushReplacement(
@@ -476,7 +485,7 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () async {
-                      await _logout();
+                      await _logout(context);
                     },
                     child: const Row(
                       children: [

@@ -23,4 +23,10 @@ class SavedImageModel extends ChangeNotifier {
     _savedImages.removeAt(index);
     notifyListeners();
   }
+
+  void clear() {
+    _savedImages.clear();
+    _lastAccessedImage = null;
+    notifyListeners();
+  }
 }
