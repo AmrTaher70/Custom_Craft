@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       // Check for specific error messages and provide feedback to the user
-      String errorMessage = 'An error occurred. Please try again later.';
+      String errorMessage;
       if (e is Exception) {
         // Extract the error message from the exception
         errorMessage = e.toString();
@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Show snackbar with error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errorMessage),
+        const SnackBar(
+          content: Text('Wrong email address or password please try again'),
         ),
       );
     } finally {

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: [
           BackGroundImage(
-            child: SearchOnItem(),
+            child: LoginScreen(),
           ),
         ],
       ),

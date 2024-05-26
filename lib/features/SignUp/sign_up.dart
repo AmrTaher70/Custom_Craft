@@ -35,18 +35,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Api api = Api();
 
 // Function to handle sign-up
-  Future signUp() async {
+  Future<bool> signUp(BuildContext context) async {
     try {
-      // Validate the form
-      if (!formKey.currentState!.validate()) {
-        return;
-      }
-
-      // Show loading indicator
-      setState(() {
-        isLoading = true;
-      });
-
       // Create an instance of SignUpModel using user input
       SignUpModel signUpData = SignUpModel(
         userName: userNameController.text,
@@ -64,48 +54,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: signUpJson,
       );
 
-      // Handle response (e.g., show success message)
+      // Handle successful response
       print('Sign up successful: $response');
-
-      // Navigate to sign-in screen
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-      // );
+      return true;
     } catch (e) {
       // Handle any exceptions
       print('Error signing up: $e');
 
-      // Hide loading indicator
-      setState(() {
-        isLoading = false;
-      });
-
       // Check for specific error messages and provide feedback to the user
-      if (e.toString().contains('This UserName is already taken')) {
-        // Show a snackbar to the user indicating that the username is already taken
-        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+      final errorMessage = e.toString();
+
+      if (errorMessage
+          .contains('This UserName is already taken try another one')) {
+        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content:
-                Text('This UserName is already taken. Please try another one.'),
+            content: Text('This UserName is already taken try another one'),
           ),
         );
-      } else if (e.toString().contains('This email is already in use!')) {
-        // Show a snackbar to the user indicating that the email is already taken
-        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+      } else if (errorMessage.contains('This email is already in use!')) {
+        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content:
-                Text('This email is already taken. Please try another one.'),
+                Text('This email is already in use! Please try another one.'),
           ),
         );
       } else {
-        // Show a generic error message to the user
-        ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('An error occurred. Please try again later.'),
           ),
         );
       }
+
+      return false;
     } finally {
       // Hide loading indicator
       setState(() {
@@ -321,9 +302,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           });
 
                                           // Attempt sign-up
-                                          await signUp();
-                                          showSuccessDialog(
-                                              context, emailController.text);
+                                          bool success = await signUp(context);
+
+                                          // Show success dialog only if sign-up is successful
+                                          if (success) {
+                                            // ignore: use_build_context_synchronously
+                                            showSuccessDialog(
+                                                context, emailController.text);
+                                          }
 
                                           // Navigate to sign-in screen if sign-up succeeds
                                           // Navigator.pushReplacement(
@@ -489,26 +475,26 @@ Widget contentBox(BuildContext context, String email) {
   return Center(
     child: Stack(
       children: <Widget>[
-        // BackdropFilter to blur the background
         Container(
           height: 314,
           width: 343,
           padding: const EdgeInsets.all(20.0),
           margin: const EdgeInsets.only(top: 120.0),
           decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: const Color(0xffFAFAFA).withOpacity(.8),
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(color: Colors.white, width: 3)),
+            shape: BoxShape.rectangle,
+            color: const Color(0xffFAFAFA).withOpacity(.8),
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(color: Colors.white, width: 3),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Positioned(
-                  left: 20.0,
-                  right: 20.0,
-                  child: Image.asset(
-                      AssetsData.goConfirmEmail) // Change to your image path
-                  ),
+                left: 20.0,
+                right: 20.0,
+                child: Image.asset(
+                    AssetsData.goConfirmEmail), // Change to your image path
+              ),
               const Text(
                 'Confirm Your Email Address',
                 style: TextStyle(
@@ -552,11 +538,7 @@ Widget contentBox(BuildContext context, String email) {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        AssetsColors.primaryColor, // Background color
-                    // foregroundColor:
-                    //     Colors.white, // Text color
-                    // Button padding
+                    backgroundColor: Colors.blue, // Background color
                     shape: RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.circular(12), // Button border radius
