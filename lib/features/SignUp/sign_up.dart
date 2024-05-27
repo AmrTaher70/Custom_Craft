@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:custom_craft/api/sign_up_model.dart';
+import 'package:custom_craft/api/sign_up_model/sign_up_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
@@ -10,7 +10,6 @@ import 'package:custom_craft/features/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:universal_html/js.dart';
 
 import '../../helper/api.helper.dart';
 
@@ -101,6 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context) {
         final screenSize = MediaQuery.of(context).size;
         final double width = screenSize.width;
+        // ignore: unused_local_variable
         final double h = screenSize.height;
 
         return BackGroundImage(

@@ -46,7 +46,8 @@ Future<dynamic> convertTextToImage(
       'Content-Type': 'application/json',
       'Authorization':
           //add ypur secreat key here
-          'Bearer sk-VAb6H7zj93P4hqwAzPzqCucMmhVFQ8KziSmirXuPDCiLAH85',
+          'Bearer sk-WQ7JRMCG3ofmMaP6SdaPc1p8rXSuoB8fAF31OInLp02jKcii',
+      // 'Bearer sk-VAb6H7zj93P4hqwAzPzqCucMmhVFQ8KziSmirXuPDCiLAH85',
       'Accept': 'image/png',
     },
     body: jsonEncode({

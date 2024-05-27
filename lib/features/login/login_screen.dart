@@ -1,4 +1,4 @@
-import 'package:custom_craft/api/login_model.dart';
+import 'package:custom_craft/api/login_model/login_model.dart';
 import 'package:custom_craft/constans/app_string/app_string.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';

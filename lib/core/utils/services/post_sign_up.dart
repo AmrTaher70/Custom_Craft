@@ -1,4 +1,4 @@
-import 'package:custom_craft/api/sign_up_model.dart';
+import 'package:custom_craft/api/sign_up_model/sign_up_model.dart';
 import 'package:custom_craft/helper/api.helper.dart';
 
 class AddSignUp {

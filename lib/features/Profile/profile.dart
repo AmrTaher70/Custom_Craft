@@ -16,7 +16,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +33,7 @@ Api api = Api();
 class _ProfileState extends State<Profile> {
   Uint8List? _webImage;
   File? _image;
-  String? _profilePictureUrl;
+  // String? _profilePictureUrl;
   Uint8List? cachedImageData;
   String? _userName;
   final Api api = Api(); // Instantiate your API helper
@@ -81,9 +80,11 @@ class _ProfileState extends State<Profile> {
         // Save the profile picture data in shared preferences
         await saveProfilePictureData(imageData);
       } else {
+        // ignore: avoid_print
         print('Failed to fetch profile picture: No response');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error fetching profile picture: $e');
     }
   }

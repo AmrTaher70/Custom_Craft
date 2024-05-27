@@ -23,6 +23,7 @@ final TextEditingController _textOfImage = TextEditingController();
 class _AiGeneratorState extends State<AiGenerator> {
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     var selectedAiPhoto = Provider.of<AiPhotoProvider>(context).selectedAiPhoto;
     return Scaffold(
         backgroundColor: const Color(0xffFAFAFA).withOpacity(.5),

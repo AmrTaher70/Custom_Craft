@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:custom_craft/api/change_password_model.dart';
+import 'package:custom_craft/api/change_passowrd_model/change_password_model.dart';
 import 'package:custom_craft/constans/colors/colors.dart';
 import 'package:custom_craft/core/utils/assets/assets.dart';
 import 'package:custom_craft/core/widget/image_background.dart';

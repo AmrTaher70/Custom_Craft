@@ -50,6 +50,7 @@ class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    // ignore: unused_local_variable
     final double width = screenSize.width;
     return BackGroundImage(
       child: Scaffold(
